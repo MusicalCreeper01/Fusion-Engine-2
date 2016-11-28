@@ -23,8 +23,6 @@ public class Chunk {
     public int x = 0;
     public int y = 0;
 
-//    public Map<Position, Integer> blocks= new HashMap<>();
-
     public int[][][] blocks = new int [CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
 
     private Mesh mesh;
@@ -40,10 +38,6 @@ public class Chunk {
     }
 
     public int getBlock(int x, int y, int z){
-//        if(x < 0 || y < 0 || z < 0) {
-//
-//            return 0;
-//        }
         try {
             return blocks[x][y][z];
         }catch(ArrayIndexOutOfBoundsException ex){
@@ -54,19 +48,11 @@ public class Chunk {
 
     }
 
-//    public void setBlock(int id, int x, int y, int z){
-//        blocks.put(new Position(x, y, z), id);
-//    }
-//
-//    public int getBlock(int x, int y, int z){
-//        return blocks.containsKey(new Position(x, y, z)) ? blocks.get(new Position(x,y,z)) : World.EMPTY;
-//    }
-
     public void draw() throws Exception{
         List<Float> verts = new ArrayList<>();
         List<Float> uvs = new ArrayList<>();
         List<Integer> tris = new ArrayList<>();
-        Texture texture = new Texture("/textures/faces.png");
+        Texture texture = new Texture("/textures/pillar.png");
 
         int i = 0;
         for(int x = 0; x < CHUNK_SIZE; ++x){
@@ -96,28 +82,16 @@ public class Chunk {
                         boolean right = posx == 0 ? true : false;
                         boolean left = negx == 0 ? true : false;
 
-//
-
-
-//                        System.out.println(x +"/" + y +"/" + z);
-
                         if(top) {
                             verts.add(x + (-BLOCK_SIZE)); verts.add(y + BLOCK_SIZE); verts.add(z + (-BLOCK_SIZE));
                             verts.add(x + BLOCK_SIZE);    verts.add(y + BLOCK_SIZE); verts.add(z + (-BLOCK_SIZE));
                             verts.add(x + (-BLOCK_SIZE)); verts.add(y + BLOCK_SIZE); verts.add(z + BLOCK_SIZE);
                             verts.add(x + BLOCK_SIZE);    verts.add(y + BLOCK_SIZE); verts.add(z + BLOCK_SIZE);
 
-
-                        /* top */
-                            /*uvs.add(0.0f); uvs.add(0.5f); //0.0f 0.5f 9
-                            uvs.add(0.5f); uvs.add(0.5f); //0.5f 0.5f 10
-                            uvs.add(0.0f); uvs.add(1.0f); //0.0f 1.0f  11
-                            uvs.add(0.5f); uvs.add(1.0f); //0.5f 0.1f  12*/
-
-                            uvs.add(0.0f); uvs.add(0.5f); //0.0f 0.5f 9
-                            uvs.add(1.0f/3); uvs.add(0.5f); //0.5f 0.5f 10
-                            uvs.add(0.0f); uvs.add(0.0f); //0.0f 1.0f  11
-                            uvs.add(1.0f/3); uvs.add(0.0f); //0.5f 0.1f  12
+                            uvs.add(1.0f/3); uvs.add(0.5f);
+                            uvs.add(0.0f); uvs.add(0.5f);
+                            uvs.add(1.0f/3); uvs.add(0.0f);
+                            uvs.add(0.0f); uvs.add(0.0f);
 
 
                             tris.add(i + 0); tris.add(i + 2); tris.add(i + 3);
@@ -134,17 +108,10 @@ public class Chunk {
                             verts.add(x + (-BLOCK_SIZE)); verts.add(y + -BLOCK_SIZE); verts.add(z + BLOCK_SIZE);
                             verts.add(x + BLOCK_SIZE);    verts.add(y + -BLOCK_SIZE); verts.add(z + BLOCK_SIZE);
 
-
-                        /* top */
-//                            uvs.add(0.5f); uvs.add(0.0f); //0.0f 0.5f 9
-//                            uvs.add(1.0f); uvs.add(0.0f); //0.5f 0.5f 10
-//                            uvs.add(0.5f); uvs.add(0.5f); //0.0f 1.0f  11
-//                            uvs.add(1.0f); uvs.add(0.5f); //0.5f 0.1f  12
-
-                            uvs.add(0.0f/3); uvs.add(0.5f); //0.0f 0.5f 9
-                            uvs.add(1.0f); uvs.add(0.5f); //0.5f 0.5f 10
-                            uvs.add(0.0f/3); uvs.add(1.0f); //0.0f 1.0f  11
-                            uvs.add(1.0f); uvs.add(1.0f); //0.5f 0.1f  12
+                            uvs.add(0.0f/3); uvs.add(0.5f);
+                            uvs.add(1.0f); uvs.add(0.5f);
+                            uvs.add(0.0f/3); uvs.add(1.0f);
+                            uvs.add(1.0f); uvs.add(1.0f);
 
 
                             tris.add(i + 3); tris.add(i + 2); tris.add(i + 0);
@@ -159,10 +126,10 @@ public class Chunk {
                             verts.add(x+BLOCK_SIZE);    verts.add(y+(-BLOCK_SIZE)); verts.add(z+BLOCK_SIZE);
                             verts.add(x+BLOCK_SIZE);    verts.add(y+BLOCK_SIZE);    verts.add(z+BLOCK_SIZE);
 
-                            uvs.add((1.0f/3)); uvs.add(0.0f); //0.0f, 0.0f 1
-                            uvs.add((1.0f/3)); uvs.add(0.5f); //0.0f 0.5f 2
-                            uvs.add((1.0f/3)*2); uvs.add(0.5f); //0.5f 0.5f 3
-                            uvs.add((1.0f/3)*2); uvs.add(0.0f); // 0.5f 0.0f 4
+                            uvs.add((1.0f/3)*2); uvs.add(0.0f);
+                            uvs.add((1.0f/3)*2); uvs.add(0.5f);
+                            uvs.add((1.0f/3)*3); uvs.add(0.5f);
+                            uvs.add((1.0f/3)*3); uvs.add(0.0f);
 
                             tris.add(i+0);  tris.add(i+1);  tris.add(i+3);
                             tris.add(i+3);  tris.add(i+1);  tris.add(i+2);
@@ -177,10 +144,10 @@ public class Chunk {
                             verts.add(x+(-BLOCK_SIZE)); verts.add(y+(-BLOCK_SIZE)); verts.add(z+(-BLOCK_SIZE));
                             verts.add(x+BLOCK_SIZE);    verts.add(y+(-BLOCK_SIZE)); verts.add(z+(-BLOCK_SIZE));
 
-                            uvs.add((1.0f/3)*3); uvs.add(0.0f); //0.0f 0.0f 5
-                            uvs.add((1.0f/3)*2); uvs.add(0.0f); //0.5f 0.0f 6
-                            uvs.add((1.0f/3)*3); uvs.add(0.5f); //0.0f 0.5f 7
-                            uvs.add((1.0f/3)*2); uvs.add(0.5f); //0.5f 0.5f 8
+                            uvs.add((1.0f/3)*2); uvs.add(0.0f);
+                            uvs.add((1.0f/3)); uvs.add(0.0f);
+                            uvs.add((1.0f/3)*2); uvs.add(0.5f);
+                            uvs.add((1.0f/3)); uvs.add(0.5f);
 
                             tris.add(i+3); tris.add(i+2); tris.add(i+0);
                             tris.add(i+3); tris.add(i+0); tris.add(i+1);
@@ -194,10 +161,10 @@ public class Chunk {
                             verts.add(x+BLOCK_SIZE);    verts.add(y+(-BLOCK_SIZE)); verts.add(z+BLOCK_SIZE);
                             verts.add(x+BLOCK_SIZE);    verts.add(y+BLOCK_SIZE);    verts.add(z+BLOCK_SIZE);
 
-                            uvs.add((1.0f/3)*3); uvs.add(0.5f);
-                            uvs.add((1.0f/3)*3); uvs.add(1.0f);
-                            uvs.add((1.0f/3)*2); uvs.add(1.0f);
                             uvs.add((1.0f/3)*2); uvs.add(0.5f);
+                            uvs.add((1.0f/3)*2); uvs.add(1.0f);
+                            uvs.add((1.0f/3)); uvs.add(1.0f);
+                            uvs.add((1.0f/3)); uvs.add(0.5f);
 
                             tris.add(i+2); tris.add(i+1); tris.add(i+0);
                             tris.add(i+0); tris.add(i+3); tris.add(i+2);
@@ -211,10 +178,15 @@ public class Chunk {
                             verts.add(x+(-BLOCK_SIZE));    verts.add(y+(-BLOCK_SIZE)); verts.add(z+BLOCK_SIZE);
                             verts.add(x+(-BLOCK_SIZE));    verts.add(y+BLOCK_SIZE);    verts.add(z+BLOCK_SIZE);
 
-                            uvs.add((1.0f/3)); uvs.add(0.5f);
-                            uvs.add((1.0f/3)); uvs.add(1.0f);
-                            uvs.add((1.0f/3)*2); uvs.add(1.0f);
+//                            uvs.add((1.0f/3)); uvs.add(0.5f);
+//                            uvs.add((1.0f/3)); uvs.add(1.0f);
+//                            uvs.add((1.0f/3)*2); uvs.add(1.0f);
+//                            uvs.add((1.0f/3)*2); uvs.add(0.5f);
+
                             uvs.add((1.0f/3)*2); uvs.add(0.5f);
+                            uvs.add((1.0f/3)*2); uvs.add(1.0f);
+                            uvs.add((1.0f/3)*3); uvs.add(1.0f);
+                            uvs.add((1.0f/3)*3); uvs.add(0.5f);
 
                             tris.add(i+0); tris.add(i+1); tris.add(i+2);
                             tris.add(i+2); tris.add(i+3); tris.add(i+0);
@@ -241,13 +213,7 @@ public class Chunk {
             Matrix4f modelViewMatrix = Fusion.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f((BLOCK_SIZE * CHUNK_SIZE)*x, 0, (BLOCK_SIZE * CHUNK_SIZE)*y), new Vector3f(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             mesh.render();
-//
-//            GL11.glBegin(GL11.GL_LINES);
-//            GL11.glVertex2f(10, 10);
-//            GL11.glVertex2f(20, 20);
-//            GL11.glEnd();
         }
-//        System.out.println("rendered chunk");
     }
 
     public static int[] convertIntegers(List<Integer> integers)

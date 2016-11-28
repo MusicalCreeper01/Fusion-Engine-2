@@ -107,8 +107,7 @@ public class World {
             newChunks = false;
             for(Chunk c : chunks.values()) {
                 try {
-                    //c.draw();
-                    c.drawobjecs();
+                    c.draw();
                 }catch (Exception ex){
                     ex.printStackTrace();
                     System.out.println("Error drawing chunk " + c.x + ":" + c.y + "!");

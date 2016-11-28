@@ -5,6 +5,7 @@ import keithcod.es.fusionengine.client.engine.IGameLogic;
 import keithcod.es.fusionengine.client.engine.Input;
 import keithcod.es.fusionengine.client.engine.Window;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
+import keithcod.es.fusionengine.client.engine.physics.Physics;
 import keithcod.es.fusionengine.client.engine.rendering.FrameBuffer;
 import keithcod.es.fusionengine.enviroment.World;
 import org.joml.Vector2f;
@@ -37,6 +38,8 @@ public class Fusion implements IGameLogic {
     public World world;
     public  Window window;
 
+    private Physics physics;
+
 
 
     public Fusion() {
@@ -48,6 +51,7 @@ public class Fusion implements IGameLogic {
         renderer = new Renderer(window, camera);
         cameraInc = new Vector3f(0, 0, 0);
         world = new World();
+        physics = new Physics();
 
     }
 
@@ -92,6 +96,14 @@ public class Fusion implements IGameLogic {
 
     @Override
     public void update(float interval, Input input) {
+        physics.run();
+
+        if (!window.isKeyPressed(GLFW_KEY_Z) && !window.isKeyPressed(GLFW_KEY_X)) {
+            camera.setPosition(camera.getPosition().x, physics.getHeight(), camera.getPosition().z);
+        }else{
+            physics.setHeight(camera.getPosition().y);
+        }
+
         // Update camera position
         camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
 
@@ -102,6 +114,7 @@ public class Fusion implements IGameLogic {
         }else{
 //            camera.moveRotation(0, .5f, 0);
         }
+
 
         world.update();
     }
