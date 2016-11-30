@@ -89,6 +89,7 @@ public class Client implements IGameLogic {
         renderer.init(window);
         world.generate();
         physics.init(window);
+
         guiManager.init(window);
         guiManager.build();
 

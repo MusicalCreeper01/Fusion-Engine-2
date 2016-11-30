@@ -1,6 +1,7 @@
 package keithcod.es.fusionengine.gui.elements;
 
 import keithcod.es.fusionengine.core.Color;
+import keithcod.es.fusionengine.core.Texture;
 import org.joml.Vector2i;
 
 import java.util.ArrayList;
@@ -22,45 +23,31 @@ public abstract class GUIElement {
     public Vector2i position = new Vector2i(0,0);
     public Vector2i size = new Vector2i(50, 50);
 
-    public Color color = Color.WHITE;
+    public Color color = Color.RED;
 
-    private int vbo;
-    private int vao;
-    private int vertexCount;
+    private Texture texture;
 
-    public void build(){
+    public Texture build(Texture tex) {
+        texture = new Texture(size.x, size.y);
+
+        for (int x = 0; x < size.x; ++x){
+            for (int y = 0; y < size.y; ++y) {
+                try {
+                    texture.setPixel(color, x, y);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                    System.err.println("Error coloring element texture!");
+                }
+            }
+        }
+
         for(GUIElement el : children)
-            el.build();
+            el.build(texture);
 
+        if(tex != null)
+            tex.combine(texture, position.x, position.y);
 
-        System.out.println("Building element..");
-
-        float[] positions = {
-//            position.x, position.y, 0,
-//            position.x + size.x, position.y, 0,
-//            position.x + size.x, position.y + size.y, 0,
-                0,0,0,
-                0.2f,0,0,
-                0.2f,0.2f,0
-
-        };
-
-        vertexCount = positions.length / 3;
-        FloatBuffer verticesBuffer = BufferUtils.createFloatBuffer(positions.length);
-        verticesBuffer.put(positions).flip();
-
-        vao = glGenVertexArrays();
-        glBindVertexArray(vao);
-
-        vbo = glGenBuffers();
-        glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, verticesBuffer, GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glBindVertexArray(0);
-
-
+        return tex;
     }
 
     public void render(){
@@ -68,15 +55,7 @@ public abstract class GUIElement {
             if(el.show)
                 el.render();
 
-        glBindVertexArray(vao);
-        glEnableVertexAttribArray(0);
-        glDrawArrays(GL_TRIANGLES, 0, vertexCount);
 
-        // Restore state
-        glDisableVertexAttribArray(0);
-        glBindVertexArray(0);
-
-//        System.out.println("Rendering element..");
 
     }
 
@@ -84,15 +63,7 @@ public abstract class GUIElement {
         for(GUIElement el : children)
             el.dispose();
 
-        glDisableVertexAttribArray(0);
 
-        // Delete the VBO
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glDeleteBuffers(vbo);
-
-        // Delete the VAO
-        glBindVertexArray(0);
-        glDeleteVertexArrays(vao);
     }
 
 }

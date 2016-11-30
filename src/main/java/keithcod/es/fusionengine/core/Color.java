@@ -54,4 +54,9 @@ public class Color {
     public Vector3f v3 (){
         return new Vector3f(r/255.0f, g/255.0f, b/255.0f);
     }
+
+    @Override
+    public String toString(){
+        return "(" + r + "," + g + "," + b + "," + a + ")";
+    }
 }
