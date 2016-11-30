@@ -11,6 +11,7 @@ import keithcod.es.fusionengine.client.engine.rendering.Texture;
 import keithcod.es.fusionengine.client.engine.rendering.Transformation;
 import keithcod.es.fusionengine.enviroment.World;
 import org.joml.Matrix4f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -97,7 +98,7 @@ public class Renderer {
         // Create uniforms for modelView and projection matrices and texture
         shaderProgram.createUniform("projectionMatrix");
         shaderProgram.createUniform("modelViewMatrix");
-        shaderProgram.createUniform("texture");
+        shaderProgram.createUniform("texture_sample");
 
         postShaderProgram = new ShaderProgram();
         postShaderProgram.createVertexShader(Utils.loadResource("/shaders/post.vert"));
@@ -114,12 +115,12 @@ public class Renderer {
         return transformation.getViewMatrix(camera);
     }
 
-    public Matrix4f getProjectionMatrix (){
+    public Matrix4f getProjectionMatrix (Window window){
         return transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
     }
 
 
-
+    Mesh box;
     public void render(Window window, World world) {
         if(useFBO){
             if(window.isResized()) {
@@ -144,13 +145,32 @@ public class Renderer {
         shaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
         // Update view Matrix
-        Matrix4f viewMatrix = transformation.getViewMatrix(camera);
+//        Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
-        shaderProgram.setUniform("texture", 0);
+        shaderProgram.setUniform("texture_sample", 0);
 
 
         world.render(shaderProgram);
+
+        if(box == null){
+            try{
+                box = Mesh.Box();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        }else{
+            glDisable(GL_CULL_FACE);
+            Matrix4f viewMatrix = Fusion.game().getRenderer().getTransformation().getViewMatrix(Fusion.game().getCamera());
+            Vector3f pos = Fusion.game().getPhysics().getBoxPosition();
+            Matrix4f modelViewMatrix = Fusion.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f(pos.x, pos.y, pos.z), new Vector3f(1, 1, 1), viewMatrix);
+            shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+            box.render();
+            glEnable(GL_CULL_FACE);
+        }
+
         shaderProgram.unbind();
+
+//        Fusion.game().getPhysics().drawDebug();
 
         if(useFBO) {
             frameBuffer.unbind(window.getWidth(), window.getHeight());

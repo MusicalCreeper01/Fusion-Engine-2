@@ -2,6 +2,7 @@ package keithcod.es.fusionengine.client.engine.rendering;
 
 
 import org.joml.Matrix4f;
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
 import java.nio.FloatBuffer;
@@ -11,7 +12,7 @@ import java.util.Map;
 import static org.lwjgl.opengl.GL20.*;
 
 public class ShaderProgram {
-    private final int programId;
+    public final int programId;
 
     private int vertexShaderId;
 
@@ -44,6 +45,13 @@ public class ShaderProgram {
 
     public void setUniform(String uniformName, int value) {
         glUniform1i(uniforms.get(uniformName), value);
+    }
+
+    public void setUniform(String uniformName, Vector4f value) {
+
+        glUniform4fv(uniforms.get(uniformName), new float[] {value.x, value.y, value.z, value.w});
+//        glUniform1i(uniforms.get(uniformName), value);
+
     }
 
     public void createVertexShader(String shaderCode) throws Exception {

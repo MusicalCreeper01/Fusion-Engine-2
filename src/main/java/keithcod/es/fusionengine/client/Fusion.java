@@ -5,11 +5,14 @@ import keithcod.es.fusionengine.client.engine.IGameLogic;
 import keithcod.es.fusionengine.client.engine.Input;
 import keithcod.es.fusionengine.client.engine.Window;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
+import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.client.engine.physics.Physics;
 import keithcod.es.fusionengine.client.engine.rendering.FrameBuffer;
 import keithcod.es.fusionengine.enviroment.World;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
+
+
+import javax.vecmath.Vector3f;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -67,9 +70,14 @@ public class Fusion implements IGameLogic {
         return INSTANCE;
     }
 
+    public Physics getPhysics(){
+        return physics;
+    }
+
     @Override
     public void init(Window window) throws Exception {
         renderer.init(window);
+        physics.init(window);
         world.generate();
 
     }
@@ -96,12 +104,12 @@ public class Fusion implements IGameLogic {
 
     @Override
     public void update(float interval, Input input) {
-        physics.run();
+        physics.update(60.0f);
 
         if (!window.isKeyPressed(GLFW_KEY_Z) && !window.isKeyPressed(GLFW_KEY_X)) {
-            camera.setPosition(camera.getPosition().x, physics.getHeight(), camera.getPosition().z);
+//            camera.setPosition(camera.getPosition().x, physics.getPlayerHeight(), camera.getPosition().z);
         }else{
-            physics.setHeight(camera.getPosition().y);
+//            physics.setPlayerPosition(new Vector3f(camera.getPosition().x, camera.getPosition().y, camera.getPosition().z));
         }
 
         // Update camera position
@@ -119,8 +127,11 @@ public class Fusion implements IGameLogic {
         world.update();
     }
 
+
+
     @Override
     public void render(Window window) {
+
         //renderer.render(window, camera, gameItems);
 
         renderer.render(window, world);

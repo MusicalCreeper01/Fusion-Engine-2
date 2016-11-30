@@ -85,7 +85,8 @@ public class FrameBuffer {
         glBindTexture(GL_TEXTURE_2D, 0);
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);
 
-        glClearColor (0.0f, 0.0f, 0.0f, 0.5f);
+//        glClearColor (0.0f, 0.0f, 0.0f, 0.5f);
+        glClearColor (0.56f, 0.76f, 0.83f, 1f);
         glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 

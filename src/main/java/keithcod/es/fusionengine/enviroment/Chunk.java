@@ -18,14 +18,17 @@ public class Chunk {
     public static final int CHUNK_SIZE = 32;
     public static final int CHUNK_HEIGHT = 128;
 
-    public static final float BLOCK_SIZE = 0.5f;
+    public static final float BLOCK_SIZE = 1;
+    public static final float BLOCK_SIZE_HALF = (float)1/2;
+
+    public static final float PHYSICAL_SIZE = BLOCK_SIZE * CHUNK_SIZE;
 
     public int x = 0;
     public int y = 0;
 
     public int[][][] blocks = new int [CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
 
-    private Mesh mesh;
+    public Mesh mesh;
 
     private World world;
 
@@ -82,11 +85,12 @@ public class Chunk {
                         boolean right = posx == 0 ? true : false;
                         boolean left = negx == 0 ? true : false;
 
+
                         if(top) {
-                            verts.add(x + (-BLOCK_SIZE)); verts.add(y + BLOCK_SIZE); verts.add(z + (-BLOCK_SIZE));
-                            verts.add(x + BLOCK_SIZE);    verts.add(y + BLOCK_SIZE); verts.add(z + (-BLOCK_SIZE));
-                            verts.add(x + (-BLOCK_SIZE)); verts.add(y + BLOCK_SIZE); verts.add(z + BLOCK_SIZE);
-                            verts.add(x + BLOCK_SIZE);    verts.add(y + BLOCK_SIZE); verts.add(z + BLOCK_SIZE);
+                            verts.add(x + (-BLOCK_SIZE_HALF)); verts.add(y + BLOCK_SIZE_HALF); verts.add(z + (-BLOCK_SIZE_HALF));
+                            verts.add(x + BLOCK_SIZE_HALF);    verts.add(y + BLOCK_SIZE_HALF); verts.add(z + (-BLOCK_SIZE_HALF));
+                            verts.add(x + (-BLOCK_SIZE_HALF)); verts.add(y + BLOCK_SIZE_HALF); verts.add(z + BLOCK_SIZE_HALF);
+                            verts.add(x + BLOCK_SIZE_HALF);    verts.add(y + BLOCK_SIZE_HALF); verts.add(z + BLOCK_SIZE_HALF);
 
                             uvs.add(1.0f/3); uvs.add(0.5f);
                             uvs.add(0.0f); uvs.add(0.5f);
@@ -103,10 +107,10 @@ public class Chunk {
                         }
 
                         if(bottom) {
-                            verts.add(x + (-BLOCK_SIZE)); verts.add(y + -BLOCK_SIZE); verts.add(z + (-BLOCK_SIZE));
-                            verts.add(x + BLOCK_SIZE);    verts.add(y + -BLOCK_SIZE); verts.add(z + (-BLOCK_SIZE));
-                            verts.add(x + (-BLOCK_SIZE)); verts.add(y + -BLOCK_SIZE); verts.add(z + BLOCK_SIZE);
-                            verts.add(x + BLOCK_SIZE);    verts.add(y + -BLOCK_SIZE); verts.add(z + BLOCK_SIZE);
+                            verts.add(x + (-BLOCK_SIZE_HALF)); verts.add(y + -BLOCK_SIZE_HALF); verts.add(z + (-BLOCK_SIZE_HALF));
+                            verts.add(x + BLOCK_SIZE_HALF);    verts.add(y + -BLOCK_SIZE_HALF); verts.add(z + (-BLOCK_SIZE_HALF));
+                            verts.add(x + (-BLOCK_SIZE_HALF)); verts.add(y + -BLOCK_SIZE_HALF); verts.add(z + BLOCK_SIZE_HALF);
+                            verts.add(x + BLOCK_SIZE_HALF);    verts.add(y + -BLOCK_SIZE_HALF); verts.add(z + BLOCK_SIZE_HALF);
 
                             uvs.add(0.0f/3); uvs.add(0.5f);
                             uvs.add(1.0f); uvs.add(0.5f);
@@ -121,10 +125,10 @@ public class Chunk {
                         }
 
                         if (front) {
-                            verts.add(x+(-BLOCK_SIZE)); verts.add(y+BLOCK_SIZE);    verts.add(z+BLOCK_SIZE);
-                            verts.add(x+(-BLOCK_SIZE)); verts.add(y+(-BLOCK_SIZE)); verts.add(z+BLOCK_SIZE);
-                            verts.add(x+BLOCK_SIZE);    verts.add(y+(-BLOCK_SIZE)); verts.add(z+BLOCK_SIZE);
-                            verts.add(x+BLOCK_SIZE);    verts.add(y+BLOCK_SIZE);    verts.add(z+BLOCK_SIZE);
+                            verts.add(x+(-BLOCK_SIZE_HALF)); verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+BLOCK_SIZE_HALF);
+                            verts.add(x+(-BLOCK_SIZE_HALF)); verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+BLOCK_SIZE_HALF);
+                            verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+BLOCK_SIZE_HALF);
+                            verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+BLOCK_SIZE_HALF);
 
                             uvs.add((1.0f/3)*2); uvs.add(0.0f);
                             uvs.add((1.0f/3)*2); uvs.add(0.5f);
@@ -139,10 +143,10 @@ public class Chunk {
                         }
 
                         if(back){
-                            verts.add(x+(-BLOCK_SIZE)); verts.add(y+BLOCK_SIZE);    verts.add(z+(-BLOCK_SIZE));
-                            verts.add(x+BLOCK_SIZE);    verts.add(y+BLOCK_SIZE);    verts.add(z+(-BLOCK_SIZE));
-                            verts.add(x+(-BLOCK_SIZE)); verts.add(y+(-BLOCK_SIZE)); verts.add(z+(-BLOCK_SIZE));
-                            verts.add(x+BLOCK_SIZE);    verts.add(y+(-BLOCK_SIZE)); verts.add(z+(-BLOCK_SIZE));
+                            verts.add(x+(-BLOCK_SIZE_HALF)); verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+(-BLOCK_SIZE_HALF));
+                            verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+(-BLOCK_SIZE_HALF));
+                            verts.add(x+(-BLOCK_SIZE_HALF)); verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+(-BLOCK_SIZE_HALF));
+                            verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+(-BLOCK_SIZE_HALF));
 
                             uvs.add((1.0f/3)*2); uvs.add(0.0f);
                             uvs.add((1.0f/3)); uvs.add(0.0f);
@@ -156,10 +160,10 @@ public class Chunk {
                         }
 
                         if (right){
-                            verts.add(x+BLOCK_SIZE);    verts.add(y+BLOCK_SIZE);    verts.add(z+(-BLOCK_SIZE));
-                            verts.add(x+BLOCK_SIZE);    verts.add(y+(-BLOCK_SIZE)); verts.add(z+(-BLOCK_SIZE));
-                            verts.add(x+BLOCK_SIZE);    verts.add(y+(-BLOCK_SIZE)); verts.add(z+BLOCK_SIZE);
-                            verts.add(x+BLOCK_SIZE);    verts.add(y+BLOCK_SIZE);    verts.add(z+BLOCK_SIZE);
+                            verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+(-BLOCK_SIZE_HALF));
+                            verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+(-BLOCK_SIZE_HALF));
+                            verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+BLOCK_SIZE_HALF);
+                            verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+BLOCK_SIZE_HALF);
 
                             uvs.add((1.0f/3)*2); uvs.add(0.5f);
                             uvs.add((1.0f/3)*2); uvs.add(1.0f);
@@ -173,10 +177,10 @@ public class Chunk {
                         }
 
                         if (left){
-                            verts.add(x+(-BLOCK_SIZE));    verts.add(y+BLOCK_SIZE);    verts.add(z+(-BLOCK_SIZE));
-                            verts.add(x+(-BLOCK_SIZE));    verts.add(y+(-BLOCK_SIZE)); verts.add(z+(-BLOCK_SIZE));
-                            verts.add(x+(-BLOCK_SIZE));    verts.add(y+(-BLOCK_SIZE)); verts.add(z+BLOCK_SIZE);
-                            verts.add(x+(-BLOCK_SIZE));    verts.add(y+BLOCK_SIZE);    verts.add(z+BLOCK_SIZE);
+                            verts.add(x+(-BLOCK_SIZE_HALF));    verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+(-BLOCK_SIZE_HALF));
+                            verts.add(x+(-BLOCK_SIZE_HALF));    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+(-BLOCK_SIZE_HALF));
+                            verts.add(x+(-BLOCK_SIZE_HALF));    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+BLOCK_SIZE_HALF);
+                            verts.add(x+(-BLOCK_SIZE_HALF));    verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+BLOCK_SIZE_HALF);
 
 //                            uvs.add((1.0f/3)); uvs.add(0.5f);
 //                            uvs.add((1.0f/3)); uvs.add(1.0f);
@@ -210,7 +214,7 @@ public class Chunk {
     public void render(ShaderProgram shaderProgram){
         if(mesh != null) {
             Matrix4f viewMatrix = Fusion.game().getRenderer().getTransformation().getViewMatrix(Fusion.game().getCamera());
-            Matrix4f modelViewMatrix = Fusion.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f((BLOCK_SIZE * CHUNK_SIZE)*x, 0, (BLOCK_SIZE * CHUNK_SIZE)*y), new Vector3f(BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE), viewMatrix);
+            Matrix4f modelViewMatrix = Fusion.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f(PHYSICAL_SIZE*x, 0, PHYSICAL_SIZE*y), new Vector3f(1, 1, 1), viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             mesh.render();
         }

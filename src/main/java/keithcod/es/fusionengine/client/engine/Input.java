@@ -27,6 +27,8 @@ public class Input {
 
     private GLFWMouseButtonCallback mouseButtonCallback;
 
+    private Window window;
+
     public Input() {
         previousPos = new Vector2d(-1, -1);
         currentPos = new Vector2d(0, 0);
@@ -34,6 +36,7 @@ public class Input {
     }
 
     public void init(Window window) {
+        this.window = window;
         glfwSetCursorPosCallback(window.getWindowHandle(), cursorPosCallback = new GLFWCursorPosCallback() {
             @Override
             public void invoke(long window, double xpos, double ypos) {
