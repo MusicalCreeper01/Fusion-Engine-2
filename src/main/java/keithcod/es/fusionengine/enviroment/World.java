@@ -1,8 +1,7 @@
 package keithcod.es.fusionengine.enviroment;
 
 import jLibNoise.noise.module.Perlin;
-import javafx.util.Pair;
-import keithcod.es.fusionengine.client.Fusion;
+import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import org.joml.Vector3f;
 
@@ -110,7 +109,7 @@ public class World {
             for(Chunk c : chunks.values()) {
                 try {
                     c.draw();
-                    Fusion.game().getPhysics().addMesh(new Vector3f(Chunk.PHYSICAL_SIZE*c.x, 0, Chunk.PHYSICAL_SIZE*c.y), c.mesh);
+                    Client.game().getPhysics().addMesh(new Vector3f(Chunk.PHYSICAL_SIZE*c.x, 0, Chunk.PHYSICAL_SIZE*c.y), c.mesh);
                 }catch (Exception ex){
                     ex.printStackTrace();
                     System.out.println("Error drawing chunk " + c.x + ":" + c.y + "!");

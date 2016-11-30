@@ -5,10 +5,11 @@ import keithcod.es.fusionengine.client.engine.IGameLogic;
 import keithcod.es.fusionengine.client.engine.Input;
 import keithcod.es.fusionengine.client.engine.Window;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
-import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.client.engine.physics.Physics;
-import keithcod.es.fusionengine.client.engine.rendering.FrameBuffer;
 import keithcod.es.fusionengine.enviroment.World;
+import keithcod.es.fusionengine.gui.GUIManager;
+import keithcod.es.fusionengine.gui.elements.GUIElement;
+import keithcod.es.fusionengine.gui.elements.GUISolid;
 import org.joml.Vector2f;
 
 
@@ -16,9 +17,9 @@ import javax.vecmath.Vector3f;
 
 import static org.lwjgl.glfw.GLFW.*;
 
-public class Fusion implements IGameLogic {
+public class Client implements IGameLogic {
 
-    private static Fusion INSTANCE;
+    private static Client INSTANCE;
 
     private static final float MOUSE_SENSITIVITY = 0.2f;
     private static final float CAMERA_POS_STEP = 0.05f;
@@ -43,18 +44,23 @@ public class Fusion implements IGameLogic {
 
     private Physics physics;
 
+    private boolean menu = true;
 
+    private GUIManager guiManager;
 
-    public Fusion() {
-
+    public Client() {
         INSTANCE = this;
         camera = new Camera();
         camera.setPosition(0,2,0);
         camera.setRotation(0,90,0);
-        renderer = new Renderer(window, camera);
+        guiManager = new GUIManager();
+
+        guiManager.add(new GUISolid());
+
         cameraInc = new Vector3f(0, 0, 0);
         world = new World();
         physics = new Physics();
+        renderer = new Renderer(window, camera, guiManager);
 
     }
 
@@ -66,7 +72,7 @@ public class Fusion implements IGameLogic {
         return camera;
     }
 
-    public static Fusion game(){
+    public static Client game(){
         return INSTANCE;
     }
 
@@ -74,11 +80,17 @@ public class Fusion implements IGameLogic {
         return physics;
     }
 
+    public World getWorld(){
+        return world;
+    }
+
     @Override
     public void init(Window window) throws Exception {
         renderer.init(window);
-        physics.init(window);
         world.generate();
+        physics.init(window);
+        guiManager.init(window);
+        guiManager.build();
 
     }
 
@@ -133,8 +145,7 @@ public class Fusion implements IGameLogic {
     public void render(Window window) {
 
         //renderer.render(window, camera, gameItems);
-
-        renderer.render(window, world);
+        renderer.render(window);
 
     }
 

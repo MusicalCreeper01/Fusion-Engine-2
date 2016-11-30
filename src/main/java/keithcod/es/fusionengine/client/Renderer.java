@@ -1,6 +1,5 @@
 package keithcod.es.fusionengine.client;
 
-import keithcod.es.fusionengine.client.engine.GameObject;
 import keithcod.es.fusionengine.client.engine.Utils;
 import keithcod.es.fusionengine.client.engine.Window;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
@@ -9,22 +8,12 @@ import keithcod.es.fusionengine.client.engine.rendering.FrameBuffer;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import keithcod.es.fusionengine.client.engine.rendering.Texture;
 import keithcod.es.fusionengine.client.engine.rendering.Transformation;
-import keithcod.es.fusionengine.enviroment.World;
+import keithcod.es.fusionengine.gui.GUIManager;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
-import org.lwjgl.BufferUtils;
-
-import java.nio.FloatBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL15.GL_ARRAY_BUFFER;
-import static org.lwjgl.opengl.GL15.GL_STATIC_DRAW;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
-import static org.lwjgl.opengl.GL30.glBindVertexArray;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
 public class Renderer {
@@ -42,13 +31,17 @@ public class Renderer {
 
     private ShaderProgram shaderProgram;
     private ShaderProgram postShaderProgram;
+    private ShaderProgram guiShaderProgram;
 
     private Camera camera;
     private Window window;
 
     private final FrameBuffer frameBuffer;
 
-    public Renderer(Window window, Camera camera) {
+    private GUIManager guiManager;
+
+    public Renderer(Window window, Camera camera, GUIManager guiManager) {
+        this.guiManager = guiManager;
         this.camera = camera;
         this.window = window;
         transformation = new Transformation();
@@ -91,19 +84,28 @@ public class Renderer {
 
         // Create shader
         shaderProgram = new ShaderProgram();
-        shaderProgram.createVertexShader(Utils.loadResource("/shaders/vertex.vs"));
-        shaderProgram.createFragmentShader(Utils.loadResource("/shaders/fragment.fs"));
+        shaderProgram.createVertexShader(Utils.loadResource("/shaders/program/vertex.vs"));
+        shaderProgram.createFragmentShader(Utils.loadResource("/shaders/program/fragment.fs"));
         shaderProgram.link();
 
         // Create uniforms for modelView and projection matrices and texture
         shaderProgram.createUniform("projectionMatrix");
         shaderProgram.createUniform("modelViewMatrix");
-        shaderProgram.createUniform("texture_sample");
+        shaderProgram.createUniform("texture_sampler");
 
         postShaderProgram = new ShaderProgram();
-        postShaderProgram.createVertexShader(Utils.loadResource("/shaders/post.vert"));
-        postShaderProgram.createFragmentShader(Utils.loadResource("/shaders/post.frag"));
+        postShaderProgram.createVertexShader(Utils.loadResource("/shaders/post/post.vert"));
+        postShaderProgram.createFragmentShader(Utils.loadResource("/shaders/post/post.frag"));
         postShaderProgram.link();
+
+        guiShaderProgram = new ShaderProgram();
+        guiShaderProgram.createVertexShader(Utils.loadResource("/shaders/program/gui.vert"));
+        guiShaderProgram.createFragmentShader(Utils.loadResource("/shaders/program/gui.frag"));
+        guiShaderProgram.link();
+
+//        guiShaderProgram.createUniform("projectionMatrix");
+        guiShaderProgram.createUniform("texture_sampler");
+
 
     }
 
@@ -121,7 +123,7 @@ public class Renderer {
 
 
     Mesh box;
-    public void render(Window window, World world) {
+    public void render(Window window) {
         if(useFBO){
             if(window.isResized()) {
                 frameBuffer.dispose();
@@ -147,10 +149,13 @@ public class Renderer {
         // Update view Matrix
 //        Matrix4f viewMatrix = transformation.getViewMatrix(camera);
 
-        shaderProgram.setUniform("texture_sample", 0);
+        shaderProgram.setUniform("texture_sampler", 0);
 
 
-        world.render(shaderProgram);
+//        world.render(shaderProgram);
+        Client.game().getWorld().render(shaderProgram);
+
+
 
         if(box == null){
             try{
@@ -160,9 +165,9 @@ public class Renderer {
             }
         }else{
             glDisable(GL_CULL_FACE);
-            Matrix4f viewMatrix = Fusion.game().getRenderer().getTransformation().getViewMatrix(Fusion.game().getCamera());
-            Vector3f pos = Fusion.game().getPhysics().getBoxPosition();
-            Matrix4f modelViewMatrix = Fusion.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f(pos.x, pos.y, pos.z), new Vector3f(1, 1, 1), viewMatrix);
+            Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().getCamera());
+            Vector3f pos = Client.game().getPhysics().getBoxPosition();
+            Matrix4f modelViewMatrix = Client.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f(pos.x, pos.y, pos.z), new Vector3f(1, 1, 1), viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             box.render();
             glEnable(GL_CULL_FACE);
@@ -170,7 +175,8 @@ public class Renderer {
 
         shaderProgram.unbind();
 
-//        Fusion.game().getPhysics().drawDebug();
+
+//        Client.game().getPhysics().drawDebug();
 
         if(useFBO) {
             frameBuffer.unbind(window.getWidth(), window.getHeight());
@@ -183,6 +189,16 @@ public class Renderer {
             postShaderProgram.unbind();
         }
 
+
+        guiShaderProgram.bind();
+
+//        guiShaderProgram.setUniform("projectionMatrix", projectionMatrix);
+
+        guiShaderProgram.setUniform("texture_sampler", 0);
+
+        guiManager.render();
+
+        guiShaderProgram.unbind();
 
 
 

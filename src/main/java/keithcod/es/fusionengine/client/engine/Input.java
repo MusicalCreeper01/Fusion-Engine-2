@@ -1,33 +1,45 @@
 package keithcod.es.fusionengine.client.engine;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.joml.Vector2d;
 import org.joml.Vector2f;
 import static org.lwjgl.glfw.GLFW.*;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWCursorEnterCallback;
+import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Input {
 
-    private final Vector2d previousPos;
+    private static Vector2d previousPos;
 
-    private final Vector2d currentPos;
+    private static Vector2d currentPos;
 
-    private final Vector2f displVec;
+    private static Vector2f displVec;
 
-    private boolean inWindow = false;
+    private static boolean inWindow = false;
 
-    private boolean leftButtonPressed = false;
+    private static boolean leftButtonPressed = false;
 
-    private boolean rightButtonPressed = false;
+    private static boolean rightButtonPressed = false;
 
-    private GLFWCursorPosCallback cursorPosCallback;
+    private static GLFWCursorPosCallback cursorPosCallback;
 
-    private GLFWCursorEnterCallback cursorEnterCallback;
+    private static GLFWCursorEnterCallback cursorEnterCallback;
 
-    private GLFWMouseButtonCallback mouseButtonCallback;
+    private static GLFWMouseButtonCallback mouseButtonCallback;
 
-    private Window window;
+    private static GLFWKeyCallback keyCallback;
+
+    private static Window window;
+
+    Map<Integer, Boolean> key = new HashMap<>();
+    Map<Integer, Boolean> keyDown = new HashMap<>();
 
     public Input() {
         previousPos = new Vector2d(-1, -1);
@@ -57,13 +69,23 @@ public class Input {
                 rightButtonPressed = button == GLFW_MOUSE_BUTTON_2 && action == GLFW_PRESS;
             }
         });
+        glfwSetKeyCallback(window.getWindowHandle(), keyCallback = new GLFWKeyCallback() {
+            @Override
+            public void invoke(long window, int key, int scancode, int action, int mods) {
+                if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                    glfwSetWindowShouldClose(window, true);
+                }
+            }
+        });
     }
 
-    public Vector2f getDisplVec() {
+//    List<>
+
+    public static Vector2f getDisplVec() {
         return displVec;
     }
 
-    public void input(Window window) {
+    public static void input(Window window) {
         displVec.x = 0;
         displVec.y = 0;
         if (previousPos.x > 0 && previousPos.y > 0 && inWindow) {
@@ -82,11 +104,21 @@ public class Input {
         previousPos.y = currentPos.y;
     }
 
-    public boolean isLeftButtonPressed() {
+    public static boolean isLeftButtonPressed() {
         return leftButtonPressed;
     }
 
-    public boolean isRightButtonPressed() {
+    public static boolean isRightButtonPressed() {
         return rightButtonPressed;
+    }
+
+    public static boolean isKeyPressed(int key)
+    {
+        return (glfwGetKey(window.getWindowHandle(), key) == GLFW_PRESS);
+    }
+
+    public static boolean isKeyReleased(int key)
+    {
+        return (glfwGetKey(window.getWindowHandle(), key) == GLFW_RELEASE);
     }
 }

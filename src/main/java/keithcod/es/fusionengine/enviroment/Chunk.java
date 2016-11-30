@@ -1,17 +1,14 @@
 package keithcod.es.fusionengine.enviroment;
 
-import keithcod.es.fusionengine.client.Fusion;
+import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import keithcod.es.fusionengine.client.engine.rendering.Texture;
-import keithcod.es.fusionengine.world.Position;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Chunk {
 
@@ -213,8 +210,8 @@ public class Chunk {
 
     public void render(ShaderProgram shaderProgram){
         if(mesh != null) {
-            Matrix4f viewMatrix = Fusion.game().getRenderer().getTransformation().getViewMatrix(Fusion.game().getCamera());
-            Matrix4f modelViewMatrix = Fusion.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f(PHYSICAL_SIZE*x, 0, PHYSICAL_SIZE*y), new Vector3f(1, 1, 1), viewMatrix);
+            Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().getCamera());
+            Matrix4f modelViewMatrix = Client.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f(PHYSICAL_SIZE*x, 0, PHYSICAL_SIZE*y), new Vector3f(1, 1, 1), viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             mesh.render();
         }

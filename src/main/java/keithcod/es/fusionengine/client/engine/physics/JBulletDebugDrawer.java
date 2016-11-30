@@ -1,17 +1,13 @@
 package keithcod.es.fusionengine.client.engine.physics;
 
 import com.bulletphysics.linearmath.IDebugDraw;
-import keithcod.es.fusionengine.client.Fusion;
+import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.Utils;
 import keithcod.es.fusionengine.client.engine.Window;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import org.joml.Matrix4f;
-import org.joml.Vector4f;
 
 import javax.vecmath.Vector3f;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL15.*;
@@ -76,10 +72,10 @@ public class JBulletDebugDrawer extends IDebugDraw {
                 0            // array buffer offset
         );
 
-        debugShader.setUniform("projectionMatrix", Fusion.game().getRenderer().getProjectionMatrix(window));
+        debugShader.setUniform("projectionMatrix", Client.game().getRenderer().getProjectionMatrix(window));
 
-        Matrix4f viewMatrix = Fusion.game().getRenderer().getTransformation().getViewMatrix(Fusion.game().getCamera());
-        Matrix4f modelViewMatrix = Fusion.game().getRenderer().getTransformation().getBasicViewMatrix(new org.joml.Vector3f(0, 0, 0), new org.joml.Vector3f(1, 1, 1), viewMatrix);
+        Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().getCamera());
+        Matrix4f modelViewMatrix = Client.game().getRenderer().getTransformation().getBasicViewMatrix(new org.joml.Vector3f(0, 0, 0), new org.joml.Vector3f(1, 1, 1), viewMatrix);
         debugShader.setUniform("modelViewMatrix", modelViewMatrix);
 
         //Sends the sprite's color information in the the shader

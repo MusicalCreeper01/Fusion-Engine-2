@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" build-on-make="true" name="FusionEnginev2:jar">
+  <artifact type="jar" build-on-make="true" name="FusionEnginev2.jar">
     <output-path>$PROJECT_DIR$/compiled</output-path>
     <root id="archive" name="FusionEnginev2.jar">
       <element id="module-output" name="FusionEnginev2" />
