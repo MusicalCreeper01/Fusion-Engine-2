@@ -134,11 +134,13 @@ public class Renderer {
             if(window.isResized()) {
                 frameBuffer.dispose();
                 frameBuffer.resize(window.getWidth(), window.getHeight());
+                guiManager.resize();
                 window.setResized(false);
             }
             frameBuffer.bind();
         }else {
             if ( window.isResized() ) {
+                guiManager.resize();
                 glViewport(0, 0, window.getWidth(), window.getHeight());
                 window.setResized(false);
             }

@@ -10,6 +10,8 @@ import java.util.List;
 
 public class GUIManager {
 
+    private static GUIManager INSTANCE;
+
     List<GUIElement> elements = new ArrayList<>();
     Window window;
 
@@ -17,7 +19,11 @@ public class GUIManager {
     Mesh mesh;
 
     public GUIManager(){
+        INSTANCE = this;
+    }
 
+    public static GUIManager get(){
+        return INSTANCE;
     }
 
     public void add (GUIElement element){
@@ -30,6 +36,11 @@ public class GUIManager {
         texture = new Texture(window.width, window.height);
     }
 
+    public void resize(){
+        texture = new Texture(window.width, window.height);
+        build();
+    }
+
     public void build(){
         for(GUIElement el : elements)
             texture = el.build(texture);
@@ -37,15 +48,6 @@ public class GUIManager {
         try {
             System.out.println(texture.getPixel(0, 0).toString());
         }catch(Exception ex){}
-    }
-
-    public void render(){
-//        for(GUIElement el : elements)
-//            if(el.show)
-//                el.render();
-
-
-
     }
 
     public int texture(){

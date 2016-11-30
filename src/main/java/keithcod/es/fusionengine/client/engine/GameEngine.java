@@ -58,8 +58,41 @@ public class GameEngine implements Runnable {
         gameLogic.init(window);
     }
 
+    public static int fps = 0;
+
+    public static int getFPS(){
+        return fps;
+    }
+
     protected void gameLoop() {
-        float elapsedTime;
+
+        long lastTime = System.nanoTime();
+        long now;
+        long timer = System.currentTimeMillis();
+        double delta = 0;
+        int frames = 0;
+        boolean running = true;
+        while (running && !window.windowShouldClose()) {
+
+            input();
+
+            now = System.nanoTime();
+            delta = (now - lastTime) / (1000000000f / TARGET_UPS);
+            lastTime = now;
+
+            update(delta); //interpolate using the delta
+            render();
+
+            frames++;
+            if (System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
+//                System.out.println(frames + " fps");
+                fps = frames;
+                frames = 0;
+            }
+        }
+
+        /*float elapsedTime;
         float accumulator = 0f;
         float interval = 1f / TARGET_UPS;
 
@@ -80,7 +113,7 @@ public class GameEngine implements Runnable {
             if (!window.isvSync()) {
                 sync();
             }
-        }
+        }*/
     }
 
     private void sync() {
@@ -99,7 +132,7 @@ public class GameEngine implements Runnable {
         gameLogic.input(window, input);
     }
 
-    protected void update(float interval) {
+    protected void update(double interval) {
         gameLogic.update(interval, input);
     }
 

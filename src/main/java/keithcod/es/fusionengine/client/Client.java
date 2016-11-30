@@ -1,15 +1,13 @@
 package keithcod.es.fusionengine.client;
 
-import keithcod.es.fusionengine.client.engine.GameObject;
-import keithcod.es.fusionengine.client.engine.IGameLogic;
-import keithcod.es.fusionengine.client.engine.Input;
-import keithcod.es.fusionengine.client.engine.Window;
+import keithcod.es.fusionengine.client.engine.*;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
 import keithcod.es.fusionengine.client.engine.physics.Physics;
 import keithcod.es.fusionengine.enviroment.World;
 import keithcod.es.fusionengine.gui.GUIManager;
 import keithcod.es.fusionengine.gui.elements.GUIElement;
 import keithcod.es.fusionengine.gui.elements.GUISolid;
+import keithcod.es.fusionengine.gui.elements.GUIText;
 import org.joml.Vector2f;
 
 
@@ -48,6 +46,8 @@ public class Client implements IGameLogic {
 
     private GUIManager guiManager;
 
+    private GUIText fpsCounter;
+
     public Client() {
         INSTANCE = this;
         camera = new Camera();
@@ -55,7 +55,8 @@ public class Client implements IGameLogic {
         camera.setRotation(0,90,0);
         guiManager = new GUIManager();
 
-        guiManager.add(new GUISolid());
+        fpsCounter = new GUIText("Roboto-Thin.ttf", "Hello world!");
+        guiManager.add(fpsCounter);
 
         cameraInc = new Vector3f(0, 0, 0);
         world = new World();
@@ -116,7 +117,7 @@ public class Client implements IGameLogic {
     }
 
     @Override
-    public void update(float interval, Input input) {
+    public void update(double interval, Input input) {
         physics.update(60.0f);
 
         if (!window.isKeyPressed(GLFW_KEY_Z) && !window.isKeyPressed(GLFW_KEY_X)) {
@@ -138,6 +139,8 @@ public class Client implements IGameLogic {
 
 
         world.update();
+
+        fpsCounter.setText(GameEngine.getFPS() + " fps");
     }
 
 

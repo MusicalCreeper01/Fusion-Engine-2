@@ -7,6 +7,9 @@ import java.nio.IntBuffer;
 
 import org.lwjgl.BufferUtils;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -38,7 +41,7 @@ public class Texture {
         if(x < 0 || y < 0 || x > width || y > height)
             throw new Exception("Cannot set pixel " + x + ":" + y + " which is out of the Texture bounds (" + width + ":" + height + ")");
 
-        System.out.println("Setting (" + x + ":" + y + ") to (" + color.getR() + "," + color.getG() + "," + color.getB() + "," + color.getA() + ") which was " + r[x][y] + "," + g[x][y] + "," + b[x][y] + "," + a[x][y] + ")");
+//        System.out.println("Setting (" + x + ":" + y + ") to (" + color.getR() + "," + color.getG() + "," + color.getB() + "," + color.getA() + ") which was " + r[x][y] + "," + g[x][y] + "," + b[x][y] + "," + a[x][y] + ")");
 
         r[x][y] = color.getR();
         g[x][y] = color.getG();
@@ -107,9 +110,9 @@ public class Texture {
         for(int y = height-1; y > 0; --y){
             for(int x = 0; x < width; ++x){
 
-                colors[i] = (( r[x][y] * 1.0f) / 255);
+                colors[i] = (( b[x][y] * 1.0f) / 255);
                 colors[i+1] = (( g[x][y] * 1.0f) / 255);
-                colors[i+2] = (( b[x][y] * 1.0f) / 255);
+                colors[i+2] = (( r[x][y] * 1.0f) / 255);
                 colors[i+3] = (( a[x][y] * 1.0f) / 255);
 
                 i += 4;
@@ -137,7 +140,13 @@ public class Texture {
             iBuffer.put(data);
             iBuffer.rewind();*/
 
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_FLOAT, toFloatArray());
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_BGRA, width, height, 0, GL_BGRA, GL_FLOAT, toFloatArray());
+
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }else{
+            glBindTexture(GL_TEXTURE_2D, id);
+
+            glTexSubImage2D(GL_TEXTURE_2D, 0, GL_BGRA, width, height, 0, GL_BGRA, GL_FLOAT, toFloatArray());
 
             glBindTexture(GL_TEXTURE_2D, 0);
         }

@@ -2,6 +2,7 @@ package keithcod.es.fusionengine.core;
 
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector4f;
+import java.beans.ConstructorProperties;
 
 public class Color {
 
@@ -17,6 +18,7 @@ public class Color {
     private int b = 0;
     private int a = 0;
 
+    @ConstructorProperties({"red", "green", "blue", "alpha"})
     public Color (int r, int g, int b, int a){
         this.r = r;
         this.g = g;
@@ -24,6 +26,7 @@ public class Color {
         this.a = a;
     }
 
+    @ConstructorProperties({"red", "green", "blue"})
     public Color (int r, int g, int b){
         this.r = r;
         this.g = g;
