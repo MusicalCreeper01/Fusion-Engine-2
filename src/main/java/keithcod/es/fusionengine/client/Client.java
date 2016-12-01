@@ -46,7 +46,7 @@ public class Client implements IGameLogic {
 
     private GUIManager guiManager;
 
-    private GUIText fpsCounter;
+//    private GUIText fpsCounter;
 
     public Client() {
         INSTANCE = this;
@@ -55,8 +55,7 @@ public class Client implements IGameLogic {
         camera.setRotation(0,90,0);
         guiManager = new GUIManager();
 
-        fpsCounter = new GUIText("Roboto-Thin.ttf", "Hello world!");
-        guiManager.add(fpsCounter);
+//        fpsCounter = new GUIText("Roboto-Thin.ttf", "Hello world!");
 
         cameraInc = new Vector3f(0, 0, 0);
         world = new World();
@@ -92,6 +91,7 @@ public class Client implements IGameLogic {
         physics.init(window);
 
         guiManager.init(window);
+        guiManager.add(new GUISolid());
         guiManager.build();
 
     }
@@ -140,7 +140,7 @@ public class Client implements IGameLogic {
 
         world.update();
 
-        fpsCounter.setText(GameEngine.getFPS() + " fps");
+//        fpsCounter.setText(GameEngine.getFPS() + " fps");
     }
 
 
@@ -155,6 +155,7 @@ public class Client implements IGameLogic {
 
     @Override
     public void cleanup() {
+        guiManager.cleanup();
         renderer.cleanup();
         if(gameItems != null) {
             for (GameObject gameItem : gameItems) {

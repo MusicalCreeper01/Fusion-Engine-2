@@ -101,7 +101,7 @@ public class Renderer {
         postShaderProgram.createFragmentShader(Utils.loadResource("/shaders/post/post.frag"));
         postShaderProgram.link();
 
-        postShaderProgram.createUniform("gui_texture");
+//        postShaderProgram.createUniform("gui_texture");
 
         guiShaderProgram = new ShaderProgram();
         guiShaderProgram.createVertexShader(Utils.loadResource("/shaders/program/gui.vert"));
@@ -110,7 +110,7 @@ public class Renderer {
 
 //        guiShaderProgram.createUniform("projectionMatrix");
 
-        guiShaderProgram.createUniform("texture_sampler");
+//        guiShaderProgram.createUniform("texture_sampler");
 
 
     }
@@ -193,29 +193,36 @@ public class Renderer {
 //            glEnable(GL_BLEND);
 //            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-            glEnable(GL_TEXTURE_2D);
+            /*glEnable(GL_TEXTURE_2D);
             glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, guiManager.texture());
 
-            postShaderProgram.setUniform("gui_texture", 1);
+            postShaderProgram.setUniform("gui_texture", 1);*/
 
             mesh.render();
+
+
 
 //            glDisable(GL_BLEND);
 
             postShaderProgram.unbind();
         }
 
+        guiShaderProgram.bind();
+        guiManager.render();
+        guiShaderProgram.unbind();
 
         /*guiShaderProgram.bind();
 
 //        guiShaderProgram.setUniform("projectionMatrix", projectionMatrix);
 
-        guiShaderProgram.setUniform("texture_sampler", 0);
         glDisable(GL_CULL_FACE);
+//        guiShaderProgram.setUniform("texture_sampler", 0);
+
         guiManager.render();
-        glEnable(GL_CULL_FACE);
-        guiShaderProgram.unbind();*/
+
+        guiShaderProgram.unbind();
+        glEnable(GL_CULL_FACE);*/
 
 
 

@@ -48,7 +48,7 @@ public class GUIText extends GUIElement {
         if(GUIManager.get() != null)
             GUIManager.get().build();
     }
-
+/*
     public Texture build(Texture tex) {
         if(!show)
             return tex;
@@ -60,24 +60,10 @@ public class GUIText extends GUIElement {
             int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
             int textheight = (int)(font.getStringBounds(text, frc).getHeight())+5;
 
-//            System.out.println("font size: " + font.getSize());
-
             size = new Vector2i(textwidth, textheight);
-
-//            System.out.println("Texture size: (" + size.x + "," + size.y + ")");
-
-//            size = new Vector2i((int) font.getStringBounds(text, new FontRenderContext(font.getTransform(), false, false)).getBounds().getWidth(), font.getSize());
 
             BufferedImage image = new BufferedImage(size.x, size.y, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g = image.createGraphics();
-
-//            g.setColor(new Color(0, 0, 0, 0));
-//            g.drawRect(0, 0, size.x, size.y);
-
-//            g.setPaint(Color.red);
-//            g.setColor(new Color(255, 0, 0, 255));
-//            g.setFont(font);
-//            g.drawString(text, 0, 0);
 
             g.setPaint(Color.red);
             g.setFont(font);
@@ -88,13 +74,10 @@ public class GUIText extends GUIElement {
 
             g.dispose();
 
-            this.texture = new Texture(size.x, size.y);
-
             for (int x = 0; x < image.getWidth(); ++x) {
                 for (int y = 0; y < image.getHeight(); ++y) {
                     Color c = new Color(image.getRGB(x, y), true);
                     try {
-//                        System.out.print(c.getRed() + ", ");
                         texture.setPixel(new keithcod.es.fusionengine.core.Color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()), x, y);
                     } catch (Exception ex) {
                         System.out.println("Failed to set texture color from font drawing for (" + x + ":" + y + ") in texture (" + size.x + "," + size.y + ")");
@@ -112,5 +95,5 @@ public class GUIText extends GUIElement {
 
         }
         return tex;
-    }
+    }*/
 }

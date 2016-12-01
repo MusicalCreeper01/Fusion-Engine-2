@@ -9,6 +9,8 @@ import org.lwjgl.opengl.GL;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.lwjgl.opengl.GL11.*;
+
 public class GUIManager {
 
     private static GUIManager INSTANCE;
@@ -16,10 +18,7 @@ public class GUIManager {
     List<GUIElement> elements = new ArrayList<>();
     Window window;
 
-    Texture texture;
-    Mesh mesh;
-
-    public int textureID = 0;
+//    Mesh mesh;
 
     public GUIManager(){
         INSTANCE = this;
@@ -31,36 +30,35 @@ public class GUIManager {
 
     public void add (GUIElement element){
         elements.add(element);
+        build();
     }
 
     public void init(Window window){
 
         this.window = window;
-        texture = new Texture(window.width, window.height);
     }
 
     public void resize(){
-        texture = new Texture(window.width, window.height);
         build();
-        texture.openGL(true);
+
     }
 
     public void build(){
-        new Thread(()->{
-            GL.createCapabilities();
 
-            for(GUIElement el : elements)
-                texture = el.build(texture);
-
-            try {
-                System.out.println(texture.getPixel(0, 0).toString());
-            }catch(Exception ex){}
-            textureID = texture.openGL(false);
-        }).start();
+        for(GUIElement el : elements)
+            el.build();
     }
 
-    public int texture(){
-        return textureID;
+    public void render (){
+        glDisable(GL_DEPTH_TEST);
+        for(GUIElement el : elements)
+            el.render();
+        glEnable(GL_DEPTH_TEST);
+    }
+
+    public void cleanup (){
+        for(GUIElement el : elements)
+            el.dispose();
     }
 
 }

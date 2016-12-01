@@ -1,7 +1,8 @@
 package keithcod.es.fusionengine.core;
 
-import javax.vecmath.Vector3f;
-import javax.vecmath.Vector4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
+
 import java.beans.ConstructorProperties;
 
 public class Color {
