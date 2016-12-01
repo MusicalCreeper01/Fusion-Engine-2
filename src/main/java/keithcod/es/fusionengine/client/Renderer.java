@@ -164,7 +164,6 @@ public class Renderer {
         Client.game().getWorld().render(shaderProgram);
 
 
-
         if(box == null){
             try{
                 box = Mesh.Box();

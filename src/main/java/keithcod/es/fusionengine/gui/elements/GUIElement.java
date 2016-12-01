@@ -27,11 +27,14 @@ public abstract class GUIElement {
 
     public Texture texture;
 
+
+
     public Texture build(Texture tex) {
         if(!show)
             return tex;
 
         texture = new Texture(size.x, size.y);
+
 
         for (int x = 0; x < size.x; ++x){
             for (int y = 0; y < size.y; ++y) {

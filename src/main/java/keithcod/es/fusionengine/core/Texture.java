@@ -10,6 +10,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.*;
 import static org.lwjgl.opengl.GL13.*;
 import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL21.*;
 import static org.lwjgl.opengl.GL15.*;
 import static org.lwjgl.opengl.GL20.*;
 import static org.lwjgl.opengl.GL30.*;
@@ -26,9 +27,16 @@ public class Texture {
 
     private int id = -1;
 
+    int pbo;
+
     public Texture(int width, int height){
         this.width = width;
         this.height = height;
+
+        pbo = glGenBuffers();
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbo);
+        glBufferData(GL_PIXEL_UNPACK_BUFFER, (width*height*4)*Float.BYTES, GL_STREAM_COPY);
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 
         //pixels = new Color[width][height];
         r = new int[width][height];
@@ -110,9 +118,9 @@ public class Texture {
         for(int y = height-1; y > 0; --y){
             for(int x = 0; x < width; ++x){
 
-                colors[i] = (( b[x][y] * 1.0f) / 255);
+                colors[i] = (( r[x][y] * 1.0f) / 255);
                 colors[i+1] = (( g[x][y] * 1.0f) / 255);
-                colors[i+2] = (( r[x][y] * 1.0f) / 255);
+                colors[i+2] = (( b[x][y] * 1.0f) / 255);
                 colors[i+3] = (( a[x][y] * 1.0f) / 255);
 
                 i += 4;
@@ -121,35 +129,37 @@ public class Texture {
         return colors;
     }
 
-    public int openGL(){
-        if(id == -1){
+
+
+    public int openGL(boolean recreate){
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, pbo);
+
+        ByteBuffer bb = glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY);
+        bb.asFloatBuffer().put(toFloatArray());
+        glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
+
+        if(id == -1 || recreate){
             id = glGenTextures();
 
             glBindTexture(GL_TEXTURE_2D, id);
 
-            //use an alignment of 1 to be safe
-            //this tells OpenGL how to unpack the RGBA bytes we will specify
             glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-            /*IntBuffer iBuffer = BufferUtils.createIntBuffer(((width * height)*4));
-
-            int[] data = toIntArray();
-            iBuffer.put(data);
-            iBuffer.rewind();*/
-
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_BGRA, width, height, 0, GL_BGRA, GL_FLOAT, toFloatArray());
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_FLOAT, 0);//toFloatArray());
 
             glBindTexture(GL_TEXTURE_2D, 0);
         }else{
             glBindTexture(GL_TEXTURE_2D, id);
 
-            glTexSubImage2D(GL_TEXTURE_2D, 0, GL_BGRA, width, height, 0, GL_BGRA, GL_FLOAT, toFloatArray());
+            glTexSubImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, width, height, 0, GL_RGBA, GL_FLOAT, 0);//toFloatArray());
 
             glBindTexture(GL_TEXTURE_2D, 0);
         }
+
+        glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 
         return id;
 

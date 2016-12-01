@@ -4,6 +4,7 @@ import keithcod.es.fusionengine.client.engine.Window;
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.core.Texture;
 import keithcod.es.fusionengine.gui.elements.GUIElement;
+import org.lwjgl.opengl.GL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,8 @@ public class GUIManager {
 
     Texture texture;
     Mesh mesh;
+
+    public int textureID = 0;
 
     public GUIManager(){
         INSTANCE = this;
@@ -39,19 +42,25 @@ public class GUIManager {
     public void resize(){
         texture = new Texture(window.width, window.height);
         build();
+        texture.openGL(true);
     }
 
     public void build(){
-        for(GUIElement el : elements)
-            texture = el.build(texture);
+        new Thread(()->{
+            GL.createCapabilities();
 
-        try {
-            System.out.println(texture.getPixel(0, 0).toString());
-        }catch(Exception ex){}
+            for(GUIElement el : elements)
+                texture = el.build(texture);
+
+            try {
+                System.out.println(texture.getPixel(0, 0).toString());
+            }catch(Exception ex){}
+            textureID = texture.openGL(false);
+        }).start();
     }
 
     public int texture(){
-        return texture.openGL();
+        return textureID;
     }
 
 }
