@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-            boolean vSync = true;
+            boolean vSync = false;
             IGameLogic gameLogic = new Client();
             GameEngine gameEng = new GameEngine("Client Engine",  600, 480, vSync, gameLogic);
             ((Client)gameLogic).window = gameEng.getWindow();

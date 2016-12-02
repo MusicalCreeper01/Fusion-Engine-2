@@ -47,6 +47,10 @@ public class ShaderProgram {
         glUniform1i(uniforms.get(uniformName), value);
     }
 
+    public void setUniform(String uniformName, float value) {
+        glUniform1f(uniforms.get(uniformName), value);
+    }
+
     public void setUniform(String uniformName, Vector4f value) {
 
         glUniform4fv(uniforms.get(uniformName), new float[] {value.x, value.y, value.z, value.w});

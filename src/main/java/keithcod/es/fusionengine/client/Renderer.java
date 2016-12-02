@@ -110,7 +110,9 @@ public class Renderer {
 
 //        guiShaderProgram.createUniform("projectionMatrix");
 
-//        guiShaderProgram.createUniform("texture_sampler");
+        guiShaderProgram.createUniform("xTexture");
+        guiShaderProgram.createUniform("xColor");
+        guiShaderProgram.createUniform("textured");
 
 
     }
@@ -131,8 +133,9 @@ public class Renderer {
     Mesh box;
     public void render(Window window) {
         if(useFBO){
+            if(frameBuffer.disposed)
+                return;
             if(window.isResized()) {
-                frameBuffer.dispose();
                 frameBuffer.resize(window.getWidth(), window.getHeight());
                 guiManager.resize();
                 window.setResized(false);
@@ -209,7 +212,8 @@ public class Renderer {
         }
 
         guiShaderProgram.bind();
-        guiManager.render();
+        guiShaderProgram.setUniform("xTexture", 0);
+        guiManager.render(guiShaderProgram);
         guiShaderProgram.unbind();
 
         /*guiShaderProgram.bind();

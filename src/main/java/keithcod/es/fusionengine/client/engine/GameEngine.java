@@ -2,9 +2,7 @@ package keithcod.es.fusionengine.client.engine;
 
 public class GameEngine implements Runnable {
 
-    public static final int TARGET_FPS = 75;
-
-    public static final int TARGET_UPS = 60;
+    public static final int TARGET_FPS = 60;
 
     private final Window window;
 
@@ -66,6 +64,9 @@ public class GameEngine implements Runnable {
 
     protected void gameLoop() {
 
+        long updateInterval = 1000 / TARGET_FPS;
+        long updateTimer = System.currentTimeMillis();
+
         long lastTime = System.nanoTime();
         long now;
         long timer = System.currentTimeMillis();
@@ -77,16 +78,21 @@ public class GameEngine implements Runnable {
             input();
 
             now = System.nanoTime();
-            delta = (now - lastTime) / (1000000000f / TARGET_UPS);
+            delta = (now - lastTime) / (1000000000f / TARGET_FPS);
             lastTime = now;
 
-            update(delta); //interpolate using the delta
+            long currMillis = System.currentTimeMillis();
+            if(currMillis - updateTimer > updateInterval) {
+                update(delta); //interpolate using the delta
+                updateTimer = currMillis;
+            }
+
             render();
 
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-//                System.out.println(frames + " fps");
+                System.out.println(frames + " fps");
                 fps = frames;
                 frames = 0;
             }

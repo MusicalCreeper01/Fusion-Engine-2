@@ -1,10 +1,8 @@
 package keithcod.es.fusionengine.gui;
 
 import keithcod.es.fusionengine.client.engine.Window;
-import keithcod.es.fusionengine.client.engine.objects.Mesh;
-import keithcod.es.fusionengine.core.Texture;
+import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import keithcod.es.fusionengine.gui.elements.GUIElement;
-import org.lwjgl.opengl.GL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,14 +44,14 @@ public class GUIManager {
     public void build(){
 
         for(GUIElement el : elements)
-            el.build();
+            el.build(window);
     }
 
-    public void render (){
-        glDisable(GL_DEPTH_TEST);
+    public void render (ShaderProgram shader){
+//        glDisable(GL_DEPTH_TEST);
         for(GUIElement el : elements)
-            el.render();
-        glEnable(GL_DEPTH_TEST);
+            el.render(shader);
+//        glEnable(GL_DEPTH_TEST);
     }
 
     public void cleanup (){

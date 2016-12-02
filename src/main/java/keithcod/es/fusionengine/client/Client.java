@@ -3,12 +3,14 @@ package keithcod.es.fusionengine.client;
 import keithcod.es.fusionengine.client.engine.*;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
 import keithcod.es.fusionengine.client.engine.physics.Physics;
+import keithcod.es.fusionengine.client.engine.rendering.Texture;
 import keithcod.es.fusionengine.enviroment.World;
 import keithcod.es.fusionengine.gui.GUIManager;
 import keithcod.es.fusionengine.gui.elements.GUIElement;
 import keithcod.es.fusionengine.gui.elements.GUISolid;
 import keithcod.es.fusionengine.gui.elements.GUIText;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 
 import javax.vecmath.Vector3f;
@@ -84,6 +86,8 @@ public class Client implements IGameLogic {
         return world;
     }
 
+    GUIText fpsLabel;
+
     @Override
     public void init(Window window) throws Exception {
         renderer.init(window);
@@ -91,7 +95,13 @@ public class Client implements IGameLogic {
         physics.init(window);
 
         guiManager.init(window);
-        guiManager.add(new GUISolid());
+
+        /*GUISolid element = new GUISolid(new Texture("/textures/pillar.png"));
+        element.size = new Vector2i(300, 200);
+
+        guiManager.add(element);*/
+        fpsLabel = new GUIText("EncodeSans-Regular.ttf", "x fps", 20, 0);
+        guiManager.add(fpsLabel );
         guiManager.build();
 
     }
@@ -115,6 +125,8 @@ public class Client implements IGameLogic {
             cameraInc.y = 1;
         }
     }
+
+    int i = 0;
 
     @Override
     public void update(double interval, Input input) {
@@ -140,7 +152,11 @@ public class Client implements IGameLogic {
 
         world.update();
 
-//        fpsCounter.setText(GameEngine.getFPS() + " fps");
+        ++i;
+        if(i > 60) {
+            fpsLabel.setText(GameEngine.getFPS() + " fps");
+            i = 0;
+        }
     }
 
 

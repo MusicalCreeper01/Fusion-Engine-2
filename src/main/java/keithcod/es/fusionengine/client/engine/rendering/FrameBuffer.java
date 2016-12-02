@@ -17,6 +17,8 @@ public class FrameBuffer {
     int width;
     int height;
 
+    public boolean disposed = false;
+
     public void init(int width, int height) {
         this.width = width;
         this.height = height;
@@ -68,10 +70,13 @@ public class FrameBuffer {
         }
 
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);                                    // Swithch back to normal framebuffer rendering
+        disposed = false;
 
     }
 
     public void resize(int width, int height){
+        dispose();
+        disposed = false;
 
         init(width, height);
 
@@ -106,6 +111,7 @@ public class FrameBuffer {
         glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
         glDeleteFramebuffersEXT(fbo);
         fbo = 0;
+        disposed = true;
     }
 }
 

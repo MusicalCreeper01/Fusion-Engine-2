@@ -116,7 +116,11 @@ public class Window {
 
         if (isvSync()) {
             // Enable v-sync
+            System.out.println("Vsync on");
             glfwSwapInterval(1);
+        }else{
+            System.out.println("Vsync off");
+            glfwSwapInterval(0);
         }
 
         // Make the window visible

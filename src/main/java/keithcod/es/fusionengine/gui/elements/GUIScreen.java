@@ -15,11 +15,11 @@ public class GUIScreen extends GUIElement {
         this.size = new Vector2i(window.getWidth(), window.getHeight());
     }
 
-    @Override
+    /*@Override
     public void render(){
         super.render();
 
 
-    }
+    }*/
 
 }
