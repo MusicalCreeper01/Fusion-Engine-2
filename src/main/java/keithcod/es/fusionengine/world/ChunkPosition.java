@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.enviroment;
+package keithcod.es.fusionengine.world;
 
 public class ChunkPosition {
 

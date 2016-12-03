@@ -1,0 +1,10 @@
+{
+  "name": "Default Pack",
+  "domain": "default",
+  "desc": "Contains the default blocks, entities, etc. that come with the engine.",
+  "authors": [{
+    "name": "Kisu Mitieru",
+    "email": "keith.mitchell@live.ca",
+    "site": "keithcod.es"
+  }]
+}

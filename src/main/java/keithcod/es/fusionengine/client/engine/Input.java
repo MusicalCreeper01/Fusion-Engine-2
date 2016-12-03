@@ -4,11 +4,14 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.joml.Vector2d;
 import org.joml.Vector2f;
 import static org.lwjgl.glfw.GLFW.*;
+
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
 import org.lwjgl.glfw.GLFWCursorEnterCallback;
 import org.lwjgl.glfw.GLFWKeyCallback;
 import org.lwjgl.glfw.GLFWMouseButtonCallback;
 
+import java.nio.DoubleBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,6 +44,8 @@ public class Input {
     Map<Integer, Boolean> key = new HashMap<>();
     Map<Integer, Boolean> keyDown = new HashMap<>();
 
+    public static boolean lockMouse = false;
+
     public Input() {
         previousPos = new Vector2d(-1, -1);
         currentPos = new Vector2d(0, 0);
@@ -52,8 +57,10 @@ public class Input {
         glfwSetCursorPosCallback(window.getWindowHandle(), cursorPosCallback = new GLFWCursorPosCallback() {
             @Override
             public void invoke(long window, double xpos, double ypos) {
+
                 currentPos.x = xpos;
                 currentPos.y = ypos;
+
             }
         });
         glfwSetCursorEnterCallback(window.getWindowHandle(), cursorEnterCallback = new GLFWCursorEnterCallback() {
@@ -88,17 +95,37 @@ public class Input {
     public static void input(Window window) {
         displVec.x = 0;
         displVec.y = 0;
-        if (previousPos.x > 0 && previousPos.y > 0 && inWindow) {
-            double deltax = currentPos.x - previousPos.x;
-            double deltay = currentPos.y - previousPos.y;
-            boolean rotateX = deltax != 0;
-            boolean rotateY = deltay != 0;
+        if(!lockMouse) {
+            glfwSetInputMode(window.getWindowHandle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+            if (previousPos.x > 0 && previousPos.y > 0 && inWindow) {
+                double deltax = currentPos.x - previousPos.x;
+                double deltay = currentPos.y - previousPos.y;
+                boolean rotateX = deltax != 0;
+                boolean rotateY = deltay != 0;
+                if (rotateX) {
+                    displVec.y = (float) deltax;
+                }
+                if (rotateY) {
+                    displVec.x = (float) deltay;
+                }
+            }
+        }else{ // http://forum.lwjgl.org/index.php?topic=5597.0
+            glfwSetInputMode(window.getWindowHandle(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+            double deltaX = currentPos.x - window.getWidth()/2;
+            double deltaY = currentPos.y - window.getHeight()/2;
+
+            boolean rotateX = deltaX != 0;
+            boolean rotateY = deltaY != 0;
             if (rotateX) {
-                displVec.y = (float) deltax;
+                displVec.y = (float) deltaX;
             }
             if (rotateY) {
-                displVec.x = (float) deltay;
+                displVec.x = (float) deltaY;
             }
+
+//            System.out.println("Delta X = " + deltaX + " Delta Y = " + deltaY);
+
+            glfwSetCursorPos(window.getWindowHandle(), window.getWidth()/2, window.getHeight()/2);
         }
         previousPos.x = currentPos.x;
         previousPos.y = currentPos.y;

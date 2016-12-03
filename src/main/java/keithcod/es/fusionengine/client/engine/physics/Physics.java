@@ -15,10 +15,8 @@ import com.bulletphysics.linearmath.DebugDrawModes;
 import com.bulletphysics.linearmath.DefaultMotionState;
 import com.bulletphysics.linearmath.MotionState;
 import com.bulletphysics.linearmath.Transform;
-import javafx.scene.shape.TriangleMesh;
 import keithcod.es.fusionengine.client.engine.Window;
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
-import keithcod.es.fusionengine.enviroment.Chunk;
 
 import javax.vecmath.Matrix4f;
 import javax.vecmath.Quat4f;
@@ -128,7 +126,8 @@ public class Physics {
     }
 
     public void update(float fps) {
-        dynamicsWorld.stepSimulation(1 / fps, 10);
+        if(dynamicsWorld != null)
+            dynamicsWorld.stepSimulation(1 / fps, 10);
 
 
 //        Transform trans = new Transform();

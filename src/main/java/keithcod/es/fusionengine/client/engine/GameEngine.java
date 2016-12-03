@@ -81,11 +81,12 @@ public class GameEngine implements Runnable {
             delta = (now - lastTime) / (1000000000f / TARGET_FPS);
             lastTime = now;
 
-            long currMillis = System.currentTimeMillis();
-            if(currMillis - updateTimer > updateInterval) {
+            //long currMillis = System.currentTimeMillis();
+            //if(currMillis - updateTimer > updateInterval) {
+            //    System.out.println(currMillis - updateTimer);
                 update(delta); //interpolate using the delta
-                updateTimer = currMillis;
-            }
+            //    updateTimer = currMillis;
+            //}
 
             render();
 

@@ -1,0 +1,7 @@
+{
+  "name": "Stone",
+  "opaque": false,
+  "textures": {
+    "all": "textures/stone.png"
+  }
+}

@@ -61,7 +61,7 @@ public abstract class GUIElement {
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
-        System.out.println("(" + size.x + "/" + window.getWidth() + ": " + (position.x / window.getWidth()) + ")");
+//        System.out.println("(" + size.x + "/" + window.getWidth() + ": " + (position.x / window.getWidth()) + ")");
 
         float x1 = -1.0f + ((float)position.x / window.getWidth());
         float y1 = 1.0f + ((float)position.y / window.getHeight());
@@ -69,7 +69,7 @@ public abstract class GUIElement {
         float x2 = -1.0f + ((float)size.x / window.getWidth());
         float y2 = 1.0f - ((float)size.y / window.getHeight());
 
-        System.out.println("("+x1 + ":" + y1 + ", " + x2 + ":" + y2 + ")");
+//        System.out.println("("+x1 + ":" + y1 + ", " + x2 + ":" + y2 + ")");
 
         verts = new float[]{
                 x1,  y1, -1.0f,

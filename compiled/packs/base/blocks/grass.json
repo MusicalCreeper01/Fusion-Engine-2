@@ -1,0 +1,7 @@
+{
+  "name": "Grass Block",
+  "opaque": false,
+  "textures": {
+    "all": "textures/grass.png"
+  }
+}

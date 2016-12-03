@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.enviroment;
+package keithcod.es.fusionengine.world;
 
 import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
@@ -23,7 +23,7 @@ public class Chunk {
     public int x = 0;
     public int y = 0;
 
-    public int[][][] blocks = new int [CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
+    public Block[][][] blocks = new Block [CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
 
     public Mesh mesh;
 
@@ -33,17 +33,17 @@ public class Chunk {
         this.world = world;
 }
 
-    public void setBlock(int id, int x, int y, int z){
-        blocks[x][y][z] = id;
+    public void setBlock(Block block, int x, int y, int z){
+        blocks[x][y][z] = block;
     }
 
-    public int getBlock(int x, int y, int z){
+    public Block getBlock(int x, int y, int z){
         try {
             return blocks[x][y][z];
         }catch(ArrayIndexOutOfBoundsException ex){
             ex.printStackTrace();
             System.out.println("getBlock("+x+", "+y+", "+z+") is invalid!");
-            return 0;
+            return null;
         }
 
     }
@@ -58,29 +58,29 @@ public class Chunk {
         for(int x = 0; x < CHUNK_SIZE; ++x){
             for(int z = 0; z < CHUNK_SIZE; ++z){
                 for(int y = 0; y < CHUNK_HEIGHT; ++y){
-                    int block = getBlock(x, y, z);
+                    Block block = getBlock(x, y, z);
 
                     if(block != World.EMPTY){
 
                         int worldx = (CHUNK_SIZE*this.x) + x;
                         int worldz = (CHUNK_SIZE*this.y) + z;
 
-                        int posx = world.getBlockAt(worldx+1, y, worldz);
-                        int posy = y < CHUNK_HEIGHT-1 ? world.getBlockAt(worldx, y+1, worldz) : 0;
-                        int posz = world.getBlockAt(worldx, y, worldz+1);
+                        Block posx = world.getBlockAt(worldx+1, y, worldz);
+                        Block posy = y < CHUNK_HEIGHT-1 ? world.getBlockAt(worldx, y+1, worldz) : null;
+                        Block posz = world.getBlockAt(worldx, y, worldz+1);
 
-                        int negx = world.getBlockAt(worldx-1, y, worldz);
-                        int negy = y > 0 ? world.getBlockAt(x, y-1, worldz) : 0;
-                        int negz = world.getBlockAt(worldx, y, worldz-1);
+                        Block negx = world.getBlockAt(worldx-1, y, worldz);
+                        Block negy = y > 0 ? world.getBlockAt(x, y-1, worldz) : null;
+                        Block negz = world.getBlockAt(worldx, y, worldz-1);
 
-                        boolean top = posy == 0 ? true : false;
-                        boolean bottom = negy == 0 ? true : false;
+                        boolean top = posy == null ? true : false;
+                        boolean bottom = negy == null ? true : false;
 
-                        boolean front = posz == 0 ? true : false;
-                        boolean back = negz == 0 ? true : false;
+                        boolean front = posz == null ? true : false;
+                        boolean back = negz == null ? true : false;
 
-                        boolean right = posx == 0 ? true : false;
-                        boolean left = negx == 0 ? true : false;
+                        boolean right = posx == null ? true : false;
+                        boolean left = negx == null ? true : false;
 
 
                         if(top) {

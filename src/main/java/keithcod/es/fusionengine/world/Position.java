@@ -17,7 +17,7 @@ public class Position {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof keithcod.es.fusionengine.enviroment.ChunkPosition)) {
+        if (!(o instanceof ChunkPosition)) {
             return false;
         }
 

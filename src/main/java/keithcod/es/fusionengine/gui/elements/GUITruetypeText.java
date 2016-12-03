@@ -1,6 +1,5 @@
 package keithcod.es.fusionengine.gui.elements;
 
-import keithcod.es.fusionengine.client.engine.*;
 import keithcod.es.fusionengine.client.engine.rendering.Texture;
 import keithcod.es.fusionengine.gui.GUIManager;
 import org.joml.Vector2i;
@@ -10,20 +9,14 @@ import org.lwjgl.opengl.GL12;
 
 import java.awt.*;
 import java.awt.font.FontRenderContext;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
-import static org.lwjgl.opengl.GL15.*;
-import static org.lwjgl.opengl.GL20.*;
-import static org.lwjgl.opengl.GL30.*;
 
-public class GUIText extends GUIElement {
+public class GUITruetypeText extends GUIElement {
 
     public Vector2i position = new Vector2i(0,0);
     public Vector2i size = new Vector2i(280, 60);
@@ -32,14 +25,14 @@ public class GUIText extends GUIElement {
 
     private String text;
 
-    public GUIText (String fontpath, String text){
+    public GUITruetypeText(String fontpath, String text){
         this(fontpath, text, 0, 0);
     }
 
-    public GUIText (String fontpath, String text, int x, int y){
+    public GUITruetypeText(String fontpath, String text, int x, int y){
         this(fontpath, text, 84.0f, x, y);
     }
-    public GUIText (String fontpath, String text, float fontsize, int x, int y){
+    public GUITruetypeText(String fontpath, String text, float fontsize, int x, int y){
         try {
             this.position = new Vector2i(x, y);
             this.text = text;

@@ -167,7 +167,7 @@ public class Renderer {
         Client.game().getWorld().render(shaderProgram);
 
 
-        if(box == null){
+        /*if(box == null){
             try{
                 box = Mesh.Box();
             }catch(Exception ex){
@@ -182,7 +182,7 @@ public class Renderer {
             box.render();
             glEnable(GL_CULL_FACE);
         }
-
+*/
         shaderProgram.unbind();
 
 

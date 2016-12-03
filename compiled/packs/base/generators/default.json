@@ -1,0 +1,9 @@
+{
+  "name": "Default Generator",
+  "desc": "Generates a standard perlin world",
+  "type": "perlin",
+  "options": {
+
+  }
+
+}

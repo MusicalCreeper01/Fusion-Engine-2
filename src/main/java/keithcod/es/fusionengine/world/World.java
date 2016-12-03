@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.enviroment;
+package keithcod.es.fusionengine.world;
 
 import jLibNoise.noise.module.Perlin;
 import keithcod.es.fusionengine.client.Client;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 public class World {
 
-    public static final int EMPTY = 0;
+    public static final Object EMPTY = null;
 
     public String name = "New World";
     public UUID uuid = UUID.randomUUID();
@@ -22,7 +22,7 @@ public class World {
 
 
 
-    public int getBlockAt(int x, int y, int z){
+    public Block getBlockAt(int x, int y, int z){
         int chunkx = (int)Math.floor((double)x/Chunk.CHUNK_SIZE);
         int chunky = (int)Math.floor((double)z/Chunk.CHUNK_SIZE);
 
@@ -38,7 +38,7 @@ public class World {
             return chunk.getBlock(normalizedx, y, normalizedz);
         }else{
 
-            return EMPTY;
+            return null;
         }
 
     }
@@ -80,7 +80,7 @@ public class World {
                                 p += base;
 
                                 for(int y = 0; y < p; ++y){
-                                    chunk.setBlock(1, x,y,z);
+                                    chunk.setBlock(Block.GRASS, x,y,z);
                                 }
                             }
                         }

@@ -1,19 +1,24 @@
 package keithcod.es.fusionengine.client;
 
+import com.google.gson.JsonSyntaxException;
 import keithcod.es.fusionengine.client.engine.*;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
 import keithcod.es.fusionengine.client.engine.physics.Physics;
-import keithcod.es.fusionengine.client.engine.rendering.Texture;
-import keithcod.es.fusionengine.enviroment.World;
+import keithcod.es.fusionengine.packs.Pack;
+import keithcod.es.fusionengine.world.World;
 import keithcod.es.fusionengine.gui.GUIManager;
-import keithcod.es.fusionengine.gui.elements.GUIElement;
-import keithcod.es.fusionengine.gui.elements.GUISolid;
-import keithcod.es.fusionengine.gui.elements.GUIText;
+import keithcod.es.fusionengine.gui.elements.GUITruetypeText;
 import org.joml.Vector2f;
-import org.joml.Vector2i;
 
 
 import javax.vecmath.Vector3f;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -21,7 +26,8 @@ public class Client implements IGameLogic {
 
     private static Client INSTANCE;
 
-    private static final float MOUSE_SENSITIVITY = 0.2f;
+//    private static final float MOUSE_SENSITIVITY = 0.2f;
+    private static final float MOUSE_SENSITIVITY = 0.8f;
     private static final float CAMERA_POS_STEP = 0.05f;
 
     private int displxInc = 0;
@@ -48,7 +54,7 @@ public class Client implements IGameLogic {
 
     private GUIManager guiManager;
 
-//    private GUIText fpsCounter;
+//    private GUITruetypeText fpsCounter;
 
     public Client() {
         INSTANCE = this;
@@ -57,7 +63,7 @@ public class Client implements IGameLogic {
         camera.setRotation(0,90,0);
         guiManager = new GUIManager();
 
-//        fpsCounter = new GUIText("Roboto-Thin.ttf", "Hello world!");
+//        fpsCounter = new GUITruetypeText("Roboto-Thin.ttf", "Hello world!");
 
         cameraInc = new Vector3f(0, 0, 0);
         world = new World();
@@ -86,23 +92,61 @@ public class Client implements IGameLogic {
         return world;
     }
 
-    GUIText fpsLabel;
+    GUITruetypeText fpsLabel;
 
     @Override
     public void init(Window window) throws Exception {
+        preInit();
+
+        register();
+
         renderer.init(window);
-        world.generate();
-        physics.init(window);
+        /*world.generate();
+        physics.init(window);*/
 
         guiManager.init(window);
 
-        /*GUISolid element = new GUISolid(new Texture("/textures/pillar.png"));
-        element.size = new Vector2i(300, 200);
-
-        guiManager.add(element);*/
-        fpsLabel = new GUIText("EncodeSans-Regular.ttf", "x fps", 20, 0);
+        fpsLabel = new GUITruetypeText("EncodeSans-Regular.ttf", "x fps", 20, 0);
         guiManager.add(fpsLabel );
         guiManager.build();
+
+        postInit();
+
+    }
+
+    public void preInit(){
+
+        List<Pack> packs = new ArrayList<Pack>();
+
+        File folder = new File("packs/");
+        File[] listOfFiles = folder.listFiles();
+
+        for (int i = 0; i < listOfFiles.length; i++) {
+            if (listOfFiles[i].isDirectory()) {
+                String s = listOfFiles[i] + "/pack.json";
+                if(Files.exists(Paths.get(s))){
+                    System.out.println("Attempting to load pack \"" + s + "\"");
+                    try {
+                        Pack pack = Pack.load(s);
+
+                        System.out.println("Loaded pack! \"" + pack.name + "\" by \"" + pack.authors[0].name + "\"");
+                    }catch(FileNotFoundException ex){
+
+                    }catch(JsonSyntaxException ex){
+                        System.out.println("Failed to load pack \"" + s + "\"! " + ex.getMessage());
+                    }
+                }
+            }
+        }
+
+    }
+
+    public void register(){
+//        Block.register();
+
+    }
+
+    public void postInit(){
 
     }
 
@@ -129,8 +173,9 @@ public class Client implements IGameLogic {
     int i = 0;
 
     @Override
-    public void update(double interval, Input input) {
-        physics.update(60.0f);
+    public void update(double delta, Input input) {
+        if(physics != null)
+            physics.update(60.0f);
 
         if (!window.isKeyPressed(GLFW_KEY_Z) && !window.isKeyPressed(GLFW_KEY_X)) {
 //            camera.setPosition(camera.getPosition().x, physics.getPlayerHeight(), camera.getPosition().z);
@@ -139,12 +184,12 @@ public class Client implements IGameLogic {
         }
 
         // Update camera position
-        camera.movePosition(cameraInc.x * CAMERA_POS_STEP, cameraInc.y * CAMERA_POS_STEP, cameraInc.z * CAMERA_POS_STEP);
+        camera.movePosition(cameraInc.x * CAMERA_POS_STEP * (float)delta, cameraInc.y * CAMERA_POS_STEP * (float)delta, cameraInc.z * CAMERA_POS_STEP * (float)delta);
 
         // Update camera based on mouse
         if (input.isRightButtonPressed()) {
             Vector2f rotVec = input.getDisplVec();
-            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY, rotVec.y * MOUSE_SENSITIVITY, 0);
+            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY * (float)delta, rotVec.y * MOUSE_SENSITIVITY * (float)delta, 0);
         }else{
 //            camera.moveRotation(0, .5f, 0);
         }
