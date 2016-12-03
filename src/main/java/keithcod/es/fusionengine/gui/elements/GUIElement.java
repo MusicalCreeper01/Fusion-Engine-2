@@ -50,24 +50,26 @@ public abstract class GUIElement {
 
     protected Texture texture;
 
-    public void build(Window window){
-        build(window, texture != null);
-    }
+//    public void build(Window window){
+//        build(window, texture != null);
+//    }
 
-    public void build(Window window, boolean useTexture) {
+   // public void build(Window window, boolean useTexture) {
+   public void build(Window window){
+//        System.out.println(color.toString());
 
 //        glDisable(GL_TEXTURE_2D);
 
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
 
-//        System.out.println("(" + size.x + "/" + window.getWidth() + ": " + (position.x / window.getWidth()) + ")");
+//        System.out.println("(" + size.x + "/" + size.y + ")");
 
-        float x1 = -1.0f + ((float)position.x / window.getWidth());
-        float y1 = 1.0f + ((float)position.y / window.getHeight());
+        float x1 = -1.0f + ((float)position.x / window.getWidth())*2;
+        float y1 = 1.0f - ((float)position.y / window.getHeight())*2;
 
-        float x2 = -1.0f + ((float)size.x / window.getWidth());
-        float y2 = 1.0f - ((float)size.y / window.getHeight());
+        float x2 = -1.0f + (((float)position.x+size.x) / window.getWidth())*2;
+        float y2 = 1.0f - (((float)position.y+size.y) / window.getHeight())*2;
 
 //        System.out.println("("+x1 + ":" + y1 + ", " + x2 + ":" + y2 + ")");
 
@@ -78,26 +80,26 @@ public abstract class GUIElement {
                 x2,  y1, -1.0f,
         };
 
-        Vector3f c = color.v3();
+        if(texture != null){
+            uvs = new float[]{
+                    0.0f,0.0f,
+                    0.0f,1.0f,
+                    1.0f,1.0f,
+                    1.0f,0.0f
+            };
+        }else {
+            Vector3f c = color.v3();
 
-        colors = new float[]{
-                c.x, c.y, c.z,
-                c.x, c.y, c.z,
-                c.x, c.y, c.z,
-                c.x, c.y, c.z
-        };
+            colors = new float[]{
+                    c.x, c.y, c.z,
+                    c.x, c.y, c.z,
+                    c.x, c.y, c.z,
+                    c.x, c.y, c.z
+            };
+        }
         indices = new int[]{
                 0, 1, 3, 3, 1, 2,
         };
-
-        if(useTexture){
-            uvs = new float[]{
-                0.0f,0.0f,
-                0.0f,1.0f,
-                1.0f,1.0f,
-                1.0f,0.0f
-            };
-        }
 
         vao = glGenVertexArrays();
         glBindVertexArray(vao);
@@ -110,7 +112,7 @@ public abstract class GUIElement {
         glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
-        if (useTexture){
+        if (texture != null){
             // Texture coordinates VBO
             uvVbo = glGenBuffers();
             FloatBuffer textCoordsBuffer = BufferUtils.createFloatBuffer(uvs.length);
@@ -144,11 +146,18 @@ public abstract class GUIElement {
     }
 
     public void render(ShaderProgram shader){
+
+        shader.bind();
+
         shader.setUniform("xColor", color.v4());
 
         if(texture == null) {
+            glBindTexture(GL_TEXTURE_2D, 0);
             glDisable(GL_TEXTURE_2D);
-            shader.setUniform("textured", 0);
+
+            shader.setUniform("textured", 0.0f);
+
+            System.out.println("Rendering untextured UI element (" + color.v4() + ")");
         }else{
             shader.setUniform("textured", 1.0f);
 
@@ -163,7 +172,6 @@ public abstract class GUIElement {
             glBindTexture(GL_TEXTURE_2D, texture.getId());
 
             shader.setUniform("xTexture", 0);
-
         }
 
         // Draw the mesh
@@ -177,12 +185,13 @@ public abstract class GUIElement {
         glDisableVertexAttribArray(1);
         glBindVertexArray(0);
 
-        glDisable(GL_TEXTURE_2D);
-
         if(texture != null){
             glDisable(GL_BLEND);
+            glDisable(GL_TEXTURE_2D);
             glDepthMask(true);
         }
+
+        shader.unbind();
 
         for(GUIElement el : children)
             if(el.show)

@@ -9,8 +9,10 @@ import keithcod.es.fusionengine.core.Utils;
 import keithcod.es.fusionengine.register.Domain;
 import keithcod.es.fusionengine.world.materials.MaterialBlock;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.nio.file.Paths;
 
 public class PackBlock {
 
@@ -31,6 +33,8 @@ public class PackBlock {
         public String back   = null;
     }
 
+    public String path;
+
     public Textures textures;
 
     public void generateSlug (){
@@ -42,44 +46,47 @@ public class PackBlock {
         MaterialBlock b = new MaterialBlock(d, name, slug);
 
         if(textures.all != null){
-            b.setTexture(textures.all);
+            b.setTexture(path + textures.all);
         }
 
         if (textures.sides != null) {
-            b.setTexture(Sides.Sides, textures.sides);
+            b.setTexture(Sides.Sides, path + textures.sides);
         }
 
         if (textures.topbottom != null) {
-            b.setTexture(Sides.Sides, textures.topbottom);
+            b.setTexture(Sides.Sides, path + textures.topbottom);
         }
 
         if (textures.left != null) {
-            b.setTexture(Side.Left, textures.left);
+            b.setTexture(Side.Left, path + textures.left);
         }
 
         if (textures.right != null) {
-            b.setTexture(Side.Right, textures.right);
+            b.setTexture(Side.Right, path + textures.right);
         }
         if (textures.top != null) {
-            b.setTexture(Side.Top, textures.top);
+            b.setTexture(Side.Top, path + textures.top);
         }
         if (textures.bottom != null) {
-            b.setTexture(Side.Bottom, textures.bottom);
+            b.setTexture(Side.Bottom, path + textures.bottom);
         }
 
         if (textures.front != null) {
-            b.setTexture(Side.Front, textures.front);
+            b.setTexture(Side.Front, path + textures.front);
         }
 
         if (textures.back != null) {
-            b.setTexture(Side.Back, textures.back);
+            b.setTexture(Side.Back, path + textures.back);
         }
+
+        b.build();
     }
 
     public static PackBlock load(String path) throws FileNotFoundException, JsonSyntaxException {
         Gson gson = new Gson();
         JsonReader reader = new JsonReader(new FileReader(path));
         PackBlock data = gson.fromJson(reader, PackBlock.class);
+        data.path = Paths.get(path).getParent().toString() + File.separator;
         return data;
     }
 

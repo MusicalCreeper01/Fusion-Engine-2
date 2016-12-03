@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import keithcod.es.fusionengine.register.Domain;
+import keithcod.es.fusionengine.register.Registry;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -41,12 +42,24 @@ public class Pack {
     public List<PackBlock> blocks = new ArrayList<>();
 
     public void build(){
+        System.out.println("Building pack \"" + name + "\"...");
+        System.out.println("    Creating domain...");
         Domain d = Domain.createDomain(domain);
 
-        for(PackBlock block : blocks)
+
+        System.out.println("    Building " + blocks.size() + " Blocks...");
+        for(PackBlock block : blocks) {
+            System.out.println("        " + d.name + ":" + block.slug + "...");
             block.build(d);
+        }
 
+        System.out.println("    Built " + blocks.size() + " Blocks!");
 
+        System.out.println("    Building atlas...");
+
+        Registry.buildAtlas(d);
+
+        System.out.println("Built \"" + name + "\"!");
     }
 
     public static Pack load(String path) throws FileNotFoundException, JsonSyntaxException{

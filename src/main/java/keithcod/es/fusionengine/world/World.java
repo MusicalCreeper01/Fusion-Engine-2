@@ -81,7 +81,7 @@ public class World {
                                 p += base;
 
                                 for(int y = 0; y < p; ++y){
-                                    chunk.setBlock(MaterialBlock.GRASS, x,y,z);
+                                    chunk.setBlock(MaterialBlock.getBlock(0), x,y,z);
                                 }
                             }
                         }

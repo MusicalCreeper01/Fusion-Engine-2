@@ -16,6 +16,30 @@ public class MaterialBlock extends Material{
 
     public static Map<Domain, ArrayList<MaterialBlock>> blocks = new HashMap<>();
 
+    public static MaterialBlock getBlock(Domain d, String slug){
+        if(!blocks.containsKey(d))
+            return null;
+
+        for(MaterialBlock block : blocks.get(d)){
+            if(block.slug.equals(slug) || block.name.equals(slug))
+                return block;
+        }
+        return null;
+    }
+
+    public static MaterialBlock getBlock(int i) {
+        int lasti = 0;
+        for(Domain d : blocks.keySet()){
+            ArrayList<MaterialBlock> bs = blocks.get(d);
+            if(i < lasti + bs.size()){
+                return bs.get(i - lasti);
+            }else{
+                lasti += bs.size();
+            }
+        }
+        return null;
+    }
+
     public static MaterialBlock GRASS = new MaterialBlock(Domain.DEFAULT, "Grass MaterialBlock", "grass_block");
 
     /*public static void registerBlocks(){
@@ -28,6 +52,8 @@ public class MaterialBlock extends Material{
     private int[] registryIDs = new int[6];
 
     public boolean opaque = false;
+
+    private Domain domain = Domain.DEFAULT;
 
     public MaterialBlock(String name){
         this(name, Utils.safeName(name));
@@ -44,6 +70,8 @@ public class MaterialBlock extends Material{
         super();
         this.name = name;
         this.slug = Utils.safeName(slug);
+        this.domain = domain;
+
         if(!blocks.containsKey(domain))
             blocks.put(domain, new ArrayList<>());
         blocks.get(domain).add(this);
@@ -85,7 +113,7 @@ public class MaterialBlock extends Material{
         texturePaths.put(Side.Back, path);
     }
 
-    public void register(String domain){
+    public void build(){
         registryIDs[0] = Registry.registerTexture(domain, texturePaths.get(Side.Top));
         registryIDs[1] = Registry.registerTexture(domain, texturePaths.get(Side.Bottom));
         registryIDs[2] = Registry.registerTexture(domain, texturePaths.get(Side.Left));

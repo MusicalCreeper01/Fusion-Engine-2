@@ -93,7 +93,7 @@ public class GameEngine implements Runnable {
             frames++;
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println(frames + " fps");
+//                System.out.println(frames + " fps");
                 fps = frames;
                 frames = 0;
             }

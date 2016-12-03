@@ -35,7 +35,10 @@ public class GUITruetypeText extends GUIElement {
     public GUITruetypeText(String fontpath, String text, float fontsize, int x, int y){
         try {
             this.position = new Vector2i(x, y);
+            super.position = new Vector2i(x, y);
+
             this.text = text;
+
             File file = new File(fontpath);
             font = Font.createFont(Font.TRUETYPE_FONT, file);
 
@@ -77,7 +80,7 @@ public class GUITruetypeText extends GUIElement {
                 super.position = position;
                 super.size = this.size;
 
-                super.build(window, true);
+//                super.build(window, true);
             }
 
             BufferedImage image = new BufferedImage(size.x, size.y, BufferedImage.TYPE_INT_ARGB);
@@ -134,28 +137,15 @@ public class GUITruetypeText extends GUIElement {
             //Send texel data to OpenGL
             glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, image.getWidth(), image.getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, buffer);
 
+            glBindTexture(GL_TEXTURE_2D, 0);
+
             this.texture = new Texture(textureID);
 
-            /*for (int x = 0; x < image.getWidth(); ++x) {
-                for (int y = 0; y < image.getHeight(); ++y) {
-                    Color c = new Color(image.getRGB(x, y), true);
-                    try {
-                        texture.setPixel(new keithcod.es.fusionengine.core.Color(c.getRed(), c.getGreen(), c.getBlue(), c.getAlpha()), x, y);
-                    } catch (Exception ex) {
-                        System.out.println("Failed to set texture color from font drawing for (" + x + ":" + y + ") in texture (" + size.x + "," + size.y + ")");
-                    }
-                }
-//                System.out.print("\n");
-            }*/
-
+            super.build(window);
 
             for(GUIElement el : children)
                 el.build(window);
 
-            /*if(tex != null)
-                tex.combine(texture, position.x, position.y);*/
-
         }
-//        return tex;
     }
 }

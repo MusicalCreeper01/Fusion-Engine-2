@@ -4,11 +4,16 @@ import com.google.gson.JsonSyntaxException;
 import keithcod.es.fusionengine.client.engine.*;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
 import keithcod.es.fusionengine.client.engine.physics.Physics;
+import keithcod.es.fusionengine.client.engine.rendering.Texture;
+import keithcod.es.fusionengine.core.Color;
+import keithcod.es.fusionengine.gui.elements.GUISolid;
 import keithcod.es.fusionengine.packs.Pack;
+import keithcod.es.fusionengine.register.Registry;
 import keithcod.es.fusionengine.world.World;
 import keithcod.es.fusionengine.gui.GUIManager;
 import keithcod.es.fusionengine.gui.elements.GUITruetypeText;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 
 import javax.vecmath.Vector3f;
@@ -101,14 +106,24 @@ public class Client implements IGameLogic {
         register();
 
         renderer.init(window);
-        /*world.generate();
-        physics.init(window);*/
-
         guiManager.init(window);
 
-        fpsLabel = new GUITruetypeText("EncodeSans-Regular.ttf", "x fps", 20, 0);
-        guiManager.add(fpsLabel );
+        fpsLabel = new GUITruetypeText("EncodeSans-Regular.ttf", "x fps", 48, 10, 0);
+        guiManager.add(fpsLabel);
+
+        GUISolid solid = new GUISolid(new Texture(Registry.getAtlas(0)));
+
+        solid.position = new Vector2i(100, 70);
+        solid.size = new Vector2i(288, 16);
+
+        guiManager.add(solid);
+
+//        guiManager.add(new GUITruetypeText("EncodeSans-Regular.ttf", "Hi!", 48, 10, 40));
+
         guiManager.build();
+
+        world.generate();
+        physics.init(window);
 
         postInit();
 
@@ -121,7 +136,7 @@ public class Client implements IGameLogic {
         File folder = new File("packs/");
         File[] listOfFiles = folder.listFiles();
 
-        for (int i = 0; i < listOfFiles.length; i++) {
+        for (int i = 0; i < listOfFiles.length; ++i) {
             if (listOfFiles[i].isDirectory()) {
                 String s = listOfFiles[i] + "/pack.json";
                 if(Files.exists(Paths.get(s))){
@@ -130,6 +145,7 @@ public class Client implements IGameLogic {
                         Pack pack = Pack.load(s);
 
                         System.out.println("Loaded pack! \"" + pack.name + "\" by \"" + pack.authors[0].name + "\"");
+                        packs.add(pack);
                     }catch(FileNotFoundException ex){
 
                     }catch(JsonSyntaxException ex){
@@ -138,6 +154,11 @@ public class Client implements IGameLogic {
                 }
             }
         }
+
+        System.out.println("Building " + packs.size() + " packs...");
+
+        for(Pack p : packs)
+            p.build();
 
     }
 
@@ -199,7 +220,8 @@ public class Client implements IGameLogic {
 
         ++i;
         if(i > 60) {
-            fpsLabel.setText(GameEngine.getFPS() + " fps");
+            if(fpsLabel != null)
+                fpsLabel.setText(GameEngine.getFPS() + " fps");
             i = 0;
         }
     }

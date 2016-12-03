@@ -211,35 +211,8 @@ public class Renderer {
             postShaderProgram.unbind();
         }
 
-        guiShaderProgram.bind();
         guiShaderProgram.setUniform("xTexture", 0);
         guiManager.render(guiShaderProgram);
-        guiShaderProgram.unbind();
-
-        /*guiShaderProgram.bind();
-
-//        guiShaderProgram.setUniform("projectionMatrix", projectionMatrix);
-
-        glDisable(GL_CULL_FACE);
-//        guiShaderProgram.setUniform("texture_sampler", 0);
-
-        guiManager.render();
-
-        guiShaderProgram.unbind();
-        glEnable(GL_CULL_FACE);*/
-
-
-
-        /*glBegin(GL_QUADS);
-        glVertex3f(-(window.width/2), -(window.height/2), 0);
-        glTexCoord2f(0,0);
-        glVertex3f((window.width/2), -(window.height/2), 0);
-        glTexCoord2f(1,0);
-        glVertex3f((window.width/2), (window.height/2), 0);
-        glTexCoord2f(1,1);
-        glVertex3f(-(window.width/2), (window.height/2), 0);
-        glTexCoord2f(0,1);
-        glEnd();*/
     }
 
     public void cleanup() {

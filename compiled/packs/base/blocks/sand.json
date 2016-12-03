@@ -2,6 +2,6 @@
   "name": "Sand",
   "opaque": false,
   "textures": {
-    "all": "textures/stone.png"
+    "all": "textures/sand.png"
   }
 }
