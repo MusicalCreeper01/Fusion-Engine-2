@@ -3,6 +3,7 @@ package keithcod.es.fusionengine.world;
 import jLibNoise.noise.module.Perlin;
 import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
+import keithcod.es.fusionengine.world.materials.MaterialBlock;
 import org.joml.Vector3f;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class World {
 
 
 
-    public Block getBlockAt(int x, int y, int z){
+    public MaterialBlock getBlockAt(int x, int y, int z){
         int chunkx = (int)Math.floor((double)x/Chunk.CHUNK_SIZE);
         int chunky = (int)Math.floor((double)z/Chunk.CHUNK_SIZE);
 
@@ -80,7 +81,7 @@ public class World {
                                 p += base;
 
                                 for(int y = 0; y < p; ++y){
-                                    chunk.setBlock(Block.GRASS, x,y,z);
+                                    chunk.setBlock(MaterialBlock.GRASS, x,y,z);
                                 }
                             }
                         }

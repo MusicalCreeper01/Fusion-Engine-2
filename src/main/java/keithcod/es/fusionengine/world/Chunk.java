@@ -4,6 +4,7 @@ import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import keithcod.es.fusionengine.client.engine.rendering.Texture;
+import keithcod.es.fusionengine.world.materials.MaterialBlock;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 
@@ -23,7 +24,7 @@ public class Chunk {
     public int x = 0;
     public int y = 0;
 
-    public Block[][][] blocks = new Block [CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
+    public MaterialBlock[][][] blocks = new MaterialBlock[CHUNK_SIZE][CHUNK_HEIGHT][CHUNK_SIZE];
 
     public Mesh mesh;
 
@@ -33,11 +34,11 @@ public class Chunk {
         this.world = world;
 }
 
-    public void setBlock(Block block, int x, int y, int z){
+    public void setBlock(MaterialBlock block, int x, int y, int z){
         blocks[x][y][z] = block;
     }
 
-    public Block getBlock(int x, int y, int z){
+    public MaterialBlock getBlock(int x, int y, int z){
         try {
             return blocks[x][y][z];
         }catch(ArrayIndexOutOfBoundsException ex){
@@ -58,20 +59,20 @@ public class Chunk {
         for(int x = 0; x < CHUNK_SIZE; ++x){
             for(int z = 0; z < CHUNK_SIZE; ++z){
                 for(int y = 0; y < CHUNK_HEIGHT; ++y){
-                    Block block = getBlock(x, y, z);
+                    MaterialBlock block = getBlock(x, y, z);
 
                     if(block != World.EMPTY){
 
                         int worldx = (CHUNK_SIZE*this.x) + x;
                         int worldz = (CHUNK_SIZE*this.y) + z;
 
-                        Block posx = world.getBlockAt(worldx+1, y, worldz);
-                        Block posy = y < CHUNK_HEIGHT-1 ? world.getBlockAt(worldx, y+1, worldz) : null;
-                        Block posz = world.getBlockAt(worldx, y, worldz+1);
+                        MaterialBlock posx = world.getBlockAt(worldx+1, y, worldz);
+                        MaterialBlock posy = y < CHUNK_HEIGHT-1 ? world.getBlockAt(worldx, y+1, worldz) : null;
+                        MaterialBlock posz = world.getBlockAt(worldx, y, worldz+1);
 
-                        Block negx = world.getBlockAt(worldx-1, y, worldz);
-                        Block negy = y > 0 ? world.getBlockAt(x, y-1, worldz) : null;
-                        Block negz = world.getBlockAt(worldx, y, worldz-1);
+                        MaterialBlock negx = world.getBlockAt(worldx-1, y, worldz);
+                        MaterialBlock negy = y > 0 ? world.getBlockAt(x, y-1, worldz) : null;
+                        MaterialBlock negz = world.getBlockAt(worldx, y, worldz-1);
 
                         boolean top = posy == null ? true : false;
                         boolean bottom = negy == null ? true : false;

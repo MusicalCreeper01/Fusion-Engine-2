@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.world;
+package keithcod.es.fusionengine.world.materials;
 
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.core.Side;
@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Block extends Material{
+public class MaterialBlock extends Material{
 
-    public static Map<Domain, ArrayList<Block>> blocks = new HashMap<>();
+    public static Map<Domain, ArrayList<MaterialBlock>> blocks = new HashMap<>();
 
-    public static Block GRASS = new Block(Domain.DEFAULT, "Grass Block", "grass_block");
+    public static MaterialBlock GRASS = new MaterialBlock(Domain.DEFAULT, "Grass MaterialBlock", "grass_block");
 
     /*public static void registerBlocks(){
         GRASS.register("default");
@@ -29,18 +29,18 @@ public class Block extends Material{
 
     public boolean opaque = false;
 
-    public Block(String name){
+    public MaterialBlock(String name){
         this(name, Utils.safeName(name));
     }
-    public Block(String name, String slug){
+    public MaterialBlock(String name, String slug){
         this(Domain.DEFAULT, name, slug);
     }
 
-    public Block(Domain d, String name){
+    public MaterialBlock(Domain d, String name){
         this(d, name, Utils.safeName(name));
     }
 
-    public Block(Domain domain, String name, String slug) {
+    public MaterialBlock(Domain domain, String name, String slug) {
         super();
         this.name = name;
         this.slug = Utils.safeName(slug);

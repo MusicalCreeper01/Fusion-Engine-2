@@ -142,7 +142,7 @@ public class Client implements IGameLogic {
     }
 
     public void register(){
-//        Block.register();
+//        MaterialBlock.register();
 
     }
 

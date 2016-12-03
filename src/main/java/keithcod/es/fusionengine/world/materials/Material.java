@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.world;
+package keithcod.es.fusionengine.world.materials;
 
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.core.Utils;

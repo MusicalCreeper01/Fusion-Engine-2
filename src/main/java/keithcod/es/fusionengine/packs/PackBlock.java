@@ -7,15 +7,14 @@ import keithcod.es.fusionengine.core.Side;
 import keithcod.es.fusionengine.core.Sides;
 import keithcod.es.fusionengine.core.Utils;
 import keithcod.es.fusionengine.register.Domain;
-import keithcod.es.fusionengine.world.Block;
-import keithcod.es.fusionengine.world.Material;
+import keithcod.es.fusionengine.world.materials.MaterialBlock;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public class PackBlock {
 
-    public String name = "Block!";
+    public String name = "MaterialBlock!";
     public String slug = null;
 
     public boolean opaque = false;
@@ -40,7 +39,7 @@ public class PackBlock {
     }
 
     public void build(Domain d){
-        Block b = new Block(d, name, slug);
+        MaterialBlock b = new MaterialBlock(d, name, slug);
 
         if(textures.all != null){
             b.setTexture(textures.all);
