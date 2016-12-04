@@ -13,7 +13,7 @@ in  vec2 Texcoord;
 out vec4 outColor;
 
 uniform sampler2D colorbuffer;
-//uniform sampler2D depthbuffer;
+uniform sampler2D depthbuffer;
 
 /*float zfar = 255.0f;
 float znear = 0.0f;
@@ -34,6 +34,6 @@ void main(void){
 void main()
 {
 //    outColor = texture(texFramebuffer, Texcoord);
-    outColor.rgb = texture(colorbuffer, Texcoord).rrr;
+    outColor = texture(colorbuffer, Texcoord);
     //outColor.rgb = texture(texFramebuffer, Texcoord).rrr;//vec3(gl_FragCoord.z, gl_FragCoord.z, gl_FragCoord.z);//texture(texFramebuffer, Texcoord).rgb;// - vintage look
 }

@@ -135,10 +135,6 @@ public class FrameBuffer {
 
         glActiveTexture( GL_TEXTURE1 );
         glBindTexture( GL_TEXTURE_2D, depthtexture);
-
-        /*glActiveTexture( GL_TEXTURE0 );
-        glBindTexture( GL_TEXTURE_2D, depthtexture);
-        glCopyTexImage2D( GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT16, 0, 0, width, height, 0 );*/
     }
 
     public void dispose(){

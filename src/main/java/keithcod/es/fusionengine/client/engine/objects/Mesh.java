@@ -102,11 +102,13 @@ public class Mesh {
     }
 
     public void render() {
-        glEnable(GL_TEXTURE_2D);
-        // Activate firs texture bank
-        glActiveTexture(GL_TEXTURE0);
-        // Bind the texture
-        glBindTexture(GL_TEXTURE_2D, texture.getId());
+        if(texture != null) {
+            glEnable(GL_TEXTURE_2D);
+            // Activate firs texture bank
+            glActiveTexture(GL_TEXTURE0);
+            // Bind the texture
+            glBindTexture(GL_TEXTURE_2D, texture.getId());
+        }
 
         // Draw the mesh
         glBindVertexArray(getVaoId());
