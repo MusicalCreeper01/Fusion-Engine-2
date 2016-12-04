@@ -13,10 +13,8 @@ in  vec2 Texcoord;
 out vec4 outColor;
 
 uniform sampler2D texFramebuffer;
-
 void main()
 {
-    /*vec4 gui = texture(gui_texture, Texcoord);
-    vec4 frame = texture(texFramebuffer, Texcoord);*/
-    outColor = texture(texFramebuffer, Texcoord);//vec4(mix(frame.rgb, gui.rgb, gui.a), gui.a);//texture(texFramebuffer, Texcoord) + texture(gui_texture, Texcoord) * texture(gui_texture, Texcoord).a;
+    outColor = texture(texFramebuffer, Texcoord);
+ //   outColor.rgb = texture(texFramebuffer, Texcoord).rrr; - vintage look
 }

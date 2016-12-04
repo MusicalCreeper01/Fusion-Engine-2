@@ -83,7 +83,7 @@ public class Renderer {
         };
 
         if(useFBO)
-            mesh = new Mesh(positions, uvs, indices, new Texture(frameBuffer.texture));
+            mesh = new Mesh(positions, uvs, indices, new Texture(frameBuffer.colortexture));
 
         // Create shader
         shaderProgram = new ShaderProgram();
@@ -156,33 +156,11 @@ public class Renderer {
         Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
 
         shaderProgram.setUniform("projectionMatrix", projectionMatrix);
-
-        // Update view Matrix
-//        Matrix4f viewMatrix = transformation.getViewMatrix(camera);
-
         shaderProgram.setUniform("texture_sampler", 0);
 
 
-//        world.render(shaderProgram);
         Client.game().getWorld().render(shaderProgram);
 
-
-        /*if(box == null){
-            try{
-                box = Mesh.Box();
-            }catch(Exception ex){
-                ex.printStackTrace();
-            }
-        }else{
-            glDisable(GL_CULL_FACE);
-            Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().getCamera());
-            Vector3f pos = Client.game().getPhysics().getBoxPosition();
-            Matrix4f modelViewMatrix = Client.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f(pos.x, pos.y, pos.z), new Vector3f(1, 1, 1), viewMatrix);
-            shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
-            box.render();
-            glEnable(GL_CULL_FACE);
-        }
-*/
         shaderProgram.unbind();
 
 
@@ -192,21 +170,8 @@ public class Renderer {
             frameBuffer.unbind(window.getWidth(), window.getHeight());
 
             postShaderProgram.bind();
-
-//            glEnable(GL_BLEND);
-//            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-            /*glEnable(GL_TEXTURE_2D);
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, guiManager.texture());
-
-            postShaderProgram.setUniform("gui_texture", 1);*/
-
+//            glDisable(GL_ALPHA_TEST);
             mesh.render();
-
-
-
-//            glDisable(GL_BLEND);
 
             postShaderProgram.unbind();
         }

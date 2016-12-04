@@ -21,6 +21,7 @@ public class World {
     public int seed = 404;
 
     Map<ChunkPosition, Chunk> chunks = new HashMap<>();
+    Map<ChunkPosition, Chunk> newchunks = new HashMap<>();
 
 
 
@@ -60,9 +61,9 @@ public class World {
                 myModule.setOctaveCount(4);
                 myModule.setLacunarity(.01d);
 
-                Map<ChunkPosition, Chunk> newchunks = new HashMap<>();
+                newchunks.clear();
 
-                int worldsize = 1;
+                int worldsize = 3;
 
                 for(int cx = -worldsize; cx < worldsize; ++cx){
                     for(int cy = -worldsize; cy < worldsize; ++cy){
@@ -79,9 +80,10 @@ public class World {
                         for(int x = 0; x < Chunk.CHUNK_SIZE; ++x) {
                             for (int y = 0; y < Chunk.CHUNK_HEIGHT; ++y) {
                                 for (int z = 0; z < Chunk.CHUNK_SIZE; ++z) {
-                                    if(gen.use(x, y, z)){
+                                    if(gen.use(xOffset+x, y, yOffset+z)){
                                         MaterialBlock b = MaterialBlock.getBlock(1);
 //                                        System.out.println("(" + x + ", " + y +", " + z +") " + b.name);
+                                        chunk.setBlock(b, x,y,z);
                                     }
                                 }
                             }
@@ -110,7 +112,7 @@ public class World {
                     }
                 }
                 for(ChunkPosition c : newchunks.keySet())
-                    chunks.put(c, newchunks.get(c));
+                    newchunks.put(c, newchunks.get(c));
                 newChunks = true;
 
             }
@@ -122,7 +124,9 @@ public class World {
         if(newChunks){
             System.out.println("Rendering chunks...");
             newChunks = false;
-            for(Chunk c : chunks.values()) {
+            for(ChunkPosition p : newchunks.keySet()) {
+                Chunk c = newchunks.get(p);
+                chunks.put(p, c);
                 try {
                     c.draw();
                     Client.game().getPhysics().addMesh(new Vector3f(Chunk.PHYSICAL_SIZE*c.x, 0, Chunk.PHYSICAL_SIZE*c.y), c.mesh);
@@ -131,6 +135,15 @@ public class World {
                     System.out.println("Error drawing chunk " + c.x + ":" + c.y + "!");
                 }
             }
+            /*for(Chunk c : newchunks.values()) {
+                try {
+                    c.draw();
+                    Client.game().getPhysics().addMesh(new Vector3f(Chunk.PHYSICAL_SIZE*c.x, 0, Chunk.PHYSICAL_SIZE*c.y), c.mesh);
+                }catch (Exception ex){
+                    ex.printStackTrace();
+                    System.out.println("Error drawing chunk " + c.x + ":" + c.y + "!");
+                }
+            }*/
         }
     }
 

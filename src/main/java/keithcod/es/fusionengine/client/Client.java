@@ -64,7 +64,7 @@ public class Client implements IGameLogic {
     public Client() {
         INSTANCE = this;
         camera = new Camera();
-        camera.setPosition(0,2,0);
+        camera.setPosition(0,15,0);
         camera.setRotation(0,90,0);
         guiManager = new GUIManager();
 

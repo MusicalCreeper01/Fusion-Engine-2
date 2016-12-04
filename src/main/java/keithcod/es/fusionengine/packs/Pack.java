@@ -57,7 +57,7 @@ public class Pack {
 
         System.out.println("    Building " + generators.size() + " Generators...");
         for(PackGenerator gen: generators) {
-            System.out.println("        " + d.name + ":" + gen.expression + "...");
+            System.out.println("        " + d.name + "...");
             gen.build();
         }
         System.out.println("    Built " + generators.size() + " Generators!");
@@ -116,7 +116,7 @@ public class Pack {
                         try {
                             PackGenerator gen = PackGenerator.load(s);
                             data.generators.add(gen);
-                            System.out.println("        Loaded generator \"" + gen.name + ":" + gen.expression + "\"");
+                            System.out.println("        Loaded generator \"" + gen.name + "\"");
                         } catch (FileNotFoundException ex) {
 
                         } catch (JsonSyntaxException ex) {

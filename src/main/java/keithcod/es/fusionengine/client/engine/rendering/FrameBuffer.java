@@ -4,44 +4,83 @@ import org.lwjgl.opengl.EXTFramebufferObject;
 
 import static org.lwjgl.opengl.EXTFramebufferObject.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL21.*;
+import static org.lwjgl.opengl.GL14.*;
 import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL31.*;
+import static org.lwjgl.opengl.GL32.*;
 import static org.lwjgl.opengl.GL12.*;
 import static org.lwjgl.opengl.GL13.*;
 
 
 public class FrameBuffer {
     private int fbo;
-    public int texture = -1;
+    public int colortexture = -1;
+    public int depthtexture = -1;
     private int depth;
+    private int backbuffer;
 
     int width;
     int height;
 
     public boolean disposed = false;
 
-    public void init(int width, int height) {
+    public void init(int width, int height, boolean usedepth) {
         this.width = width;
         this.height = height;
 
         fbo = glGenFramebuffersEXT();
-        if(texture == -1)
-            texture = glGenTextures();
-        depth = glGenRenderbuffersEXT();
+        if(colortexture == -1)
+            colortexture = glGenTextures();
+        if(depthtexture == -1)
+            depthtexture = glGenTextures();
+        if(!usedepth) {
+            depth = glGenRenderbuffersEXT();
 
-        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);
+            glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
-        // initialize color texture
+            // initialize color texture
 
-        glBindTexture(GL_TEXTURE_2D, texture);                                   // Bind the colorbuffer texture
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);               // make it linear filterd
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);  // Create the texture data
-        glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, texture, 0); // attach it to the framebuffer
+            glBindTexture(GL_TEXTURE_2D, colortexture);                                   // Bind the colorbuffer texture
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);               // make it linear filterd
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+            glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_INT, (java.nio.ByteBuffer) null);  // Create the texture data
+
+            glBindTexture(GL_TEXTURE_2D, 0);
+            glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colortexture, 0); // attach it to the framebuffer
+
+            //GL_DEPTH_ATTACHMENT
+            depth = glGenRenderbuffers();
+            glBindRenderbuffer(GL_RENDERBUFFER, depth);
+            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth);
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        }else{
+            
+
+        }
+        /*glBindRenderbuffer(GL_RENDERBUFFER, depth);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, width, height);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth);*/
+
+        /*glBindTexture(GL_TEXTURE_2D, depthtexture);                                   // Bind the colorbuffer texture
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);               // make it linear filterd
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+//        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, (java.nio.ByteBuffer) null);  // Create the texture data
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, (java.nio.ByteBuffer) null);
 
 
-        int depth = glGenRenderbuffers();
-        glBindRenderbuffer(GL_RENDERBUFFER, depth);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depth);
+        backbuffer = glGenFramebuffers();
+        glBindFramebuffer(GL_FRAMEBUFFER, backbuffer);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthtexture, 0);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glBindTexture(GL_TEXTURE_2D, 0);*/
 
         int framebuffer = EXTFramebufferObject.glCheckFramebufferStatusEXT( EXTFramebufferObject.GL_FRAMEBUFFER_EXT );
         switch ( framebuffer ) {
@@ -88,7 +127,7 @@ public class FrameBuffer {
     public void bind(){
         glViewport (0, 0, width, height);
         glBindTexture(GL_TEXTURE_2D, 0);
-        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER, fbo);
 
 //        glClearColor (0.0f, 0.0f, 0.0f, 0.5f);
         glClearColor (0.56f, 0.76f, 0.83f, 1f);
@@ -97,7 +136,7 @@ public class FrameBuffer {
 
     public void unbind(int width, int height){
         glEnable(GL_TEXTURE_2D);
-        glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         glClearColor (0.0f, 1.0f, 0.0f, 0.5f);
         glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
