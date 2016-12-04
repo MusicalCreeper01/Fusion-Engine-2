@@ -40,6 +40,7 @@ public class Pack {
     public String path;
 
     public List<PackBlock> blocks = new ArrayList<>();
+    public List<PackGenerator> generators = new ArrayList<>();
 
     public void build(){
         System.out.println("Building pack \"" + name + "\"...");
@@ -52,8 +53,14 @@ public class Pack {
             System.out.println("        " + d.name + ":" + block.slug + "...");
             block.build(d);
         }
-
         System.out.println("    Built " + blocks.size() + " Blocks!");
+
+        System.out.println("    Building " + generators.size() + " Generators...");
+        for(PackGenerator gen: generators) {
+            System.out.println("        " + d.name + ":" + gen.expression + "...");
+            gen.build();
+        }
+        System.out.println("    Built " + generators.size() + " Generators!");
 
         System.out.println("    Building atlas...");
 
@@ -69,25 +76,52 @@ public class Pack {
         Pack data = gson.fromJson(reader, Pack.class);
         data.path = Paths.get(path).getParent().toString();
 
-        String blocksPath = Paths.get(data.path, "blocks/").toString();
-        System.out.println("    Attempting to load blocks at \"" + blocksPath + "\"");
-        File folder = new File(blocksPath);
-        File[] listOfFiles = folder.listFiles();
+        {
+            String blocksPath = Paths.get(data.path, "blocks/").toString();
+            System.out.println("    Attempting to load blocks at \"" + blocksPath + "\"");
+            File folder = new File(blocksPath);
+            File[] listOfFiles = folder.listFiles();
 
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                String s =listOfFiles[i].getPath();
-                if(s.endsWith("json")){
-                    System.out.println("        Attempting to load block \"" + s + "\"");
-                    try {
-                        PackBlock block= PackBlock.load(s);
-                        block.generateSlug();
-                        data.blocks.add(block);
-                        System.out.println("        Loaded block \"" + block.name + ":" + block.slug + "\"");
-                    }catch(FileNotFoundException ex){
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    String s = listOfFiles[i].getPath();
+                    if (s.endsWith("json")) {
+                        System.out.println("        Attempting to load block \"" + s + "\"");
+                        try {
+                            PackBlock block = PackBlock.load(s);
+                            block.generateSlug();
+                            data.blocks.add(block);
+                            System.out.println("        Loaded block \"" + block.name + ":" + block.slug + "\"");
+                        } catch (FileNotFoundException ex) {
 
-                    }catch(JsonSyntaxException ex){
-                        System.out.println("Failed to load block \"" + s + "\"! " + ex.getMessage());
+                        } catch (JsonSyntaxException ex) {
+                            System.out.println("Failed to load block \"" + s + "\"! " + ex.getMessage());
+                        }
+                    }
+                }
+            }
+        }
+
+        {
+            String generatorsPath = Paths.get(data.path, "generators/").toString();
+            System.out.println("    Attempting to load generators at \"" + generatorsPath + "\"");
+            File folder = new File(generatorsPath);
+            File[] listOfFiles = folder.listFiles();
+
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    String s = listOfFiles[i].getPath();
+                    if (s.endsWith("json")) {
+                        System.out.println("        Attempting to load generator \"" + s + "\"");
+                        try {
+                            PackGenerator gen = PackGenerator.load(s);
+                            data.generators.add(gen);
+                            System.out.println("        Loaded generator \"" + gen.name + ":" + gen.expression + "\"");
+                        } catch (FileNotFoundException ex) {
+
+                        } catch (JsonSyntaxException ex) {
+                            System.out.println("Failed to load generator \"" + s + "\"! " + ex.getMessage());
+                        }
                     }
                 }
             }
@@ -96,3 +130,4 @@ public class Pack {
         return data;
     }
 }
+

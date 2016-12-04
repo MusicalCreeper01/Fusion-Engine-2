@@ -3,6 +3,7 @@ package keithcod.es.fusionengine.world;
 import jLibNoise.noise.module.Perlin;
 import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
+import keithcod.es.fusionengine.world.generation.Generator;
 import keithcod.es.fusionengine.world.materials.MaterialBlock;
 import org.joml.Vector3f;
 
@@ -48,18 +49,20 @@ public class World {
 
     public void generate(){
         final World instance = this;
+        Generator gen = Generator.generators.get(0);
+
         (new Thread() {
             public void run() {
                 Perlin myModule = new Perlin();
                 myModule.setSeed(seed);
+                myModule.setFrequency(.05d);
                 myModule.setPersistence(0.1d);
                 myModule.setOctaveCount(4);
-                myModule.setFrequency(.05d);
                 myModule.setLacunarity(.01d);
 
                 Map<ChunkPosition, Chunk> newchunks = new HashMap<>();
 
-                int worldsize = 2;
+                int worldsize = 1;
 
                 for(int cx = -worldsize; cx < worldsize; ++cx){
                     for(int cy = -worldsize; cy < worldsize; ++cy){
@@ -73,23 +76,32 @@ public class World {
                         int heightscale = 5;
                         int base = 10;
 
-
-                        //chunk.setBlock(1, 0,0,0);
-
                         for(int x = 0; x < Chunk.CHUNK_SIZE; ++x) {
-                            for (int z = 0; z < Chunk.CHUNK_SIZE; ++z) {
-                                Double v = ((myModule.getValue((xOffset+x)- 0.98, (yOffset+z)- 0.98, .1) + 1) / 2.0 * heightscale);
-                                int p = v.intValue();
-                                p += base;
-
-                                for(int y = 0; y < p; ++y){
-                                    chunk.setBlock(MaterialBlock.getBlock(0), x,y,z);
+                            for (int y = 0; y < Chunk.CHUNK_HEIGHT; ++y) {
+                                for (int z = 0; z < Chunk.CHUNK_SIZE; ++z) {
+                                    if(gen.use(x, y, z)){
+                                        MaterialBlock b = MaterialBlock.getBlock(1);
+//                                        System.out.println("(" + x + ", " + y +", " + z +") " + b.name);
+                                    }
                                 }
                             }
                         }
 
+                       /* for(int x = 0; x < Chunk.CHUNK_SIZE; ++x) {
+                            for (int z = 0; z < Chunk.CHUNK_SIZE; ++z) {
+                                Double v = ((myModule.getValue((xOffset+x), (yOffset+z), .1) + 1) / 2.0 * heightscale);
+                                int p = v.intValue();
+                                p += base;
+
+                                for(int y = 0; y < p; ++y){
+                                    chunk.setBlock(MaterialBlock.getBlock(1), x,y,z);
+                                }
+                            }
+                        }*/
+
                         try {
                             newchunks.put(new ChunkPosition(cx,cy), chunk);
+                            System.out.println("Created chunk (" + cx + ":" + cy + ")");
                         }catch(Exception ex){
                             ex.printStackTrace();
                         }
@@ -108,6 +120,7 @@ public class World {
 
     public void update(){
         if(newChunks){
+            System.out.println("Rendering chunks...");
             newChunks = false;
             for(Chunk c : chunks.values()) {
                 try {

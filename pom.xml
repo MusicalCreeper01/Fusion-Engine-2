@@ -194,6 +194,7 @@
             <artifactId>jbullet</artifactId>
             <version>20101010-1</version>
         </dependency>
+
     </dependencies>
 
 </project>

@@ -1,9 +1,6 @@
 {
   "name": "Default Generator",
   "desc": "Generates a standard perlin world",
-  "type": "perlin",
-  "options": {
-
-  }
-
+  "expression": "y < (perlin(404, x, z)+1.0)/2.0",
+  "xexpression": "y < ((perlin(x, z, .01, .05d, 0.1d, 4, .01d) + 1) / 2 * 5)+3"
 }
