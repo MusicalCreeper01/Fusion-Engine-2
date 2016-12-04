@@ -188,6 +188,7 @@ public abstract class GUIElement {
         if(texture != null){
             glDisable(GL_BLEND);
             glDisable(GL_TEXTURE_2D);
+            glBindTexture(GL_TEXTURE_2D, 0);
             glDepthMask(true);
         }
 

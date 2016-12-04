@@ -1,12 +1,15 @@
 package keithcod.es.fusionengine.world;
 
+import keithcod.es.fusionengine.core.Side;
 import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import keithcod.es.fusionengine.client.engine.rendering.Texture;
+import keithcod.es.fusionengine.register.Registry;
 import keithcod.es.fusionengine.world.materials.MaterialBlock;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +56,7 @@ public class Chunk {
         List<Float> verts = new ArrayList<>();
         List<Float> uvs = new ArrayList<>();
         List<Integer> tris = new ArrayList<>();
-        Texture texture = new Texture("/textures/pillar.png");
+        Texture texture = new Texture(Registry.getAtlas(0));//"/textures/pillar.png");
 
         int i = 0;
         for(int x = 0; x < CHUNK_SIZE; ++x){
@@ -90,10 +93,19 @@ public class Chunk {
                             verts.add(x + (-BLOCK_SIZE_HALF)); verts.add(y + BLOCK_SIZE_HALF); verts.add(z + BLOCK_SIZE_HALF);
                             verts.add(x + BLOCK_SIZE_HALF);    verts.add(y + BLOCK_SIZE_HALF); verts.add(z + BLOCK_SIZE_HALF);
 
-                            uvs.add(1.0f/3); uvs.add(0.5f);
+                            Vector4f uv = block.getUVs(Side.Top);
+
+                            /*uvs.add(1.0f/3); uvs.add(0.5f);
                             uvs.add(0.0f); uvs.add(0.5f);
                             uvs.add(1.0f/3); uvs.add(0.0f);
-                            uvs.add(0.0f); uvs.add(0.0f);
+                            uvs.add(0.0f); uvs.add(0.0f);*/
+
+                            uvs.add(uv.z); uvs.add(uv.w);
+                            uvs.add(uv.x); uvs.add(uv.w);
+                            uvs.add(uv.z); uvs.add(uv.y);
+                            uvs.add(uv.x); uvs.add(uv.y);
+
+//                            System.out.println(uv.toString());
 
 
                             tris.add(i + 0); tris.add(i + 2); tris.add(i + 3);
@@ -110,10 +122,17 @@ public class Chunk {
                             verts.add(x + (-BLOCK_SIZE_HALF)); verts.add(y + -BLOCK_SIZE_HALF); verts.add(z + BLOCK_SIZE_HALF);
                             verts.add(x + BLOCK_SIZE_HALF);    verts.add(y + -BLOCK_SIZE_HALF); verts.add(z + BLOCK_SIZE_HALF);
 
-                            uvs.add(0.0f/3); uvs.add(0.5f);
+                            Vector4f uv = block.getUVs(Side.Bottom);
+
+                            /*uvs.add(0.0f/3); uvs.add(0.5f);
                             uvs.add(1.0f); uvs.add(0.5f);
                             uvs.add(0.0f/3); uvs.add(1.0f);
-                            uvs.add(1.0f); uvs.add(1.0f);
+                            uvs.add(1.0f); uvs.add(1.0f);*/
+
+                            uvs.add(uv.x); uvs.add(uv.y);
+                            uvs.add(uv.z); uvs.add(uv.y);
+                            uvs.add(uv.x); uvs.add(uv.w);
+                            uvs.add(uv.z); uvs.add(uv.w);
 
 
                             tris.add(i + 3); tris.add(i + 2); tris.add(i + 0);
@@ -128,10 +147,17 @@ public class Chunk {
                             verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+BLOCK_SIZE_HALF);
                             verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+BLOCK_SIZE_HALF);
 
-                            uvs.add((1.0f/3)*2); uvs.add(0.0f);
+                            Vector4f uv = block.getUVs(Side.Front);
+
+                            /*uvs.add((1.0f/3)*2); uvs.add(0.0f);
                             uvs.add((1.0f/3)*2); uvs.add(0.5f);
                             uvs.add((1.0f/3)*3); uvs.add(0.5f);
-                            uvs.add((1.0f/3)*3); uvs.add(0.0f);
+                            uvs.add((1.0f/3)*3); uvs.add(0.0f);*/
+
+                            uvs.add(uv.x); uvs.add(uv.y);
+                            uvs.add(uv.x); uvs.add(uv.w);
+                            uvs.add(uv.z); uvs.add(uv.w);
+                            uvs.add(uv.z); uvs.add(uv.y);
 
                             tris.add(i+0);  tris.add(i+1);  tris.add(i+3);
                             tris.add(i+3);  tris.add(i+1);  tris.add(i+2);
@@ -146,10 +172,17 @@ public class Chunk {
                             verts.add(x+(-BLOCK_SIZE_HALF)); verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+(-BLOCK_SIZE_HALF));
                             verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+(-BLOCK_SIZE_HALF));
 
-                            uvs.add((1.0f/3)*2); uvs.add(0.0f);
+                            Vector4f uv = block.getUVs(Side.Front);
+
+                            /*uvs.add((1.0f/3)*2); uvs.add(0.0f);
                             uvs.add((1.0f/3)); uvs.add(0.0f);
                             uvs.add((1.0f/3)*2); uvs.add(0.5f);
-                            uvs.add((1.0f/3)); uvs.add(0.5f);
+                            uvs.add((1.0f/3)); uvs.add(0.5f);*/
+
+                            uvs.add(uv.z); uvs.add(uv.y);
+                            uvs.add(uv.x); uvs.add(uv.y);
+                            uvs.add(uv.z); uvs.add(uv.w);
+                            uvs.add(uv.x); uvs.add(uv.w);
 
                             tris.add(i+3); tris.add(i+2); tris.add(i+0);
                             tris.add(i+3); tris.add(i+0); tris.add(i+1);
@@ -163,10 +196,17 @@ public class Chunk {
                             verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+(-BLOCK_SIZE_HALF)); verts.add(z+BLOCK_SIZE_HALF);
                             verts.add(x+BLOCK_SIZE_HALF);    verts.add(y+BLOCK_SIZE_HALF);    verts.add(z+BLOCK_SIZE_HALF);
 
-                            uvs.add((1.0f/3)*2); uvs.add(0.5f);
+                            Vector4f uv = block.getUVs(Side.Right);
+
+                            /*uvs.add((1.0f/3)*2); uvs.add(0.5f);
                             uvs.add((1.0f/3)*2); uvs.add(1.0f);
                             uvs.add((1.0f/3)); uvs.add(1.0f);
-                            uvs.add((1.0f/3)); uvs.add(0.5f);
+                            uvs.add((1.0f/3)); uvs.add(0.5f);*/
+
+                            uvs.add(uv.z); uvs.add(uv.y);
+                            uvs.add(uv.z); uvs.add(uv.w);
+                            uvs.add(uv.x); uvs.add(uv.w);
+                            uvs.add(uv.x); uvs.add(uv.y);
 
                             tris.add(i+2); tris.add(i+1); tris.add(i+0);
                             tris.add(i+0); tris.add(i+3); tris.add(i+2);
@@ -185,10 +225,17 @@ public class Chunk {
 //                            uvs.add((1.0f/3)*2); uvs.add(1.0f);
 //                            uvs.add((1.0f/3)*2); uvs.add(0.5f);
 
-                            uvs.add((1.0f/3)*2); uvs.add(0.5f);
+                            Vector4f uv = block.getUVs(Side.Right);
+
+                            /*uvs.add((1.0f/3)*2); uvs.add(0.5f);
                             uvs.add((1.0f/3)*2); uvs.add(1.0f);
                             uvs.add((1.0f/3)*3); uvs.add(1.0f);
-                            uvs.add((1.0f/3)*3); uvs.add(0.5f);
+                            uvs.add((1.0f/3)*3); uvs.add(0.5f);*/
+
+                            uvs.add(uv.x); uvs.add(uv.y);
+                            uvs.add(uv.x); uvs.add(uv.w);
+                            uvs.add(uv.z); uvs.add(uv.w);
+                            uvs.add(uv.z); uvs.add(uv.y);
 
                             tris.add(i+0); tris.add(i+1); tris.add(i+2);
                             tris.add(i+2); tris.add(i+3); tris.add(i+0);

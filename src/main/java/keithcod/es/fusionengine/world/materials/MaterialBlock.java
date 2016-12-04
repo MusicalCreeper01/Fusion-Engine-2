@@ -40,7 +40,7 @@ public class MaterialBlock extends Material{
         return null;
     }
 
-    public static MaterialBlock GRASS = new MaterialBlock(Domain.DEFAULT, "Grass MaterialBlock", "grass_block");
+//    public static MaterialBlock GRASS = new MaterialBlock(Domain.DEFAULT, "Grass MaterialBlock", "grass_block");
 
     /*public static void registerBlocks(){
         GRASS.register("default");
@@ -53,7 +53,7 @@ public class MaterialBlock extends Material{
 
     public boolean opaque = false;
 
-    private Domain domain = Domain.DEFAULT;
+    public Domain domain = Domain.DEFAULT;
 
     public MaterialBlock(String name){
         this(name, Utils.safeName(name));
@@ -122,6 +122,31 @@ public class MaterialBlock extends Material{
         registryIDs[5] = Registry.registerTexture(domain, texturePaths.get(Side.Back));
     }
 
+    public Vector4f getUVs(Side side){
+        int i = 0;
+        switch (side){
+            case Top:
+                i = 0;
+                break;
+            case Bottom:
+                i = 1;
+                break;
+            case Left:
+                i = 2;
+                break;
+            case Right:
+                i = 3;
+                break;
+            case Front:
+                i = 4;
+                break;
+            case Back:
+                i = 5;
+                break;
+        }
 
+
+        return Registry.getUVs(domain, registryIDs[i]);
+    }
 
 }

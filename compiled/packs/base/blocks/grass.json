@@ -2,6 +2,7 @@
   "name": "Grass Block",
   "opaque": false,
   "textures": {
-    "all": "textures/grass.png"
+    "all": "textures/grass_top.png",
+    "sides":  "textures/grass_side.png"
   }
 }

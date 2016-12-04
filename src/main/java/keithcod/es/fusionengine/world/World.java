@@ -59,8 +59,10 @@ public class World {
 
                 Map<ChunkPosition, Chunk> newchunks = new HashMap<>();
 
-                for(int cx = -2; cx < 2; ++cx){
-                    for(int cy = -2; cy < 2; ++cy){
+                int worldsize = 2;
+
+                for(int cx = -worldsize; cx < worldsize; ++cx){
+                    for(int cy = -worldsize; cy < worldsize; ++cy){
                         Chunk chunk = new Chunk(instance);
 
                         chunk.x = cx;

@@ -114,7 +114,7 @@ public class Client implements IGameLogic {
         GUISolid solid = new GUISolid(new Texture(Registry.getAtlas(0)));
 
         solid.position = new Vector2i(100, 70);
-        solid.size = new Vector2i(288, 16);
+        solid.size = new Vector2i(48, 16);
 
         guiManager.add(solid);
 

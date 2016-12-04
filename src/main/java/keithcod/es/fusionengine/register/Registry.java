@@ -8,6 +8,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static org.lwjgl.opengl.GL11.*;
@@ -17,22 +18,23 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 public class Registry {
 
-    public static final String DOMAIN = "";
+//    public static final String DOMAIN = "";
 
     static Map<Domain, Integer> nextID = new HashMap<>();
-    static Map<Domain, Map<Integer, String>> registeredTextures = new HashMap<>();
+    static Map<Domain, LinkedHashMap<Integer, String>> registeredTextures = new HashMap<>();
     public static Map<Domain, Integer> atlases = new HashMap<>();
-    static Map<Domain, Map<Integer, Vector4f>> uvs = new HashMap<>();
+    static Map<Domain, LinkedHashMap<Integer, Vector4f>> uvs = new HashMap<>();
 
     public static Integer getAtlas(int index){
         return atlases.get( (atlases.keySet().toArray())[ index ] );
     }
 
     public static int registerTexture(Domain domain, String s){
+
         if(!nextID.containsKey(domain))
             nextID.put(domain, 0);
         if(!registeredTextures.containsKey(domain))
-            registeredTextures.put(domain, new HashMap<>());
+            registeredTextures.put(domain, new LinkedHashMap<>());
 
         //TODO: make more efficient method
         if(registeredTextures.get(domain).containsValue(s)){
@@ -54,6 +56,8 @@ public class Registry {
     }
 
     public static void buildAtlas(Domain domain){
+        long start = System.currentTimeMillis();
+
         if(!registeredTextures.containsKey(domain)){
             System.err.println("Cannot build atlas " + domain  + " because it doesn't exist!");
         }
@@ -85,6 +89,10 @@ public class Registry {
                 if(decoder.getHeight() > atlasheight) atlasheight = decoder.getHeight();
             }catch(IOException ex){
                 System.err.println("Error adding texture \"" + s + "\" to the atlas, cannot read file!");
+                Vector4f v4 = new Vector4f(0,0,1,1);
+                if(!uvs.containsKey(domain))
+                    uvs.put(domain, new LinkedHashMap<>());
+                uvs.get(domain).put(i, v4);
             }catch(NullPointerException ex){
                 System.err.println("Error adding texture \"" + s + "\" to the atlas, cannot find texture file!");
             }
@@ -125,9 +133,14 @@ public class Registry {
                 buf.flip();
 
                 if(!uvs.containsKey(domain))
-                    uvs.put(domain, new HashMap<>());
+                    uvs.put(domain, new LinkedHashMap<>());
 
-                uvs.get(domain).put(i, new Vector4f(x / atlaswidth, 0, (x+decoder.getWidth())/atlaswidth, decoder.getHeight() / atlasheight));
+                Vector4f v4 = new Vector4f((float)x / atlaswidth, (float)0, ((float)x+decoder.getWidth())/atlaswidth, (float)decoder.getHeight() / atlasheight);
+                uvs.get(domain).put(i, v4);
+
+                System.out.println(x + ":(" + atlaswidth + "," + atlasheight + ") (" + decoder.getWidth() + "," + decoder.getHeight() + ")");
+//                System.out.println(((float)x+decoder.getWidth())+ "/" + atlaswidth);
+                System.out.println("(" + v4.x + ", " + v4.y + ", " + v4.z + ", " + v4.w + ")");
 
                 glTexSubImage2D(GL_TEXTURE_2D, 0, x, 0, decoder.getWidth(), decoder.getHeight(), GL_RGBA, GL_UNSIGNED_BYTE, buf);
 
@@ -143,5 +156,15 @@ public class Registry {
 
         atlases.put(domain, textureId);
 
+
+        System.out.println("Took " + ((start - System.currentTimeMillis())/1000) + "s to create atlas");
+    }
+
+    public static Vector4f getUVs(Domain domain, int id){
+        if(uvs.containsKey(domain))
+            if(uvs.get(domain).containsKey(id))
+                return uvs.get(domain).get(id);
+
+        return new Vector4f(0,0,1,1);
     }
 }

@@ -1,0 +1,7 @@
+{
+  "name": "Dirt",
+  "opaque": false,
+  "textures": {
+    "all": "textures/dirt.png"
+  }
+}
