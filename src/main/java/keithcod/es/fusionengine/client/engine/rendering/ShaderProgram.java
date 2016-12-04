@@ -31,9 +31,11 @@ public class ShaderProgram {
     public void createUniform(String uniformName) throws Exception {
         int uniformLocation = glGetUniformLocation(programId, uniformName);
         if (uniformLocation < 0) {
-            throw new Exception ("Could not find uniform:" + uniformName);
+//            throw new Exception ("Could not find uniform:" + uniformName);
+            System.out.println("Could not find uniform " + uniformName);
         }
         uniforms.put(uniformName, uniformLocation);
+
     }
 
     public void setUniform(String uniformName, Matrix4f value) {
@@ -44,6 +46,11 @@ public class ShaderProgram {
     }
 
     public void setUniform(String uniformName, int value) {
+        /*if(!uniforms.containsKey(uniformName)){
+//            System.out.println("Attempted to set uniform " + uniformName + " which doesn't exist!");
+            return;
+        }*/
+
         glUniform1i(uniforms.get(uniformName), value);
     }
 

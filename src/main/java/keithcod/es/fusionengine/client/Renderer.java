@@ -28,7 +28,7 @@ public class Renderer {
 
     private static final float Z_NEAR = 0.01f;
 
-    private static final float Z_FAR = 1000.f;
+    private static final float Z_FAR = 10.f;
 
     private final Transformation transformation;
 
@@ -83,7 +83,7 @@ public class Renderer {
         };
 
         if(useFBO)
-            mesh = new Mesh(positions, uvs, indices, new Texture(frameBuffer.colortexture));
+            mesh = new Mesh(positions, uvs, indices, new Texture(frameBuffer.depthtexture));
 
         // Create shader
         shaderProgram = new ShaderProgram();
@@ -101,7 +101,8 @@ public class Renderer {
         postShaderProgram.createFragmentShader(Utils.loadResource("/shaders/post/post.frag"));
         postShaderProgram.link();
 
-//        postShaderProgram.createUniform("gui_texture");
+       /* postShaderProgram.createUniform("colorbuffer");
+        postShaderProgram.createUniform("depthbuffer");*/
 
         guiShaderProgram = new ShaderProgram();
         guiShaderProgram.createVertexShader(Utils.loadResource("/shaders/program/gui.vert"));
@@ -171,6 +172,10 @@ public class Renderer {
 
             postShaderProgram.bind();
 //            glDisable(GL_ALPHA_TEST);
+
+            /*postShaderProgram.setUniform("colorbuffer", 0);
+            postShaderProgram.setUniform("depthbuffer", 1);*/
+
             mesh.render();
 
             postShaderProgram.unbind();
