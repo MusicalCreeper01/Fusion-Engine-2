@@ -21,7 +21,7 @@ import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 
 
-public class EntityControllable implements IControllableEntity {
+public class EntityControllable extends Entity implements IControllableEntity {
 
     boolean canJump = true;
 

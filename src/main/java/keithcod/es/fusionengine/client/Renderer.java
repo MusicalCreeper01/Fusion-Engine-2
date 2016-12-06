@@ -31,16 +31,16 @@ public class Renderer {
     private ShaderProgram postShaderProgram;
     private ShaderProgram guiShaderProgram;
 
-    private Camera camera;
+//    private Camera camera;
     private Window window;
 
     private final FrameBuffer frameBuffer;
 
     private GUIManager guiManager;
 
-    public Renderer(Window window, Camera camera, GUIManager guiManager) {
+    public Renderer(Window window, GUIManager guiManager) {
         this.guiManager = guiManager;
-        this.camera = camera;
+//        this.camera = camera;
         this.window = window;
         transformation = new Transformation();
         frameBuffer = new FrameBuffer();
@@ -118,16 +118,21 @@ public class Renderer {
     }
 
     public Matrix4f getViewMatrix(){
-        return transformation.getViewMatrix(camera);
+        return transformation.getViewMatrix(Client.game().thePlayer().getCamera());
     }
 
     public Matrix4f getProjectionMatrix (Window window){
         return transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
     }
 
+    /*public void render(Window window) {
+//        render(window, camera);
+    }*/
 
     Mesh box;
     public void render(Window window) {
+//        this.camera = cam;
+
         if(useFBO){
             if(frameBuffer.disposed)
                 return;
@@ -175,8 +180,12 @@ public class Renderer {
             postShaderProgram.unbind();
         }
 
+        guiShaderProgram.bind();
+
         guiShaderProgram.setUniform("xTexture", 0);
         guiManager.render(guiShaderProgram);
+
+        guiShaderProgram.unbind();
     }
 
     public void cleanup() {

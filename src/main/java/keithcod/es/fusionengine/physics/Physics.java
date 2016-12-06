@@ -23,6 +23,8 @@ import javax.vecmath.Quat4f;
 import javax.vecmath.Vector3f;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.util.HashMap;
+import java.util.Map;
 
 //http://gamedev.stackexchange.com/questions/41942/moving-the-jbullet-collision-body-to-with-the-player-object
 
@@ -30,6 +32,15 @@ public class Physics {
 
     protected DynamicsWorld dynamicsWorld = null;
     private RigidBody box;
+
+    public static int nextcollider = 0;
+
+    public Map<Integer, CollisionObject> colliders = new HashMap<>();
+
+
+    public static int nextrigidbody = 0;
+
+    public Map<Integer, RigidBody> rigidbodies = new HashMap<>();
 
     public Physics (){
 
@@ -57,26 +68,6 @@ public class Physics {
     }
 
     private DynamicsWorld createDynamicsWorld() {
-        /*// collision configuration contains default setup for memory, collision setup
-        DefaultCollisionConfiguration collisionConfiguration
-                = new DefaultCollisionConfiguration();
-        // calculates exact collision given a list possible colliding pairs
-        CollisionDispatcher dispatcher = new CollisionDispatcher(collisionConfiguration);
-
-        // the maximum size of the collision world. Make sure objects stay
-        // within these boundaries. Don't make the world AABB size too large, it
-        // will harm simulation quality and performance
-        Vector3f worldAabbMin = new Vector3f(-1000, -1000, -1000);
-        Vector3f worldAabbMax = new Vector3f( 1000,  1000,  1000);
-        // maximum number of objects
-        final int maxProxies = 1024;
-        // Broadphase computes an conservative approximate list of colliding pairs
-        BroadphaseInterface broadphase = new AxisSweep3(
-                worldAabbMin, worldAabbMax, maxProxies);
-
-        // constraint (joint) solver
-        ConstraintSolver solver = new SequentialImpulseConstraintSolver();*/
-
         BroadphaseInterface broadphase = new DbvtBroadphase();
         DefaultCollisionConfiguration collisionConfiguration = new DefaultCollisionConfiguration();
         CollisionDispatcher dispatcher = new CollisionDispatcher(collisionConfiguration);
@@ -87,7 +78,7 @@ public class Physics {
                 dispatcher, broadphase, solver, collisionConfiguration);
     }
 
-    private RigidBody createBoxBody() {
+    /*private RigidBody createBoxBody() {
         CollisionShape colShape = new BoxShape(new Vector3f(0.5f,0.5f,0.5f));
 //        CollisionShape colShape = new SphereShape(Chunk.BLOCK_SIZE_HALF);
 
@@ -102,7 +93,7 @@ public class Physics {
         RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, state, colShape, localInertia);
 
         return new RigidBody(rbInfo);
-    }
+    }*/
 
     private RigidBody createGroundBody() {
         // collision object is a horisantal plane located at y = 0
@@ -122,7 +113,10 @@ public class Physics {
         // create and return
         RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, state, colShape, localInertia);
 
-        return new RigidBody(rbInfo);
+        RigidBody rb = new RigidBody(rbInfo);
+        rb.setRestitution(0.0f);
+
+        return rb;
     }
 
     public void update(float fps) {
@@ -154,7 +148,7 @@ public class Physics {
         return new org.joml.Vector3f(trans.origin.x, trans.origin.y, trans.origin.z);
     }
 
-    public void addMesh(org.joml.Vector3f position, Mesh mesh){
+    public int addMesh(org.joml.Vector3f position, Mesh mesh){
         float[] coords = mesh.getVertices();
         int[] indices = mesh.getIndices();
 
@@ -184,12 +178,60 @@ public class Physics {
             CollisionObject colObject = new CollisionObject();
             colObject.setCollisionShape(collisionShape);
             colObject.setWorldTransform(new Transform(new Matrix4f(new Quat4f(0, 0, 0, 1), new Vector3f(position.x, position.y, position.z), 1f)));
+
+            colObject.setRestitution(0.0f);
+            colObject.setFriction(0);
+
             dynamicsWorld.addCollisionObject(colObject);
+
+            int id = nextcollider;
+            ++nextcollider;
+
+            colliders.put(id, colObject);
+
+            return id;
 
         } else {
             System.err.println("Failed to extract geometry from model. ");
         }
+        return -1;
+    }
 
+    public RigidBody createRigidbody (CollisionShape shape, Vector3f pos) {
+        return createRigidbody(shape, pos, 1f);
+    }
+
+    public RigidBody createRigidbody (CollisionShape shape, Vector3f pos, float mass){
+        int id = nextrigidbody;
+        ++nextrigidbody;
+
+        Vector3f localInertia = new Vector3f(0, 0, 0);
+        shape.calculateLocalInertia(mass, localInertia);
+
+        Transform transform = new Transform(new Matrix4f(new Quat4f(0, 0, 0, 1), pos, 1.0f));
+        MotionState state = new DefaultMotionState(transform);
+
+        RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, state, shape, localInertia);
+
+        RigidBody rb = new RigidBody(rbInfo);
+
+        dynamicsWorld.addRigidBody(rb);
+
+        rigidbodies.put(nextrigidbody, rb);
+
+        return rb;
+    }
+
+    public void removeMesh(int i){
+        if(i == -1)
+            return;
+
+        if(colliders.containsKey(i)){
+            CollisionObject co = colliders.get(i);
+
+            dynamicsWorld.removeCollisionObject(co);
+            colliders.remove(i);
+        }
     }
 
     /*DiscreteDynamicsWorld dynamicsWorld;

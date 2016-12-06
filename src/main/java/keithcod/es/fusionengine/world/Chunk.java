@@ -33,6 +33,8 @@ public class Chunk {
 
     private World world;
 
+    private int collider = -1;
+
     public Chunk(World world){
         this.world = world;
 }
@@ -52,7 +54,10 @@ public class Chunk {
 
     }
 
-    public void draw() throws Exception{
+    public void draw() throws Exception {
+        if(collider != -1)
+            world.getPhysics().removeMesh(collider);
+
         List<Float> verts = new ArrayList<>();
         List<Float> uvs = new ArrayList<>();
         List<Integer> tris = new ArrayList<>();
@@ -74,7 +79,7 @@ public class Chunk {
                         MaterialBlock posz = world.getBlockAt(worldx, y, worldz+1);
 
                         MaterialBlock negx = world.getBlockAt(worldx-1, y, worldz);
-                        MaterialBlock negy = y > 0 ? world.getBlockAt(x, y-1, worldz) : null;
+                        MaterialBlock negy = y > 0 ? world.getBlockAt(worldx, y-1, worldz) : null;
                         MaterialBlock negz = world.getBlockAt(worldx, y, worldz-1);
 
                         boolean top = posy == null ? true : false;
@@ -254,11 +259,13 @@ public class Chunk {
 
         System.out.println(vertsa.length);
         mesh = new Mesh(vertsa, convertFloats(uvs), convertIntegers(tris), texture);
+
+        collider = world.getPhysics().addMesh(new Vector3f(Chunk.PHYSICAL_SIZE*x, 0, Chunk.PHYSICAL_SIZE*y), mesh);
     }
 
     public void render(ShaderProgram shaderProgram){
         if(mesh != null) {
-            Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().getCamera());
+            Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().thePlayer().getCamera());
             Matrix4f modelViewMatrix = Client.game().getRenderer().getTransformation().getBasicViewMatrix(new Vector3f(PHYSICAL_SIZE*x, 0, PHYSICAL_SIZE*y), new Vector3f(1, 1, 1), viewMatrix);
             shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
             mesh.render();

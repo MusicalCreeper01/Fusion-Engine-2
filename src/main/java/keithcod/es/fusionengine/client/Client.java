@@ -3,6 +3,8 @@ package keithcod.es.fusionengine.client;
 import com.google.gson.JsonSyntaxException;
 import keithcod.es.fusionengine.client.engine.*;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
+import keithcod.es.fusionengine.core.Location;
+import keithcod.es.fusionengine.core.Player;
 import keithcod.es.fusionengine.physics.Physics;
 import keithcod.es.fusionengine.client.engine.rendering.Texture;
 import keithcod.es.fusionengine.gui.elements.GUISolid;
@@ -47,7 +49,7 @@ public class Client implements IGameLogic {
 
     private final Renderer renderer;
 
-    private final Camera camera;
+    //private final Camera camera;
     private final Vector3f cameraInc;
 
     private GameObject[] gameItems;
@@ -55,11 +57,13 @@ public class Client implements IGameLogic {
     public World world;
     public  Window window;
 
-    private Physics physics;
+//    private Physics physics;
 
     private boolean menu = true;
 
     private GUIManager guiManager;
+
+    private Player player;
 
 //    private GUITruetypeText fpsCounter;
 
@@ -69,20 +73,31 @@ public class Client implements IGameLogic {
         std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;
         std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;*/
 
-
-
         INSTANCE = this;
-        camera = new Camera();
+
+       /* *//*camera = new Camera();
+
         camera.setPosition(0,15,0);
-        camera.setRotation(0,90,0);
+        camera.setRotation(0,90,0);*//*
+
         guiManager = new GUIManager();
 
 //        fpsCounter = new GUITruetypeText("Roboto-Thin.ttf", "Hello world!");
 
         cameraInc = new Vector3f(0, 0, 0);
+
         world = new World();
-        physics = new Physics();
-        renderer = new Renderer(window, camera, guiManager);
+        player = new Player(new Location(world, 0, 200, 0));
+        world.addEntity(player);
+
+//        physics = new Physics();
+        renderer = new Renderer(window, guiManager);*/
+
+        guiManager = new GUIManager();
+
+        cameraInc = new Vector3f(0, 0, 0);
+//        physics = new Physics();
+        renderer = new Renderer(window, guiManager);
 
     }
 
@@ -90,20 +105,24 @@ public class Client implements IGameLogic {
         return renderer;
     }
 
-    public Camera getCamera(){
+    /*public Camera getCamera(){
         return camera;
-    }
+    }*/
 
     public static Client game(){
         return INSTANCE;
     }
 
-    public Physics getPhysics(){
+    /*public Physics getPhysics(){
         return physics;
-    }
+    }*/
 
     public World getWorld(){
         return world;
+    }
+
+    public Player thePlayer(){
+        return player;
     }
 
     GUITruetypeText fpsLabel;
@@ -138,8 +157,24 @@ public class Client implements IGameLogic {
 
         guiManager.build();
 
-        /*world.generate();
-        physics.init(window);*/
+         /*camera = new Camera();
+
+        camera.setPosition(0,15,0);
+        camera.setRotation(0,90,0);*/
+
+//        guiManager = new GUIManager();
+
+//        fpsCounter = new GUITruetypeText("Roboto-Thin.ttf", "Hello world!");
+
+
+
+        world = new World();
+        player = new Player(new Location(world, 0, 40, 0));
+        world.addEntity(player);
+
+
+        world.generate();
+//        physics.init(window);
 
         postInit();
 
@@ -211,8 +246,7 @@ public class Client implements IGameLogic {
 
     @Override
     public void update(double delta, Input input) {
-        if(physics != null)
-            physics.update(60.0f);
+
 
         if (!window.isKeyPressed(GLFW_KEY_Z) && !window.isKeyPressed(GLFW_KEY_X)) {
 //            camera.setPosition(camera.getPosition().x, physics.getPlayerHeight(), camera.getPosition().z);
@@ -221,12 +255,14 @@ public class Client implements IGameLogic {
         }
 
         // Update camera position
-        camera.movePosition(cameraInc.x * CAMERA_POS_STEP * (float)delta, cameraInc.y * CAMERA_POS_STEP * (float)delta, cameraInc.z * CAMERA_POS_STEP * (float)delta);
+        player.movePosition(cameraInc.x * CAMERA_POS_STEP * (float)delta, cameraInc.y * CAMERA_POS_STEP * (float)delta, cameraInc.z * CAMERA_POS_STEP * (float)delta);
+        //camera.movePosition(cameraInc.x * CAMERA_POS_STEP * (float)delta, cameraInc.y * CAMERA_POS_STEP * (float)delta, cameraInc.z * CAMERA_POS_STEP * (float)delta);
 
         // Update camera based on mouse
         if (input.isRightButtonPressed()) {
             Vector2f rotVec = input.getDisplVec();
-            camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY * (float)delta, rotVec.y * MOUSE_SENSITIVITY * (float)delta, 0);
+            player.moveRotation(rotVec.x * MOUSE_SENSITIVITY * (float)delta, rotVec.y * MOUSE_SENSITIVITY * (float)delta, 0);
+            //camera.moveRotation(rotVec.x * MOUSE_SENSITIVITY * (float)delta, rotVec.y * MOUSE_SENSITIVITY * (float)delta, 0);
         }else{
 //            camera.moveRotation(0, .5f, 0);
         }
@@ -235,8 +271,10 @@ public class Client implements IGameLogic {
 
         ++i;
         if(i > 60) {
-            if(fpsLabel != null)
+            if(fpsLabel != null) {
+//                System.out.println("updating fps");
                 fpsLabel.setText(Time.fps + " fps");
+            }
             i = 0;
         }
     }

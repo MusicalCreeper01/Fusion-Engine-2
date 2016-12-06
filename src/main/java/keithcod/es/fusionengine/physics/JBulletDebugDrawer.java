@@ -74,7 +74,7 @@ public class JBulletDebugDrawer extends IDebugDraw {
 
         debugShader.setUniform("projectionMatrix", Client.game().getRenderer().getProjectionMatrix(window));
 
-        Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().getCamera());
+        Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().thePlayer().getCamera());
         Matrix4f modelViewMatrix = Client.game().getRenderer().getTransformation().getBasicViewMatrix(new org.joml.Vector3f(0, 0, 0), new org.joml.Vector3f(1, 1, 1), viewMatrix);
         debugShader.setUniform("modelViewMatrix", modelViewMatrix);
 

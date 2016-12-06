@@ -42,15 +42,16 @@ public class GUIManager {
     }
 
     public void build(){
-
         for(GUIElement el : elements)
             el.build(window);
     }
 
     public void render (ShaderProgram shader){
 //        glDisable(GL_DEPTH_TEST);
+
         for(GUIElement el : elements)
             el.render(shader);
+        shader.unbind();
 //        glEnable(GL_DEPTH_TEST);
     }
 

@@ -153,7 +153,7 @@ public class Registry {
                 if(!uvs.containsKey(domain))
                     uvs.put(domain, new LinkedHashMap<>());
 
-                Vector4f v4 = new Vector4f((float)x / atlaswidth, (float)0, ((float)x+decoder.getWidth())/atlaswidth, (float)decoder.getHeight() / atlasheight);
+                Vector4f v4 = new Vector4f(((float)x+0.001f) / atlaswidth, ((float)0)+0.001f, ((float)x+decoder.getWidth()-0.001f)/atlaswidth, ((float)decoder.getHeight()-0.001f) / atlasheight);
                 uvs.get(domain).put(i, v4);
 
                 System.out.println(x + ":(" + atlaswidth + "," + atlasheight + ") (" + decoder.getWidth() + "," + decoder.getHeight() + ")");

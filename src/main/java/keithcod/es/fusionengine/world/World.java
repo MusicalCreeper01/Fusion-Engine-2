@@ -3,6 +3,8 @@ package keithcod.es.fusionengine.world;
 import jLibNoise.noise.module.Perlin;
 import keithcod.es.fusionengine.client.Client;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
+import keithcod.es.fusionengine.entities.Entity;
+import keithcod.es.fusionengine.physics.Physics;
 import keithcod.es.fusionengine.world.generation.Generator;
 import keithcod.es.fusionengine.world.materials.MaterialBlock;
 import org.joml.Vector3f;
@@ -26,6 +28,21 @@ public class World {
 //    public boolean morning = true;
     public static final int MAX_TIME = 40;
 
+    private Physics physics;
+    private List<Entity> entities = new ArrayList<>();
+
+    public World(){
+        physics = new Physics();
+        physics.init(Client.game().window);
+    }
+
+    public Physics getPhysics (){
+        return physics;
+    }
+
+    public void addEntity(Entity entity){
+        entities.add(entity);
+    }
 
     public MaterialBlock getBlockAt(int x, int y, int z){
         int chunkx = (int)Math.floor((double)x/Chunk.CHUNK_SIZE);
@@ -47,21 +64,7 @@ public class World {
         }
 
     }
-    Timer timer;
-    public World(){
-        /*timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask()
-        {
-            public void run()
-            {
-                ++time;
-                if(time > MAX_TIME)
-                    time = 0;
 
-                System.out.println("World time: " + time);
-            }
-        }, 0, 1000);*/
-    }
 
     boolean newChunks = false;
 
@@ -107,18 +110,6 @@ public class World {
                             }
                         }
 
-                       /* for(int x = 0; x < Chunk.CHUNK_SIZE; ++x) {
-                            for (int z = 0; z < Chunk.CHUNK_SIZE; ++z) {
-                                Double v = ((myModule.getValue((xOffset+x), (yOffset+z), .1) + 1) / 2.0 * heightscale);
-                                int p = v.intValue();
-                                p += base;
-
-                                for(int y = 0; y < p; ++y){
-                                    chunk.setBlock(MaterialBlock.getBlock(1), x,y,z);
-                                }
-                            }
-                        }*/
-
                         try {
                             newchunks.put(new ChunkPosition(cx,cy), chunk);
                             System.out.println("Created chunk (" + cx + ":" + cy + ")");
@@ -140,6 +131,8 @@ public class World {
     long last = System.nanoTime ();
     long now;
 
+    boolean ready = false;
+
     public void update(){
         if(newChunks){
             System.out.println("Rendering chunks...");
@@ -149,25 +142,66 @@ public class World {
                 chunks.put(p, c);
                 try {
                     c.draw();
-                    Client.game().getPhysics().addMesh(new Vector3f(Chunk.PHYSICAL_SIZE*c.x, 0, Chunk.PHYSICAL_SIZE*c.y), c.mesh);
+                    drawSurrounding(c.x, c.y);
+//                    Client.game().getPhysics().addMesh(new Vector3f(Chunk.PHYSICAL_SIZE*c.x, 0, Chunk.PHYSICAL_SIZE*c.y), c.mesh);
                 }catch (Exception ex){
                     ex.printStackTrace();
                     System.out.println("Error drawing chunk " + c.x + ":" + c.y + "!");
                 }
             }
+            ready = true;
         }
 
-        now = System.nanoTime ();
-        timef += (now - last)/1000000000f;
+        if(ready) {
+            now = System.nanoTime();
+            timef += (now - last) / 1000000000f;
 
-        last = now;
-        time = (int)timef;
+            last = now;
+            time = (int) timef;
 
+            for (Entity entity : entities)
+                entity.update();
+
+            if (physics != null)
+                physics.update(60.0f);
+
+        }
 //        System.out.println(timef + ":" + time);
 
     }
 
+    public void drawSurrounding(int x, int y){
+        ChunkPosition c1 = new ChunkPosition(x+1, y);
+        ChunkPosition c2 = new ChunkPosition(x-1, y);
+        ChunkPosition c3 = new ChunkPosition(x, y+1);
+        ChunkPosition c4 = new ChunkPosition(x, y-1);
+        try {
+            if (chunks.containsKey(c1))
+                chunks.get(c1).draw();
+        }catch(Exception ex){}
+
+        try {
+            if (chunks.containsKey(c2))
+                chunks.get(c2).draw();
+        }catch(Exception ex){}
+
+        try {
+            if (chunks.containsKey(c3))
+                chunks.get(c3).draw();
+        }catch(Exception ex){}
+
+        try {
+            if (chunks.containsKey(c4))
+                chunks.get(c4).draw();
+        }catch(Exception ex){}
+    }
+
     public void render(ShaderProgram shaderProgram){
+
+        /*shaderProgram.unbind();
+        physics.drawDebug();
+        shaderProgram.bind();*/
+
         for(ChunkPosition pair : chunks.keySet()){
             Chunk chunk = chunks.get(pair);
 

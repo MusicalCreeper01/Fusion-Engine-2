@@ -132,8 +132,11 @@ public class Window {
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
         glEnable(GL_DEPTH_TEST);
-        glDepthFunc (GL_LEQUAL);
-        glDepthMask( true );
+
+        glEnable(GL_ALPHA_TEST);
+
+//        glDepthFunc (GL_LEQUAL);
+//        glDepthMask( false );
         glEnable(GL_CULL_FACE);
 //        glEnable(GL13.GL_MULTISAMPLE);
 //        glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
