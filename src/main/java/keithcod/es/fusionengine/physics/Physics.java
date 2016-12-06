@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.client.engine.physics;
+package keithcod.es.fusionengine.physics;
 
 import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
@@ -49,10 +49,10 @@ public class Physics {
 
         dynamicsWorld.setGravity(new Vector3f(0f, -10f, 0f));
 
-        box = createBoxBody();
+        //box = createBoxBody();
 //        box.setRestitution(0);
 
-        dynamicsWorld.addRigidBody(box);
+        //dynamicsWorld.addRigidBody(box);
         dynamicsWorld.addRigidBody(createGroundBody());
     }
 

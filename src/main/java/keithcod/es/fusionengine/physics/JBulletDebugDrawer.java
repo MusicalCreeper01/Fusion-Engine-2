@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.client.engine.physics;
+package keithcod.es.fusionengine.physics;
 
 import com.bulletphysics.linearmath.IDebugDraw;
 import keithcod.es.fusionengine.client.Client;

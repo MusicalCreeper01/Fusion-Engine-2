@@ -49,15 +49,15 @@ public class Texture {
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
         //http://gamedev.stackexchange.com/questions/111061/how-can-i-make-terrain-texturing-look-detailed-both-close-up-and-far-away
-        GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
+        //GL30.glGenerateMipmap(GL11.GL_TEXTURE_2D);
         //I preffer LINEAR_MIPMAP because depending of the distance,
         //the textures will be seen better or "worst".
-        GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
+        //GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR_MIPMAP_LINEAR);
         //The more you increase the final value, the most the texture will be affected by the
         //AntiSotropic Filter, that also distorts the texture depending of the distance.
 
         //float aniso = glGetFloat(EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT);
-        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, 0);
+        GL11.glTexParameterf(GL11.GL_TEXTURE_2D, EXTTextureFilterAnisotropic.GL_TEXTURE_MAX_ANISOTROPY_EXT, 4);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -69,7 +69,7 @@ public class Texture {
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, decoder.getWidth(), decoder.getHeight(), 0,
                 GL_RGBA, GL_UNSIGNED_BYTE, buf);
         // Generate Mip Map
-        glGenerateMipmap(GL_TEXTURE_2D);
+        //glGenerateMipmap(GL_TEXTURE_2D);
         return textureId;
     }
 

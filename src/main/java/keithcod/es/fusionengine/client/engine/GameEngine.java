@@ -56,11 +56,11 @@ public class GameEngine implements Runnable {
         gameLogic.init(window);
     }
 
-    public static int fps = 0;
+    /*public static int fps = 0;
 
     public static int getFPS(){
         return fps;
-    }
+    }*/
 
     protected void gameLoop() {
 
@@ -81,6 +81,8 @@ public class GameEngine implements Runnable {
             delta = (now - lastTime) / (1000000000f / TARGET_FPS);
             lastTime = now;
 
+            Time.deltaTime = delta;
+
             //long currMillis = System.currentTimeMillis();
             //if(currMillis - updateTimer > updateInterval) {
             //    System.out.println(currMillis - updateTimer);
@@ -94,7 +96,8 @@ public class GameEngine implements Runnable {
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
 //                System.out.println(frames + " fps");
-                fps = frames;
+//                fps = frames;
+                Time.fps = frames;
                 frames = 0;
             }
         }

@@ -131,8 +131,9 @@ public class Window {
         // Set the clear color
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-//        glDepthFunc (GL_LEQUAL);
         glEnable(GL_DEPTH_TEST);
+        glDepthFunc (GL_LEQUAL);
+        glDepthMask( true );
         glEnable(GL_CULL_FACE);
 //        glEnable(GL13.GL_MULTISAMPLE);
 //        glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);

@@ -6,16 +6,11 @@ import keithcod.es.fusionengine.client.engine.objects.Camera;
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
 import keithcod.es.fusionengine.client.engine.rendering.FrameBuffer;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
-import keithcod.es.fusionengine.client.engine.rendering.Texture;
 import keithcod.es.fusionengine.client.engine.rendering.Transformation;
 import keithcod.es.fusionengine.gui.GUIManager;
 import org.joml.Matrix4f;
-import org.joml.Vector3f;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE1;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
 
@@ -28,7 +23,7 @@ public class Renderer {
 
     private static final float Z_NEAR = 0.01f;
 
-    private static final float Z_FAR = 1000.f;
+    private static final float Z_FAR = 200.f;
 
     private final Transformation transformation;
 
@@ -87,8 +82,8 @@ public class Renderer {
 
         // Create shader
         shaderProgram = new ShaderProgram();
-        shaderProgram.createVertexShader(Utils.loadResource("/shaders/program/vertex.vs"));
-        shaderProgram.createFragmentShader(Utils.loadResource("/shaders/program/fragment.fs"));
+        shaderProgram.createVertexShader(Utils.loadResource("/shaders/program/simple.vert"));
+        shaderProgram.createFragmentShader(Utils.loadResource("/shaders/program/block.frag"));
         shaderProgram.link();
 
         // Create uniforms for modelView and projection matrices and texture

@@ -3,11 +3,10 @@ package keithcod.es.fusionengine.client;
 import com.google.gson.JsonSyntaxException;
 import keithcod.es.fusionengine.client.engine.*;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
-import keithcod.es.fusionengine.client.engine.physics.Physics;
+import keithcod.es.fusionengine.physics.Physics;
 import keithcod.es.fusionengine.client.engine.rendering.Texture;
-import keithcod.es.fusionengine.core.Color;
 import keithcod.es.fusionengine.gui.elements.GUISolid;
-import keithcod.es.fusionengine.packs.Pack;
+import keithcod.es.fusionengine.extentions.packs.Pack;
 import keithcod.es.fusionengine.register.Registry;
 import keithcod.es.fusionengine.world.World;
 import keithcod.es.fusionengine.gui.GUIManager;
@@ -24,6 +23,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL20.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -62,6 +64,13 @@ public class Client implements IGameLogic {
 //    private GUITruetypeText fpsCounter;
 
     public Client() {
+        /*std::cout << "OpenGL version: " << glGetString(GL_VERSION) << std::endl;
+        std::cout << "GLSL version: " << glGetString(GL_SHADING_LANGUAGE_VERSION) << std::endl;
+        std::cout << "Vendor: " << glGetString(GL_VENDOR) << std::endl;
+        std::cout << "Renderer: " << glGetString(GL_RENDERER) << std::endl;*/
+
+
+
         INSTANCE = this;
         camera = new Camera();
         camera.setPosition(0,15,0);
@@ -101,6 +110,13 @@ public class Client implements IGameLogic {
 
     @Override
     public void init(Window window) throws Exception {
+        System.out.println("\nOpenGL Version: " + glGetString(GL_VERSION));
+        System.out.println("GLSL Version: " +     glGetString(GL_SHADING_LANGUAGE_VERSION));
+        System.out.println("GLFW Version: " +     glfwGetVersionString());
+        System.out.println("Vendor Version: " +   glGetString(GL_VENDOR));
+        System.out.println("Renderer Version: " + glGetString(GL_RENDERER)+"\n");
+        System.out.println("Extensions: " +       glGetString(GL_EXTENSIONS)+"\n");
+
         preInit();
 
         register();
@@ -122,8 +138,8 @@ public class Client implements IGameLogic {
 
         guiManager.build();
 
-        world.generate();
-        physics.init(window);
+        /*world.generate();
+        physics.init(window);*/
 
         postInit();
 
@@ -215,13 +231,12 @@ public class Client implements IGameLogic {
 //            camera.moveRotation(0, .5f, 0);
         }
 
-
         world.update();
 
         ++i;
         if(i > 60) {
             if(fpsLabel != null)
-                fpsLabel.setText(GameEngine.getFPS() + " fps");
+                fpsLabel.setText(Time.fps + " fps");
             i = 0;
         }
     }
@@ -231,7 +246,6 @@ public class Client implements IGameLogic {
     @Override
     public void render(Window window) {
 
-        //renderer.render(window, camera, gameItems);
         renderer.render(window);
 
     }

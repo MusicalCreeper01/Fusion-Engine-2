@@ -1,6 +1,9 @@
 package keithcod.es.fusionengine.client.engine.rendering;
 
 
+import keithcod.es.fusionengine.client.Client;
+import keithcod.es.fusionengine.client.engine.Time;
+import keithcod.es.fusionengine.world.World;
 import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
@@ -46,12 +49,11 @@ public class ShaderProgram {
     }
 
     public void setUniform(String uniformName, int value) {
-        /*if(!uniforms.containsKey(uniformName)){
-//            System.out.println("Attempted to set uniform " + uniformName + " which doesn't exist!");
-            return;
-        }*/
-
         glUniform1i(uniforms.get(uniformName), value);
+    }
+
+    public void setUniform(String uniformName, double value) {
+        glUniform1f(uniforms.get(uniformName), (float)value);
     }
 
     public void setUniform(String uniformName, float value) {
@@ -101,10 +103,25 @@ public class ShaderProgram {
             System.err.println("Warning validating Shader code: " + glGetProgramInfoLog(programId, 1024));
         }
 
+        createUniform("deltatime");
+        createUniform("viewMatrix");
+        createUniform("time");
+        createUniform("timef");
+        createUniform("maxtime");
+        createUniform("fps");
+
     }
 
     public void bind() {
         glUseProgram(programId);
+
+        setUniform("deltatime", Time.deltaTime);
+        /*setUniform("viewMatrix");
+        */
+        setUniform("time", Client.game().getWorld().time);
+        setUniform("timef", Client.game().getWorld().timef);
+        setUniform("maxtime", World.MAX_TIME);
+        setUniform("fps", Time.fps);
     }
 
     public void unbind() {

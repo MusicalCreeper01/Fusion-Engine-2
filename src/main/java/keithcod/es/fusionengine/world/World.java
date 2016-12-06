@@ -7,9 +7,7 @@ import keithcod.es.fusionengine.world.generation.Generator;
 import keithcod.es.fusionengine.world.materials.MaterialBlock;
 import org.joml.Vector3f;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class World {
 
@@ -23,6 +21,10 @@ public class World {
     Map<ChunkPosition, Chunk> chunks = new HashMap<>();
     Map<ChunkPosition, Chunk> newchunks = new HashMap<>();
 
+    public int time = 0;
+    public float timef = 0;
+//    public boolean morning = true;
+    public static final int MAX_TIME = 40;
 
 
     public MaterialBlock getBlockAt(int x, int y, int z){
@@ -45,8 +47,24 @@ public class World {
         }
 
     }
+    Timer timer;
+    public World(){
+        /*timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask()
+        {
+            public void run()
+            {
+                ++time;
+                if(time > MAX_TIME)
+                    time = 0;
+
+                System.out.println("World time: " + time);
+            }
+        }, 0, 1000);*/
+    }
 
     boolean newChunks = false;
+
 
     public void generate(){
         final World instance = this;
@@ -63,7 +81,7 @@ public class World {
 
                 newchunks.clear();
 
-                int worldsize = 3;
+                int worldsize = 2;
 
                 for(int cx = -worldsize; cx < worldsize; ++cx){
                     for(int cy = -worldsize; cy < worldsize; ++cy){
@@ -119,6 +137,8 @@ public class World {
         }).start();
     }
 
+    long last = System.nanoTime ();
+    long now;
 
     public void update(){
         if(newChunks){
@@ -135,16 +155,16 @@ public class World {
                     System.out.println("Error drawing chunk " + c.x + ":" + c.y + "!");
                 }
             }
-            /*for(Chunk c : newchunks.values()) {
-                try {
-                    c.draw();
-                    Client.game().getPhysics().addMesh(new Vector3f(Chunk.PHYSICAL_SIZE*c.x, 0, Chunk.PHYSICAL_SIZE*c.y), c.mesh);
-                }catch (Exception ex){
-                    ex.printStackTrace();
-                    System.out.println("Error drawing chunk " + c.x + ":" + c.y + "!");
-                }
-            }*/
         }
+
+        now = System.nanoTime ();
+        timef += (now - last)/1000000000f;
+
+        last = now;
+        time = (int)timef;
+
+//        System.out.println(timef + ":" + time);
+
     }
 
     public void render(ShaderProgram shaderProgram){

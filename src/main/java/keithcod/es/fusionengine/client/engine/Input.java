@@ -67,8 +67,10 @@ public class Input {
             @Override
             public void invoke(long window, boolean entered) {
                 inWindow = entered;
+                System.out.println("Mouse entered: " + entered);
             }
         });
+
         glfwSetMouseButtonCallback(window.getWindowHandle(), mouseButtonCallback = new GLFWMouseButtonCallback() {
             @Override
             public void invoke(long window, int button, int action, int mods) {
@@ -93,11 +95,17 @@ public class Input {
     }
 
     public static void input(Window window) {
+        if(!inWindow)
+            return;
+
         displVec.x = 0;
         displVec.y = 0;
         if(!lockMouse) {
             glfwSetInputMode(window.getWindowHandle(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
             if (previousPos.x > 0 && previousPos.y > 0 && inWindow) {
+                if(currentPos.x > window.getWidth() || currentPos.y > window.getHeight())
+                    return;
+
                 double deltax = currentPos.x - previousPos.x;
                 double deltay = currentPos.y - previousPos.y;
                 boolean rotateX = deltax != 0;

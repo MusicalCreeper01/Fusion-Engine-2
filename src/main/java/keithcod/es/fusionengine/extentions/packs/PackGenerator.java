@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.packs;
+package keithcod.es.fusionengine.extentions.packs;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;

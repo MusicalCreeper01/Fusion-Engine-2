@@ -11,7 +11,19 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static org.lwjgl.opengl.ARBTextureStorage.*;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL14.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL40.*;
+import static org.lwjgl.opengl.GL31.*;
+import static org.lwjgl.opengl.GL32.*;
+import static org.lwjgl.opengl.GL33.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL21.*;
+
 import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
@@ -112,14 +124,20 @@ public class Registry {
         // Tell OpenGL how to unpack the RGBA bytes. Each component is 1 byte size
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexStorage2D(GL_TEXTURE_2D, 3, GL_RGBA8, atlaswidth, atlasheight);
+
+        // Upload the texture data
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, atlaswidth, atlasheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, (ByteBuffer) null);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
         glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         glTexParameteri (GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
-        // Upload the texture data
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, atlaswidth, atlasheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, (ByteBuffer) null);
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAX_LEVEL, 3);
+
+//        glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 
         int x = 0;
 
@@ -152,6 +170,9 @@ public class Registry {
 
         }
 
+        glEnable(GL_TEXTURE_2D);
+        glGenerateMipmap(GL_TEXTURE_2D);
+
         System.out.println(domain.name + ":atlas (" + atlaswidth + ":" + atlasheight + ")");
 
         atlases.put(domain, textureId);
@@ -168,3 +189,5 @@ public class Registry {
         return new Vector4f(0,0,1,1);
     }
 }
+
+

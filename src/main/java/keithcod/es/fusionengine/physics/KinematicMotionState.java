@@ -1,4 +1,4 @@
-package keithcod.es.fusionengine.client.engine.physics;
+package keithcod.es.fusionengine.physics;
 
 import com.bulletphysics.linearmath.MotionState;
 import com.bulletphysics.linearmath.Transform;

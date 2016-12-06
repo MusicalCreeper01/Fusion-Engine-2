@@ -1,0 +1,8 @@
+{
+  "name": "Default Style",
+  "background": {
+    "src": "textures/skybox.jpg",
+    "stretch": false,
+    "skybox": true
+  }
+}
