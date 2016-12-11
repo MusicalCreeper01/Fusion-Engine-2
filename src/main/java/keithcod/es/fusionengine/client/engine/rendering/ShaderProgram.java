@@ -8,6 +8,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 
+import javax.vecmath.Vector3f;
 import java.nio.FloatBuffer;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class ShaderProgram {
         // Dump the matrix into a float buffer
         FloatBuffer fb = BufferUtils.createFloatBuffer(16);
         value.get(fb);
+//        System.out.println(uniforms.get(uniformName));
         glUniformMatrix4fv(uniforms.get(uniformName), false, fb);
     }
 
@@ -64,6 +66,19 @@ public class ShaderProgram {
 
         glUniform4fv(uniforms.get(uniformName), new float[] {value.x, value.y, value.z, value.w});
 //        glUniform1i(uniforms.get(uniformName), value);
+
+    }
+
+    public void setUniform(String uniformName, Vector3f[] v3) {
+        float[] f = new float[v3.length*3];
+        int i = 0;
+        for(Vector3f v : v3){
+            f[i]   = v.x;
+            f[i+1] = v.y;
+            f[i+2] = v.z;
+            i += 3;
+        }
+        glUniform3fv(uniforms.get(uniformName), f);
 
     }
 
@@ -116,8 +131,7 @@ public class ShaderProgram {
         glUseProgram(programId);
 
         setUniform("deltatime", Time.deltaTime);
-        /*setUniform("viewMatrix");
-        */
+        setUniform("viewMatrix", Client.game().getRenderer().getViewMatrix());
         setUniform("time", Client.game().getWorld().time);
         setUniform("timef", Client.game().getWorld().timef);
         setUniform("maxtime", World.MAX_TIME);

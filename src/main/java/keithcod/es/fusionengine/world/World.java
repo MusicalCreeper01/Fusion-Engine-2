@@ -133,7 +133,7 @@ public class World {
 
     boolean ready = false;
 
-    public void update(){
+    public void update(double delta){
         if(newChunks){
             System.out.println("Rendering chunks...");
             newChunks = false;
@@ -160,7 +160,7 @@ public class World {
             time = (int) timef;
 
             if (physics != null)
-                physics.update(60.0f);
+                physics.update(delta);
 
             for (Entity entity : entities)
                 entity.update();

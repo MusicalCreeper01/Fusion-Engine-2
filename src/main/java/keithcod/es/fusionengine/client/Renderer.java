@@ -10,6 +10,10 @@ import keithcod.es.fusionengine.client.engine.rendering.Transformation;
 import keithcod.es.fusionengine.gui.GUIManager;
 import org.joml.Matrix4f;
 
+import javax.vecmath.Vector3f;
+
+import java.util.Random;
+
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30.glGenVertexArrays;
@@ -35,6 +39,7 @@ public class Renderer {
     private Window window;
 
     private final FrameBuffer frameBuffer;
+    private final FrameBuffer depthFrameBuffer;
 
     private GUIManager guiManager;
 
@@ -44,6 +49,7 @@ public class Renderer {
         this.window = window;
         transformation = new Transformation();
         frameBuffer = new FrameBuffer();
+        depthFrameBuffer = new FrameBuffer();
     }
 
     public Transformation getTransformation (){
@@ -54,9 +60,19 @@ public class Renderer {
 
     boolean useFBO = true;
 
+    int RAND_MAX = 32767;
+    Vector3f[] kernel;
+
+    public float rand (){
+        Random r = new Random();
+        return r.nextInt();
+    }
+
     public void init(Window window) throws Exception {
-        if(useFBO)
+        if(useFBO) {
             frameBuffer.init(window.getWidth(), window.getHeight());
+            depthFrameBuffer.init(window.getWidth(), window.getHeight());
+        }
 
         float size = 1.0f;
         float[] positions = new float[]{
@@ -80,6 +96,25 @@ public class Renderer {
         if(useFBO)
             mesh = new Mesh(positions, uvs, indices, null);//new Texture(frameBuffer.colortexture));
 
+        int KERNEL_SIZE = 128;
+        kernel = new Vector3f[KERNEL_SIZE];
+
+
+        for (int i = 0 ; i < KERNEL_SIZE ; i++ ) {
+            float scale = (float)i / (float)(KERNEL_SIZE);
+            Vector3f v = new Vector3f();
+            v.x = 2.0f * (float)rand()/RAND_MAX - 1.0f;
+            v.y = 2.0f * (float)rand()/RAND_MAX - 1.0f;
+            v.z = 2.0f * (float)rand()/RAND_MAX - 1.0f;
+            // Use an acceleration function so more points are
+            // located closer to the origin
+            v.x *= (0.1f + 0.9f * scale * scale);
+            v.y *= (0.1f + 0.9f * scale * scale);
+            v.z *= (0.1f + 0.9f * scale * scale);
+
+            kernel[i] = v;
+        }
+
         // Create shader
         shaderProgram = new ShaderProgram();
         shaderProgram.createVertexShader(Utils.loadResource("/shaders/program/simple.vert"));
@@ -98,6 +133,7 @@ public class Renderer {
 
         postShaderProgram.createUniform("colorbuffer");
         postShaderProgram.createUniform("depthbuffer");
+        postShaderProgram.createUniform("gKernel");
 
         guiShaderProgram = new ShaderProgram();
         guiShaderProgram.createVertexShader(Utils.loadResource("/shaders/program/gui.vert"));
@@ -170,10 +206,17 @@ public class Renderer {
         if(useFBO) {
             frameBuffer.unbind(window.getWidth(), window.getHeight());
 
+            depthFrameBuffer.bind();
+
+            Client.game().getWorld().render(shaderProgram);
+
+            depthFrameBuffer.unbind(window.getWidth(), window.getHeight());
+
             postShaderProgram.bind();
 
             postShaderProgram.setUniform("colorbuffer", 0);
             postShaderProgram.setUniform("depthbuffer", 1);
+            postShaderProgram.setUniform("gKernel", kernel);
 
             mesh.render();
 

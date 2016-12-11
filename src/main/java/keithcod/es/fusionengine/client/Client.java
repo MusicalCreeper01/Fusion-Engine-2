@@ -274,7 +274,7 @@ public class Client implements IGameLogic {
 //            camera.moveRotation(0, .5f, 0);
         }
 
-        world.update();
+        world.update(delta);
 
         ++i;
         if(i > 60) {

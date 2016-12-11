@@ -15,15 +15,17 @@ import javax.vecmath.Vector3f;
 public class EntityPlayer extends Entity{
 
     public EntityPlayer (Location position){
-        CapsuleShape shape = new CapsuleShape(Chunk.BLOCK_SIZE_HALF-0.02f, Chunk.BLOCK_SIZE-0.05f);
-//        shape.setMargin(0.1f);
+        CapsuleShape shape = new CapsuleShape(Chunk.BLOCK_SIZE_HALF-0.2f, Chunk.BLOCK_SIZE-0.05f);
+//        BoxShape shape = new BoxShape(new Vector3f(Chunk.BLOCK_SIZE_HALF-0.5f, Chunk.BLOCK_SIZE-0.05f, Chunk.BLOCK_SIZE_HALF-0.5f));
+
         rigidbody = position.world.getPhysics().createRigidbody(shape, new Vector3f(position.x, position.y, position.z), 1f);
-//        rigidbody = position.world.getPhysics().createRigidbody(new BoxShape(new Vector3f(Chunk.BLOCK_SIZE_HALF, Chunk.BLOCK_SIZE, Chunk.BLOCK_SIZE_HALF)), new Vector3f(position.x, position.y, position.z), 1f);
         rigidbody.setRestitution(0);
+        rigidbody.setDamping(0.3f, 0.2f);
         rigidbody.setFriction(0.1f);
         rigidbody.setAngularFactor(0.0f);
 
-//        rigidbody.setAngularVelocity(new Vector3f(0,1,0));
+        rigidbody.setActivationState(CollisionObject.DISABLE_DEACTIVATION);
+
     }
 
     @Override
@@ -45,7 +47,6 @@ public class EntityPlayer extends Entity{
     }
 
     public void move(Location loc){
-//        System.out.println(position + ": " + loc);
         position = loc;
         if(rigidbody != null){
             Transform trans = new Transform();
@@ -58,25 +59,8 @@ public class EntityPlayer extends Entity{
     }
 
     public void applyForce(float x1, float y, float z1){
-
-        /*double angle = Math.toRadians(rotation.y);
-
-        x = (float)Math.sin(angle) * z;
-        y = (float)Math.cos(angle) * -1.0f * z;*/
-
-        /*if ( z != 0 ) {
-            x += (float)Math.sin(Math.toRadians(rotation.y)) * -1.0f * z;
-            z += (float)Math.cos(Math.toRadians(rotation.y)) * z;
-        }
-        if ( x != 0) {
-            x += (float)Math.sin(Math.toRadians(rotation.y - 90)) * -1.0f * x;
-            z += (float)Math.cos(Math.toRadians(rotation.y - 90)) * x;
-        }*/
-
         float x = 0;
         float z = 0;
-
-        System.out.println(x + ":" + z);
 
         if ( z1 != 0 ) {
             x += (float)Math.sin(Math.toRadians(rotation.getY())) * -1.0f * z1;
@@ -87,14 +71,9 @@ public class EntityPlayer extends Entity{
             z += (float)Math.cos(Math.toRadians(rotation.getY() - 90)) * x1;
         }
 
-        /*double angle = Math.toRadians(rotation.getY());
-        double sin = Math.sin( angle );
-        double cos = Math.cos( angle );
-        x = (float)(x * cos - z * sin);
-        z = (float)(x * sin + z * cos);*/
+        y *= 4;
 
-
-        rigidbody.setActivationState(CollisionObject.DISABLE_DEACTIVATION);
+//        rigidbody.setActivationState(CollisionObject.DISABLE_DEACTIVATION);
         rigidbody.setLinearVelocity(new Vector3f(x, y, z));
     }
 

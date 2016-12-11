@@ -28,26 +28,17 @@ public class Player extends EntityPlayer{
         camera.setPosition(position.x, position.y, position.z);
     }
 
-
     public void movePosition(float x, float y, float z){
         applyForce(x, y, z);
     }
 
     public void moveRotation(float x, float y, float z) {
-        //System.out.println(y);
         rotation.setX(rotation.getX() + x);
         rotation.setY(rotation.getY() + y);
         rotation.setZ(rotation.getZ() + z);
-        /*rotation.setX(rotation.getX() + (int)x);
-        rotation.setY(rotation.getY() + (int)y);
-        rotation.setZ(rotation.getZ() + (int)z);*/
-        /*rotation.x += Math.toDegrees(x);
-        rotation.y += Math.toDegrees(y);
-        rotation.z += Math.toDegrees(z);*/
 
         camera.moveRotation(x, y, z);
-        /*System.out.println("cam: " + camera.getRotation().y);
-        System.out.println("rot: " + rotation.getY());*/
+
         this.rotate(0, y, 0);
     }
 

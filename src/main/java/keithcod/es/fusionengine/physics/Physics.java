@@ -55,10 +55,11 @@ public class Physics {
 
         debugDraw = new JBulletDebugDrawer(window);
         dynamicsWorld.setDebugDrawer(debugDraw);
+        debugDraw.setDebugMode(DebugDrawModes.DRAW_WIREFRAME + DebugDrawModes.DRAW_AABB);
 
 
-
-        dynamicsWorld.setGravity(new Vector3f(0f, -30f, 0f));
+//        dynamicsWorld.setGravity(new Vector3f(0f, -30f, 0f));
+        dynamicsWorld.setGravity(new Vector3f(0f, -100f, 0f));
 
         //box = createBoxBody();
 //        box.setRestitution(0);
@@ -119,9 +120,9 @@ public class Physics {
         return rb;
     }
 
-    public void update(float fps) {
+    public void update(double delta) {
         if(dynamicsWorld != null)
-            dynamicsWorld.stepSimulation(1 / fps, 10);
+            dynamicsWorld.stepSimulation((float)delta , 2, 1/60f);
 
 
 //        Transform trans = new Transform();
@@ -130,7 +131,7 @@ public class Physics {
     }
 
     public void drawDebug(){
-        debugDraw.setDebugMode(DebugDrawModes.DRAW_WIREFRAME | DebugDrawModes.DRAW_AABB | DebugDrawModes.ENABLE_CCD);
+        debugDraw.setDebugMode(DebugDrawModes.DRAW_WIREFRAME + DebugDrawModes.DRAW_AABB);
         dynamicsWorld.debugDrawWorld();
 
 //        System.out.println("Debug mode: " + debugDraw.getDebugMode());
@@ -174,6 +175,7 @@ public class Physics {
 //            meshShape.setLocalScaling(new Vector3f(0.5f, 0.5f, 0.5f));
 
             CollisionShape collisionShape = meshShape;
+            collisionShape.setMargin(0.1f);
 
             CollisionObject colObject = new CollisionObject();
             colObject.setCollisionShape(collisionShape);
