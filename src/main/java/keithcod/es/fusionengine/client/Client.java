@@ -37,7 +37,8 @@ public class Client implements IGameLogic {
 
 //    private static final float MOUSE_SENSITIVITY = 0.2f;
     private static final float MOUSE_SENSITIVITY = 0.8f;
-    private static final float CAMERA_POS_STEP = 0.05f;
+//    private static final float CAMERA_POS_STEP = 0.05f;
+    private static final float CAMERA_POS_STEP = 3.0f;
 
     private int displxInc = 0;
 
@@ -248,6 +249,7 @@ public class Client implements IGameLogic {
     public void update(double delta, Input input) {
 
 
+
         if (!window.isKeyPressed(GLFW_KEY_Z) && !window.isKeyPressed(GLFW_KEY_X)) {
 //            camera.setPosition(camera.getPosition().x, physics.getPlayerHeight(), camera.getPosition().z);
         }else{
@@ -256,7 +258,12 @@ public class Client implements IGameLogic {
 
         // Update camera position
         player.movePosition(cameraInc.x * CAMERA_POS_STEP * (float)delta, cameraInc.y * CAMERA_POS_STEP * (float)delta, cameraInc.z * CAMERA_POS_STEP * (float)delta);
-        //camera.movePosition(cameraInc.x * CAMERA_POS_STEP * (float)delta, cameraInc.y * CAMERA_POS_STEP * (float)delta, cameraInc.z * CAMERA_POS_STEP * (float)delta);
+
+
+//        player.movePosition(cameraInc.x * CAMERA_POS_STEP * (float)delta, cameraInc.z * CAMERA_POS_STEP * (float)delta);
+
+
+//        camera.movePosition(cameraInc.x * CAMERA_POS_STEP * (float)delta, cameraInc.y * CAMERA_POS_STEP * (float)delta, cameraInc.z * CAMERA_POS_STEP * (float)delta);
 
         // Update camera based on mouse
         if (input.isRightButtonPressed()) {

@@ -1,71 +1,54 @@
 package keithcod.es.fusionengine.core;
 
 import keithcod.es.fusionengine.client.engine.objects.Camera;
-import keithcod.es.fusionengine.entities.EntityPhysical;
 import keithcod.es.fusionengine.entities.EntityPlayer;
 
-import javax.vecmath.Vector3f;
 import java.util.UUID;
 
 public class Player extends EntityPlayer{
 
-    public String name = "KawaiiKisu";
+    public String name = "Kisu";
 
     public UUID uuid = UUID.nameUUIDFromBytes(name.getBytes());
 
-//    EntityPlayer entity;
     Camera camera;
 
     public Player(Location pos){
         super(pos);
 
-//        entity = new EntityPlayer(pos);
         camera = new Camera();
 
         rotation = new Rotation();
-        setPosition(pos);
-        setRotation(rotation);
+        position = pos;
     }
 
     @Override
     public void update(){
         super.update();
-
-        setPosition(this.position);
-        setRotation(this.rotation);
+        camera.setPosition(position.x, position.y, position.z);
     }
 
-    public void setPosition(Location location){
-        this.position = location;
-
-        //entity.move(new Vector3f(location.x, location.y, location.z));
-        camera.setPosition(location.x, location.y, location.z);
-    }
 
     public void movePosition(float x, float y, float z){
-        position.x += x;
-        position.y += y;
-        position.z += z;
-        camera.movePosition(x, y, z);
-    }
-
-    public void setRotation(float x, float y, float z) {
-        rotation.x = x;
-        rotation.y = y;
-        rotation.z = z;
-    }
-
-    public void setRotation(Rotation rot) {
-        rotation.x = rot.x;
-        rotation.y = rot.y;
-        rotation.z = rot.z;
+        applyForce(x, y, z);
     }
 
     public void moveRotation(float x, float y, float z) {
-        rotation.x += x;
-        rotation.y += y;
-        rotation.z += z;
+        //System.out.println(y);
+        rotation.setX(rotation.getX() + x);
+        rotation.setY(rotation.getY() + y);
+        rotation.setZ(rotation.getZ() + z);
+        /*rotation.setX(rotation.getX() + (int)x);
+        rotation.setY(rotation.getY() + (int)y);
+        rotation.setZ(rotation.getZ() + (int)z);*/
+        /*rotation.x += Math.toDegrees(x);
+        rotation.y += Math.toDegrees(y);
+        rotation.z += Math.toDegrees(z);*/
+
         camera.moveRotation(x, y, z);
+        /*System.out.println("cam: " + camera.getRotation().y);
+        System.out.println("rot: " + rotation.getY());*/
+        this.rotate(0, y, 0);
     }
 
     public Camera getCamera(){

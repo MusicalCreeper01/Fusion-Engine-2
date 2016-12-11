@@ -58,7 +58,7 @@ public class Physics {
 
 
 
-        dynamicsWorld.setGravity(new Vector3f(0f, -10f, 0f));
+        dynamicsWorld.setGravity(new Vector3f(0f, -30f, 0f));
 
         //box = createBoxBody();
 //        box.setRestitution(0);
@@ -179,8 +179,10 @@ public class Physics {
             colObject.setCollisionShape(collisionShape);
             colObject.setWorldTransform(new Transform(new Matrix4f(new Quat4f(0, 0, 0, 1), new Vector3f(position.x, position.y, position.z), 1f)));
 
+
+
             colObject.setRestitution(0.0f);
-            colObject.setFriction(0);
+            colObject.setFriction(0.0f);
 
             dynamicsWorld.addCollisionObject(colObject);
 
@@ -205,6 +207,8 @@ public class Physics {
         int id = nextrigidbody;
         ++nextrigidbody;
 
+//        shape.setMargin(0.1f);
+
         Vector3f localInertia = new Vector3f(0, 0, 0);
         shape.calculateLocalInertia(mass, localInertia);
 
@@ -214,6 +218,9 @@ public class Physics {
         RigidBodyConstructionInfo rbInfo = new RigidBodyConstructionInfo(mass, state, shape, localInertia);
 
         RigidBody rb = new RigidBody(rbInfo);
+
+        rb.setRestitution(0.1f);
+        rb.setHitFraction(0);
 
         dynamicsWorld.addRigidBody(rb);
 

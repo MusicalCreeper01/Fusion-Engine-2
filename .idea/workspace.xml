@@ -2,22 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3724fb8d-23c7-4d77-86e5-2a6cb4335d3c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Location.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Player.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Rotation.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/Entity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPhysical.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Client.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Client.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Renderer.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Renderer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/Window.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/Window.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityControllable.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityControllable.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/GameEngine.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/GameEngine.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Location.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Location.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Player.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Player.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Rotation.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Rotation.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/Entity.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/Entity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPlayer.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPlayer.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/gui/GUIManager.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/gui/GUIManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/JBulletDebugDrawer.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/JBulletDebugDrawer.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/Physics.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/Physics.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/register/Registry.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/register/Registry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/Chunk.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/Chunk.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/World.java" afterPath="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/World.java" />
     </list>
     <ignored path="FusionEngine2.iws" />
@@ -48,8 +41,8 @@
       <file leaf-file-name="Renderer.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Renderer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="180" column="9" selection-start-line="180" selection-start-column="9" selection-end-line="180" selection-end-column="9" />
+            <state relative-caret-position="196">
+              <caret line="167" column="2" selection-start-line="167" selection-start-column="2" selection-end-line="167" selection-end-column="2" />
               <folding />
             </state>
           </provider>
@@ -59,21 +52,10 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Client.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="384">
-              <caret line="268" column="0" selection-start-line="268" selection-start-column="0" selection-end-line="268" selection-end-column="0" />
+              <caret line="270" column="23" selection-start-line="270" selection-start-column="23" selection-end-line="270" selection-end-column="23" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4927#4933#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GUITruetypeText.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/gui/elements/GUITruetypeText.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="20">
-              <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -81,23 +63,8 @@
       <file leaf-file-name="World.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/World.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="190" column="30" selection-start-line="190" selection-start-column="30" selection-end-line="190" selection-end-column="30" />
-              <folding>
-                <element signature="e#1114#1115#0" expanded="true" />
-                <element signature="e#1144#1145#0" expanded="true" />
-                <element signature="e#1187#1188#0" expanded="true" />
-                <element signature="e#1223#1224#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="EntityPlayer.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPlayer.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="46">
-              <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
+            <state relative-caret-position="366">
+              <caret line="162" column="27" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -106,10 +73,45 @@
       <file leaf-file-name="Player.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
+            <state relative-caret-position="434">
+              <caret line="48" column="10" selection-start-line="48" selection-start-column="8" selection-end-line="49" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#687#688#0" expanded="true" />
+                <element signature="e#722#723#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Camera.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/objects/Camera.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="26">
+              <caret line="30" column="71" selection-start-line="30" selection-start-column="71" selection-end-line="30" selection-end-column="71" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Rotation.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Rotation.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="281">
+              <caret line="50" column="23" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="EntityPlayer.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPlayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="267">
+              <caret line="68" column="65" selection-start-line="68" selection-start-column="65" selection-end-line="68" selection-end-column="65" />
+              <folding>
+                <element signature="e#3520#3521#0" expanded="true" />
+                <element signature="e#3587#3588#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -118,21 +120,9 @@
       <file leaf-file-name="Physics.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/Physics.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="317">
-              <caret line="181" column="12" selection-start-line="181" selection-start-column="12" selection-end-line="181" selection-end-column="12" />
+            <state relative-caret-position="173">
+              <caret line="121" column="35" selection-start-line="121" selection-start-column="35" selection-end-line="121" selection-end-column="35" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Entity.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/Entity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="417">
-              <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -161,7 +151,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/register/Domain.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/Block.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/MaterialBlock.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/materials/Material.java" />
@@ -186,7 +175,6 @@
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/objects/Mesh.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/rendering/FrameBuffer.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/Time.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/GameEngine.java" />
         <option value="$PROJECT_DIR$/src/main/resources/shaders/post/ssao.frag" />
         <option value="$PROJECT_DIR$/src/main/resources/shaders/post/nightvision.frag" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/Input.java" />
@@ -197,21 +185,23 @@
         <option value="$PROJECT_DIR$/src/main/resources/shaders/program/lit.frag" />
         <option value="$PROJECT_DIR$/compiled/styles/base/style.json" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/JBulletDebugDrawer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Rotation.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/Window.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/register/Registry.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityControllable.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/Chunk.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Location.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPhysical.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Player.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPlayer.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/gui/GUIManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Location.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/Entity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Client.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/objects/Camera.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Renderer.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/Physics.java" />
         <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/World.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Renderer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/gui/GUIManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Client.java" />
-        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/Entity.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/GameEngine.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Rotation.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Player.java" />
+        <option value="$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPlayer.java" />
       </list>
     </option>
   </component>
@@ -223,8 +213,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="35" />
-    <option name="y" value="16" />
+    <option name="x" value="140" />
+    <option name="y" value="15" />
     <option name="width" value="1529" />
     <option name="height" value="1024" />
   </component>
@@ -253,8 +243,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -661,7 +650,8 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
+      <pane id="Scope" />
+      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -980,7 +970,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="35" y="16" width="1529" height="1024" extended-state="0" />
+    <frame x="140" y="15" width="1529" height="1024" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -992,12 +982,10 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37308535" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938075" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20224719" sideWeight="0.5" order="4" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1009,6 +997,8 @@
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32938075" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932165" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -1040,45 +1030,10 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/generation/GeneratorModule.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="27" selection-start-line="7" selection-start-column="27" selection-end-line="7" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/extentions/packs/Pack.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="103" column="0" selection-start-line="103" selection-start-column="0" selection-end-line="103" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/compiled/packs/base/generators/default.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/generation/Generator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="39" column="0" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Temp/Rar$DRa0.506/ogl-OpenGL-tutorial_0015_33/tutorial14_render_to_texture/tutorial14.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-935">
           <caret line="188" column="81" selection-start-line="188" selection-start-column="6" selection-end-line="188" selection-end-column="81" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1086,7 +1041,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="188" column="81" selection-start-line="188" selection-start-column="6" selection-end-line="188" selection-end-column="81" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1094,7 +1048,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1102,11 +1055,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="215">
           <caret line="20" column="36" selection-start-line="20" selection-start-column="36" selection-end-line="20" selection-end-column="36" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#524#525#0" expanded="false" />
-            <element signature="e#566#567#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1114,7 +1062,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1122,7 +1069,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="16" column="28" selection-start-line="16" selection-start-column="28" selection-end-line="16" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1130,7 +1076,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
           <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1172,7 +1117,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1180,7 +1124,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
           <caret line="18" column="34" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1196,18 +1139,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/GameEngine.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="80" column="51" selection-start-line="80" selection-start-column="40" selection-end-line="80" selection-end-column="51" />
-          <folding>
-            <marker date="1480880042037" expanded="false" signature="1408:1418" ph=" { " />
-            <marker date="1480880042037" expanded="false" signature="1429:1435" ph=" }" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1223,7 +1154,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
           <caret line="58" column="28" selection-start-line="58" selection-start-column="28" selection-end-line="58" selection-end-column="28" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1231,7 +1161,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
           <caret line="9" column="20" selection-start-line="9" selection-start-column="20" selection-end-line="9" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1239,7 +1168,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1247,7 +1175,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="26" selection-start-line="12" selection-start-column="26" selection-end-line="12" selection-end-column="26" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1263,7 +1190,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2063">
           <caret line="429" column="28" selection-start-line="429" selection-start-column="28" selection-end-line="429" selection-end-column="41" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1271,7 +1197,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="6" column="4" selection-start-line="2" selection-start-column="2" selection-end-line="6" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1279,23 +1204,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/objects/Camera.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="56" column="5" selection-start-line="46" selection-start-column="4" selection-end-line="56" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Rotation.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1317,14 +1225,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/IPhysicalEntity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/IPhysicalEntity.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/IControllableEntity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -1337,7 +1238,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
           <caret line="45" column="11" selection-start-line="45" selection-start-column="11" selection-end-line="45" selection-end-column="19" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1365,26 +1265,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Location.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/Chunk.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="22" column="30" selection-start-line="22" selection-start-column="30" selection-end-line="22" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/Physics.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="317">
-          <caret line="181" column="12" selection-start-line="181" selection-start-column="12" selection-end-line="181" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -1397,15 +1281,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/World.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/gui/GUIManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="190" column="30" selection-start-line="190" selection-start-column="30" selection-end-line="190" selection-end-column="30" />
+        <state relative-caret-position="94">
+          <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Location.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="22" column="0" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
           <folding>
-            <element signature="e#1114#1115#0" expanded="true" />
-            <element signature="e#1144#1145#0" expanded="true" />
-            <element signature="e#1187#1188#0" expanded="true" />
-            <element signature="e#1223#1224#0" expanded="true" />
+            <element signature="e#248#249#0" expanded="false" />
+            <element signature="e#282#283#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1418,18 +1308,80 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/gui/GUIManager.java">
+    <entry file="jar://$MAVEN_REPOSITORY$/cz/advel/jbullet/jbullet/20101010-1/jbullet-20101010-1-sources.jar!/com/bulletphysics/collision/dispatch/CollisionObject.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="43" column="24" selection-start-line="43" selection-start-column="24" selection-end-line="43" selection-end-column="24" />
+        <state relative-caret-position="198">
+          <caret line="149" column="53" selection-start-line="149" selection-start-column="33" selection-end-line="149" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/cz/advel/jbullet/jbullet/20101010-1/jbullet-20101010-1-sources.jar!/com/bulletphysics/linearmath/QuaternionUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="101" column="23" selection-start-line="101" selection-start-column="23" selection-end-line="101" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/cz/advel/jbullet/jbullet/20101010-1/jbullet-20101010-1-sources.jar!/com/bulletphysics/dynamics/RigidBody.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="77" column="18" selection-start-line="77" selection-start-column="18" selection-end-line="77" selection-end-column="18" />
+          <folding>
+            <element signature="e#18712#18713#0" expanded="false" />
+            <element signature="e#18741#18742#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/cz/advel/jbullet/jbullet/20101010-1/jbullet-20101010-1-sources.jar!/com/bulletphysics/collision/shapes/CapsuleShape.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="181">
+          <caret line="56" column="11" selection-start-line="56" selection-start-column="11" selection-end-line="56" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="14" column="20" selection-start-line="14" selection-start-column="20" selection-end-line="14" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/physics/Physics.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="121" column="35" selection-start-line="121" selection-start-column="35" selection-end-line="121" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Renderer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="180" column="9" selection-start-line="180" selection-start-column="9" selection-end-line="180" selection-end-column="9" />
+        <state relative-caret-position="196">
+          <caret line="167" column="2" selection-start-line="167" selection-start-column="2" selection-end-line="167" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/GameEngine.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="77" column="20" selection-start-line="77" selection-start-column="20" selection-end-line="77" selection-end-column="20" />
+          <folding>
+            <marker date="1481427895530" expanded="false" signature="1408:1418" ph=" { " />
+            <marker date="1481427895530" expanded="false" signature="1429:1435" ph=" }" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/world/World.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="366">
+          <caret line="162" column="27" selection-start-line="162" selection-start-column="27" selection-end-line="162" selection-end-column="27" />
           <folding />
         </state>
       </provider>
@@ -1437,38 +1389,48 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/Client.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="384">
-          <caret line="268" column="0" selection-start-line="268" selection-start-column="0" selection-end-line="268" selection-end-column="0" />
+          <caret line="270" column="23" selection-start-line="270" selection-start-column="23" selection-end-line="270" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4927#4933#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/client/engine/objects/Camera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="30" column="71" selection-start-line="30" selection-start-column="71" selection-end-line="30" selection-end-column="71" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="31" column="18" selection-start-line="31" selection-start-column="18" selection-end-line="31" selection-end-column="18" />
+        <state relative-caret-position="434">
+          <caret line="48" column="10" selection-start-line="48" selection-start-column="8" selection-end-line="49" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#687#688#0" expanded="true" />
+            <element signature="e#722#723#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/core/Rotation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="50" column="23" selection-start-line="50" selection-start-column="23" selection-end-line="50" selection-end-column="23" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/EntityPlayer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="46">
-          <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/keithcod/es/fusionengine/entities/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="417">
-          <caret line="33" column="8" selection-start-line="33" selection-start-column="8" selection-end-line="33" selection-end-column="8" />
+        <state relative-caret-position="267">
+          <caret line="68" column="65" selection-start-line="68" selection-start-column="65" selection-end-line="68" selection-end-column="65" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#3520#3521#0" expanded="true" />
+            <element signature="e#3587#3588#0" expanded="true" />
           </folding>
         </state>
       </provider>

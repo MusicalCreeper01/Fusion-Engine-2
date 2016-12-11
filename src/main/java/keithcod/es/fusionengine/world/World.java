@@ -159,12 +159,11 @@ public class World {
             last = now;
             time = (int) timef;
 
-            for (Entity entity : entities)
-                entity.update();
-
             if (physics != null)
                 physics.update(60.0f);
 
+            for (Entity entity : entities)
+                entity.update();
         }
 //        System.out.println(timef + ":" + time);
 
@@ -198,9 +197,9 @@ public class World {
 
     public void render(ShaderProgram shaderProgram){
 
-        /*shaderProgram.unbind();
+        shaderProgram.unbind();
         physics.drawDebug();
-        shaderProgram.bind();*/
+        shaderProgram.bind();
 
         for(ChunkPosition pair : chunks.keySet()){
             Chunk chunk = chunks.get(pair);

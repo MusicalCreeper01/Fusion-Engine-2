@@ -64,7 +64,7 @@ public class GameEngine implements Runnable {
 
     protected void gameLoop() {
 
-        long updateInterval = 1000 / TARGET_FPS;
+        long updateInterval = (long)(TARGET_FPS * 0.001f);//1000 / TARGET_FPS;
         long updateTimer = System.currentTimeMillis();
 
         long lastTime = System.nanoTime();
@@ -83,12 +83,12 @@ public class GameEngine implements Runnable {
 
             Time.deltaTime = delta;
 
-            //long currMillis = System.currentTimeMillis();
-            //if(currMillis - updateTimer > updateInterval) {
+            long currMillis = System.currentTimeMillis();
+            if(currMillis - updateTimer > updateInterval) {
             //    System.out.println(currMillis - updateTimer);
                 update(delta); //interpolate using the delta
-            //    updateTimer = currMillis;
-            //}
+                updateTimer = currMillis;
+            }
 
             render();
 

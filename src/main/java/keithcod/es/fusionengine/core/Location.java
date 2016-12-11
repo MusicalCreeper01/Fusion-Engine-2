@@ -27,4 +27,9 @@ public class Location {
         this.z = z;
     }
 
+    @Override
+    public String toString(){
+        return "("+x+", " + y + ", " + z + ")";
+    }
+
 }
