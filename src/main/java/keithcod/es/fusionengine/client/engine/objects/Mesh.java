@@ -50,12 +50,13 @@ public class Mesh {
         return indices;
     }
 
-
+    float[] textCoords;
 
     public Mesh(float[] positions, float[] textCoords, int[] indices, Texture texture) {
         this.texture = texture;
         vertexCount = indices.length;
         vboIdList = new ArrayList();
+        this.textCoords = textCoords;
 
         vertices = positions;
         this.indices = indices;
@@ -72,14 +73,16 @@ public class Mesh {
         glBufferData(GL_ARRAY_BUFFER, posBuffer, GL_STATIC_DRAW);
         glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0);
 
-        // Texture coordinates VBO
-        vboId = glGenBuffers();
-        vboIdList.add(vboId);
-        FloatBuffer textCoordsBuffer = BufferUtils.createFloatBuffer(textCoords.length);
-        textCoordsBuffer.put(textCoords).flip();
-        glBindBuffer(GL_ARRAY_BUFFER, vboId);
-        glBufferData(GL_ARRAY_BUFFER, textCoordsBuffer, GL_STATIC_DRAW);
-        glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
+        if(textCoords != null) {
+            // Texture coordinates VBO
+            vboId = glGenBuffers();
+            vboIdList.add(vboId);
+            FloatBuffer textCoordsBuffer = BufferUtils.createFloatBuffer(textCoords.length);
+            textCoordsBuffer.put(textCoords).flip();
+            glBindBuffer(GL_ARRAY_BUFFER, vboId);
+            glBufferData(GL_ARRAY_BUFFER, textCoordsBuffer, GL_STATIC_DRAW);
+            glVertexAttribPointer(1, 2, GL_FLOAT, false, 0, 0);
+        }
 
         // Index VBO
         vboId = glGenBuffers();
@@ -113,13 +116,15 @@ public class Mesh {
         // Draw the mesh
         glBindVertexArray(getVaoId());
         glEnableVertexAttribArray(0);
-        glEnableVertexAttribArray(1);
+        if(textCoords != null)
+            glEnableVertexAttribArray(1);
 
         glDrawElements(GL_TRIANGLES, getVertexCount(), GL_UNSIGNED_INT, 0);
 
         // Restore state
         glDisableVertexAttribArray(0);
-        glDisableVertexAttribArray(1);
+        if(textCoords != null)
+            glDisableVertexAttribArray(1);
         glBindVertexArray(0);
     }
 
@@ -141,7 +146,7 @@ public class Mesh {
     }
 
     public static Mesh Box() throws Exception{
-        float[] positions = new float[] {
+        /*float[] positions = new float[] {
                 // V0
                 -0.5f, 0.5f, 0.5f,
                 // V1
@@ -234,8 +239,134 @@ public class Mesh {
                 // Bottom face
                 19, 18, 16, 19, 16, 17,
                 // Back face
+                4, 6, 7, 5, 4, 7,};*/
+
+        float[] positions = new float[] {
+                // V0
+                -0.5f, 0.5f, 0.5f,
+                // V1
+                -0.5f, -0.5f, 0.5f,
+                // V2
+                0.5f, -0.5f, 0.5f,
+                // V3
+                0.5f, 0.5f, 0.5f,
+                // V4
+                -0.5f, 0.5f, -0.5f,
+                // V5
+                0.5f, 0.5f, -0.5f,
+                // V6
+                -0.5f, -0.5f, -0.5f,
+                // V7
+                0.5f, -0.5f, -0.5f,
+
+                // For text coords in top face
+                // V8: V4 repeated
+                -0.5f, 0.5f, -0.5f,
+                // V9: V5 repeated
+                0.5f, 0.5f, -0.5f,
+                // V10: V0 repeated
+                -0.5f, 0.5f, 0.5f,
+                // V11: V3 repeated
+                0.5f, 0.5f, 0.5f,
+
+                // For text coords in right face
+                // V12: V3 repeated
+                0.5f, 0.5f, 0.5f,
+                // V13: V2 repeated
+                0.5f, -0.5f, 0.5f,
+
+                // For text coords in left face
+                // V14: V0 repeated
+                -0.5f, 0.5f, 0.5f,
+                // V15: V1 repeated
+                -0.5f, -0.5f, 0.5f,
+
+                // For text coords in bottom face
+                // V16: V6 repeated
+                -0.5f, -0.5f, -0.5f,
+                // V17: V7 repeated
+                0.5f, -0.5f, -0.5f,
+                // V18: V1 repeated
+                -0.5f, -0.5f, 0.5f,
+                // V19: V2 repeated
+                0.5f, -0.5f, 0.5f,
+        };
+        float[] textCoords = new float[]{
+                0.0f, 0.0f,
+                0.0f, 0.5f,
+                0.5f, 0.5f,
+                0.5f, 0.0f,
+
+                0.0f, 0.0f,
+                0.5f, 0.0f,
+                0.0f, 0.5f,
+                0.5f, 0.5f,
+
+                // For text coords in top face
+                0.0f, 0.5f,
+                0.5f, 0.5f,
+                0.0f, 1.0f,
+                0.5f, 1.0f,
+
+                // For text coords in right face
+                0.0f, 0.0f,
+                0.0f, 0.5f,
+
+                // For text coords in left face
+                0.5f, 0.0f,
+                0.5f, 0.5f,
+
+                // For text coords in bottom face
+                0.5f, 0.0f,
+                1.0f, 0.0f,
+                0.5f, 0.5f,
+                1.0f, 0.5f,
+        };
+        int[] indices = new int[]{
+                // Front face
+                0, 1, 3, 3, 1, 2,
+                // Top Face
+                8, 10, 11, 9, 8, 11,
+                // Right face
+                12, 13, 7, 5, 12, 7,
+                // Left face
+                14, 15, 6, 4, 14, 6,
+                // Bottom face
+                16, 18, 19, 17, 16, 19,
+                // Back face
                 4, 6, 7, 5, 4, 7,};
+
         Texture texture = new Texture("/textures/grassblock.png");
         return new Mesh(positions, textCoords, indices, texture);
+    }
+
+    public static Mesh BasicBox(){
+        float vertices[] = { 		1.0f, 0.0f, -1.0f,    //0 index
+                1.0f, 0.0f, 1.0f, 	//1
+                -1.0f,0.0f, 1.0f, 	//2
+                -1.0f, 0.0f,-1.0f, 	//3
+                1.0f, 1.0f, -1.0f, 	//4
+                1.0f, 1.0f, 1.0f, 	//5
+                -1.0f,1.0f, 1.0f, 	//6
+                -1.0f, 1.0f, -1.0f,      //7
+        };
+        int indices[] = { 0, 1, 2, 0, 2, 3,
+                0, 4, 5, 0, 5, 1,
+        };
+        float uvs[] = { 1, 0,
+                1, 1,
+                0, 1,
+                0, 0,
+                //... I repeat these 4 coordinate 2 times
+                1, 0,
+                1, 1,
+                0, 1,
+                0, 0,};
+        try {
+            Texture texture = new Texture("/textures/grassblock.png");
+            return new Mesh(vertices, uvs, indices, texture);
+        }catch(Exception ex){
+            return new Mesh(vertices, uvs, indices, null);
+        }
     }
 }

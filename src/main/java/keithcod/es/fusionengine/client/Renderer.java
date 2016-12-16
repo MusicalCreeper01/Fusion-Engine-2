@@ -4,6 +4,7 @@ import keithcod.es.fusionengine.client.engine.Utils;
 import keithcod.es.fusionengine.client.engine.Window;
 import keithcod.es.fusionengine.client.engine.objects.Camera;
 import keithcod.es.fusionengine.client.engine.objects.Mesh;
+import keithcod.es.fusionengine.client.engine.objects.Skybox;
 import keithcod.es.fusionengine.client.engine.rendering.FrameBuffer;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import keithcod.es.fusionengine.client.engine.rendering.Transformation;
@@ -23,11 +24,11 @@ public class Renderer {
     /**
      * Field of View in Radians
      */
-    private static final float FOV = (float) Math.toRadians(75.0f);
+    public static final float FOV = (float) Math.toRadians(75.0f);
 
-    private static final float Z_NEAR = 0.01f;
+    public static final float Z_NEAR = 0.01f;
 
-    private static final float Z_FAR = 200.f;
+    public static final float Z_FAR = 200.f;
 
     private final Transformation transformation;
 
@@ -42,6 +43,8 @@ public class Renderer {
     private final FrameBuffer depthFrameBuffer;
 
     private GUIManager guiManager;
+
+    //private Skybox skybox;
 
     public Renderer(Window window, GUIManager guiManager) {
         this.guiManager = guiManager;
@@ -58,7 +61,7 @@ public class Renderer {
 
     Mesh mesh;
 
-    boolean useFBO = true;
+    boolean useFBO = false;
 
     int RAND_MAX = 32767;
     Vector3f[] kernel;
@@ -67,6 +70,8 @@ public class Renderer {
         Random r = new Random();
         return r.nextInt();
     }
+
+    //Mesh m;
 
     public void init(Window window) throws Exception {
         if(useFBO) {
@@ -95,6 +100,10 @@ public class Renderer {
 
         if(useFBO)
             mesh = new Mesh(positions, uvs, indices, null);//new Texture(frameBuffer.colortexture));
+
+        //skybox = new Skybox(new String[] {"skybox2.png", "skybox2.png", "skybox2_top.png", "skybox2_bottom.png", "skybox2.png", "skybox2.png"});
+
+        //m = Mesh.BasicBox();
 
         int KERNEL_SIZE = 128;
         kernel = new Vector3f[KERNEL_SIZE];
@@ -151,6 +160,7 @@ public class Renderer {
 
     public void clear() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//        glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
     }
 
     public Matrix4f getViewMatrix(){
@@ -165,7 +175,7 @@ public class Renderer {
 //        render(window, camera);
     }*/
 
-    Mesh box;
+//    Mesh box;
     public void render(Window window) {
 //        this.camera = cam;
 
@@ -187,14 +197,22 @@ public class Renderer {
             clear();
         }
 
+        //skybox.render();
+
         shaderProgram.bind();
 
         // Update projection Matrix
-        Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
+        //Matrix4f projectionMatrix = transformation.getProjectionMatrix(FOV, window.getWidth(), window.getHeight(), Z_NEAR, Z_FAR);
 
-        shaderProgram.setUniform("projectionMatrix", projectionMatrix);
+        //shaderProgram.setUniform("projectionMatrix", getProjectionMatrix(window));
         shaderProgram.setUniform("texture_sampler", 0);
 
+
+        Matrix4f viewMatrix = Client.game().getRenderer().getTransformation().getViewMatrix(Client.game().thePlayer().getCamera());
+        Matrix4f modelViewMatrix = Client.game().getRenderer().getTransformation().getBasicViewMatrix(new org.joml.Vector3f(0, 15, 0), new org.joml.Vector3f(1, 1, 1), viewMatrix);
+        shaderProgram.setUniform("modelViewMatrix", modelViewMatrix);
+
+        //m.render();
 
         Client.game().getWorld().render(shaderProgram);
 

@@ -127,7 +127,7 @@ public class Registry {
         glTexStorage2D(GL_TEXTURE_2D, 3, GL_RGBA8, atlaswidth, atlasheight);
 
         // Upload the texture data
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, atlaswidth, atlasheight, 0, GL_RGBA, GL_UNSIGNED_BYTE, (ByteBuffer) null);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, atlaswidth, atlasheight, 0, GL_SRGB_ALPHA, GL_UNSIGNED_BYTE, (ByteBuffer) null);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);

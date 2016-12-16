@@ -120,6 +120,7 @@ public class ShaderProgram {
 
         createUniform("deltatime");
         createUniform("viewMatrix");
+        createUniform("projectionMatrix");
         createUniform("time");
         createUniform("timef");
         createUniform("maxtime");
@@ -132,6 +133,7 @@ public class ShaderProgram {
 
         setUniform("deltatime", Time.deltaTime);
         setUniform("viewMatrix", Client.game().getRenderer().getViewMatrix());
+        setUniform("projectionMatrix", Client.game().getRenderer().getProjectionMatrix(Client.game().window));
         setUniform("time", Client.game().getWorld().time);
         setUniform("timef", Client.game().getWorld().timef);
         setUniform("maxtime", World.MAX_TIME);

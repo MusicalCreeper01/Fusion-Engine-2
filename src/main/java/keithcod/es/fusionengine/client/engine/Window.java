@@ -12,6 +12,13 @@ import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL21.*;
+import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL31.*;
+import static org.lwjgl.opengl.GL32.*;
 
 public class Window {
 
@@ -137,7 +144,10 @@ public class Window {
 
 //        glDepthFunc (GL_LEQUAL);
 //        glDepthMask( false );
+
         glEnable(GL_CULL_FACE);
+        glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+
 //        glEnable(GL13.GL_MULTISAMPLE);
 //        glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 //        glHint(NVMultisampleFilterHint.GL_MULTISAMPLE_FILTER_HINT_NV, GL_NICEST);

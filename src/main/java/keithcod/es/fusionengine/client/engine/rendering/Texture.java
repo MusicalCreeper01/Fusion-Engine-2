@@ -8,6 +8,10 @@ import org.lwjgl.opengl.GL30;
 
 import java.nio.ByteBuffer;
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL12.*;
+import static org.lwjgl.opengl.GL13.*;
+import static org.lwjgl.opengl.GL20.*;
+import static org.lwjgl.opengl.GL21.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 
 public class Texture {
@@ -65,12 +69,23 @@ public class Texture {
         glTexParameteri (GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL12.GL_CLAMP_TO_EDGE);
         glTexParameteri (GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL12.GL_CLAMP_TO_EDGE);
 
-        // Upload the texture data
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, decoder.getWidth(), decoder.getHeight(), 0,
-                GL_RGBA, GL_UNSIGNED_BYTE, buf);
+        /*if(!pow2(decoder.getWidth()) || !pow2(decoder.getHeight())){
+            System.out.println("Non-pow2 image " + fileName + " (" + decoder.getWidth() + "," + decoder.getHeight() + ") ");
+
+        }else{*/
+            // Upload the texture data
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_SRGB_ALPHA, decoder.getWidth(), decoder.getHeight(), 0,
+                    GL_SRGB_ALPHA, GL_UNSIGNED_BYTE, buf);
+//        }
+
+
         // Generate Mip Map
         //glGenerateMipmap(GL_TEXTURE_2D);
         return textureId;
+    }
+
+    public static boolean pow2(int n){
+        return (n & (n - 1)) == 0;
     }
 
     public void cleanup() {

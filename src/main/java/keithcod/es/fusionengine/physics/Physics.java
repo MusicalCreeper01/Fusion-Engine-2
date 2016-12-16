@@ -4,6 +4,7 @@ import com.bulletphysics.collision.broadphase.BroadphaseInterface;
 import com.bulletphysics.collision.broadphase.DbvtBroadphase;
 import com.bulletphysics.collision.dispatch.CollisionDispatcher;
 import com.bulletphysics.collision.dispatch.CollisionObject;
+import com.bulletphysics.collision.dispatch.CollisionWorld;
 import com.bulletphysics.collision.dispatch.DefaultCollisionConfiguration;
 import com.bulletphysics.collision.shapes.*;
 import com.bulletphysics.dynamics.DiscreteDynamicsWorld;
@@ -59,7 +60,7 @@ public class Physics {
 
 
 //        dynamicsWorld.setGravity(new Vector3f(0f, -30f, 0f));
-        dynamicsWorld.setGravity(new Vector3f(0f, -100f, 0f));
+        dynamicsWorld.setGravity(new Vector3f(0f, -20f, 0f));
 
         //box = createBoxBody();
 //        box.setRestitution(0);
@@ -175,7 +176,7 @@ public class Physics {
 //            meshShape.setLocalScaling(new Vector3f(0.5f, 0.5f, 0.5f));
 
             CollisionShape collisionShape = meshShape;
-            collisionShape.setMargin(0.1f);
+//            collisionShape.setMargin(0.1f);
 
             CollisionObject colObject = new CollisionObject();
             colObject.setCollisionShape(collisionShape);
@@ -242,6 +243,11 @@ public class Physics {
             colliders.remove(i);
         }
     }
+
+    /*public Vector3f raycast (Vector3f start, Vector3f end){
+
+//        dynamicsWorld.rayTest(start, end, );
+    }*/
 
     /*DiscreteDynamicsWorld dynamicsWorld;
     EntityPlayer player;

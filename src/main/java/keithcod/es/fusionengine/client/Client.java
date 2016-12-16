@@ -127,6 +127,7 @@ public class Client implements IGameLogic {
     }
 
     GUITruetypeText fpsLabel;
+    GUITruetypeText timeLabel;
 
     @Override
     public void init(Window window) throws Exception {
@@ -146,6 +147,9 @@ public class Client implements IGameLogic {
 
         fpsLabel = new GUITruetypeText("EncodeSans-Regular.ttf", "x fps", 48, 10, 0);
         guiManager.add(fpsLabel);
+
+        timeLabel = new GUITruetypeText("EncodeSans-Regular.ttf", "0000", 48, 10, 30);
+        guiManager.add(timeLabel);
 
         GUISolid solid = new GUISolid(new Texture(Registry.getAtlas(0)));
 
@@ -281,6 +285,7 @@ public class Client implements IGameLogic {
             if(fpsLabel != null) {
 //                System.out.println("updating fps");
                 fpsLabel.setText(Time.fps + " fps");
+                timeLabel.setText(Client.game().getWorld().time + "");
             }
             i = 0;
         }

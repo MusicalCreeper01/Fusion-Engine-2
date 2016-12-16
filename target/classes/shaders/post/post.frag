@@ -23,6 +23,12 @@ void main()
         outColor.rgb = texture(colorbuffer, Texcoord).rgb;
     }*/
 
+
     outColor.rgb = texture(colorbuffer, Texcoord).rgb;
+    //gamma correction
+    /*float gamma = 2.2;
+    outColor.rgb = pow(outColor.rgb, vec3(1.0/gamma));*/
+
+
 
 }

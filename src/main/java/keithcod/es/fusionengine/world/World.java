@@ -2,6 +2,7 @@ package keithcod.es.fusionengine.world;
 
 import jLibNoise.noise.module.Perlin;
 import keithcod.es.fusionengine.client.Client;
+import keithcod.es.fusionengine.client.engine.objects.Skybox;
 import keithcod.es.fusionengine.client.engine.rendering.ShaderProgram;
 import keithcod.es.fusionengine.entities.Entity;
 import keithcod.es.fusionengine.physics.Physics;
@@ -28,12 +29,19 @@ public class World {
 //    public boolean morning = true;
     public static final int MAX_TIME = 40;
 
+    public Skybox skybox;
+
     private Physics physics;
     private List<Entity> entities = new ArrayList<>();
 
     public World(){
         physics = new Physics();
         physics.init(Client.game().window);
+
+        skybox = new Skybox(new String[] {"assets/textures/sky/skybox_pos_x.png", "assets/textures/sky/skybox_neg_x.png",
+                                          "assets/textures/sky/skybox_pos_y.png", "assets/textures/sky/skybox_neg_y.png",
+                                          "assets/textures/sky/skybox_pos_z.png" ,"assets/textures/sky/skybox_neg_z.png"});
+
     }
 
     public Physics getPhysics (){
@@ -155,8 +163,11 @@ public class World {
         if(ready) {
             now = System.nanoTime();
             timef += (now - last) / 1000000000f;
-
             last = now;
+
+            if(timef > MAX_TIME)
+                timef = 0;
+
             time = (int) timef;
 
             if (physics != null)
@@ -165,8 +176,6 @@ public class World {
             for (Entity entity : entities)
                 entity.update();
         }
-//        System.out.println(timef + ":" + time);
-
     }
 
     public void drawSurrounding(int x, int y){
@@ -198,7 +207,8 @@ public class World {
     public void render(ShaderProgram shaderProgram){
 
         shaderProgram.unbind();
-        physics.drawDebug();
+        //physics.drawDebug();
+        skybox.render();
         shaderProgram.bind();
 
         for(ChunkPosition pair : chunks.keySet()){

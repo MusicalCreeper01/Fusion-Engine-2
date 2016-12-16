@@ -25,6 +25,7 @@ public class EntityPlayer extends Entity{
         rigidbody.setAngularFactor(0.0f);
 
         rigidbody.setActivationState(CollisionObject.DISABLE_DEACTIVATION);
+        rigidbody.setSleepingThresholds(0.02f, 0.8f);
 
     }
 
